@@ -2,7 +2,7 @@
 
 1. Clone the repository:
     ```sh
-    git clone --recursive https://github.com/ggjorven/Game-Interaction.git
+    git clone https://github.com/ggjorven/Game-Interaction.git
     cd Game-Interaction
     ```
 

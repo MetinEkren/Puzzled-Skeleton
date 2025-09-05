@@ -1,8 +1,7 @@
-local MacOSVersion = MacOSVersion or "14.5"
 local OutputDir = OutputDir or "%{cfg.buildcfg}-%{cfg.system}"
 
-project "Game-Interaction"
-	kind "ConsoleApp"
+project "GameInteraction"
+	kind "WindowedApp" -- TODO: WindowedApp
 	language "C#"
 
 	dotnetframework "4.8"
@@ -18,6 +17,7 @@ project "Game-Interaction"
 	files
 	{
 		"src/Game-Interaction/**.cs",
+		"src/Game-Interaction/**.xaml",
 	}
 
 	-- Deprecated and replaced by dotnetsdk ^
@@ -26,16 +26,26 @@ project "Game-Interaction"
 	--	"WPF"
 	--}
 
+	links 
+	{
+		"PresentationCore",
+		"PresentationFramework",
+		"WindowsBase",
+		"System",
+		"System.Data",
+		"System.Xaml",
+		"System.CodeDom"
+	}
+
+    clr "Unsafe"
+	framework "4.8"
+
+	filter "files:**.xaml"
+		buildaction "Page" -- WPF XAML pages
+		--dependentupon(function(f) return f .. ".cs" end)
+
 	filter "system:windows"
 		systemversion "latest"
-		staticruntime "on"
-
-	filter "system:linux"
-		systemversion "latest"
-		staticruntime "on"
-
-    filter "system:macosx"
-		systemversion(MacOSVersion)
 		staticruntime "on"
 
 	filter "configurations:Debug"
