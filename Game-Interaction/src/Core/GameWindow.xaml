@@ -10,7 +10,8 @@
         Width="1280" Height="720"
         
         MouseDown="MousePressed"
-        KeyDown="KeyPressed">
+        KeyDown="KeyPressed"
+        SizeChanged="WindowResize">
     <Canvas 
         Name="GameCanvas" 
         Background="Black"

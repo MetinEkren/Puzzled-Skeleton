@@ -61,16 +61,28 @@ namespace GameInteraction
             Console.WriteLine("Key pressed");
         }
 
+        private void WindowResize(object sender, SizeChangedEventArgs e)
+        {
+            Console.WriteLine("Window resize");
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         public Action<double> TickMethod { get; set; }
-        private DateTime m_LastTime;
+        public Canvas WindowCanvas => (Canvas)FindName("GameCanvas"); // Lazy-load canvas // Note: GameCanvas is the name in XAML file
 
         private Game m_Game;
+        private DateTime m_LastTime = DateTime.Now;
 
         public static GameWindow Instance { get; private set; }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Variable throughput
+        ////////////////////////////////////////////////////////////////////////////////////
+        public new uint Width { get { return (uint)this.ActualWidth; } }
+        public new uint Height { get { return (uint)this.ActualHeight; } }
+    
     }
 
 }

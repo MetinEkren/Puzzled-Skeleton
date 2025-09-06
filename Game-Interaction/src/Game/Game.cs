@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace GameInteraction
 {
@@ -27,7 +30,31 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public void Tick(double deltaTime)
         {
-            Console.WriteLine("TICK");
+            OnUpdate((float)deltaTime);
+            OnRender();
+        }
+
+        private void OnUpdate(float deltaTime)
+        {
+        }
+
+        private void OnRender()
+        {
+            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+
+            Rectangle rect = new Rectangle
+            {
+                Tag = "TESTRECT",
+                Height = 64,
+                Width = 64,
+                Fill = brush
+            };
+            
+            Canvas.SetLeft(rect, 0.0f);     // X
+            Canvas.SetTop(rect, 0.0f);      // Y
+
+            // finally add the circle to the canvas
+            GameWindow.Instance.WindowCanvas.Children.Add(rect);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
