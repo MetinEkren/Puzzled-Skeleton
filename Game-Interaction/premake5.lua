@@ -1,13 +1,13 @@
 local OutputDir = OutputDir or "%{cfg.buildcfg}-%{cfg.system}"
 
 project "GameInteraction"
-	kind "WindowedApp" -- TODO: WindowedApp
+	kind "WindowedApp" 
 	language "C#"
 
 	dotnetframework "4.8"
 	dotnetsdk "WindowsDesktop" -- Note: This is the WPF flag
 
-	architecture "x86_64"
+	architecture "x64"
 
 	warnings "Extra"
 
@@ -16,8 +16,8 @@ project "GameInteraction"
 
 	files
 	{
-		"src/Game-Interaction/**.cs",
-		"src/Game-Interaction/**.xaml",
+		"src/GameInteraction/**.cs",
+		"src/GameInteraction/**.xaml",
 	}
 
 	-- Deprecated and replaced by dotnetsdk ^
