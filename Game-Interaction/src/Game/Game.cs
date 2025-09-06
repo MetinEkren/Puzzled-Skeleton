@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 
 namespace GameInteraction
@@ -49,7 +51,7 @@ namespace GameInteraction
                 Width = 64,
                 Fill = brush
             };
-            
+
             Canvas.SetLeft(rect, 0.0f);     // X
             Canvas.SetTop(rect, 0.0f);      // Y
 
