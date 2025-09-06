@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,9 +25,12 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public Texture(string path)
         {
+            string diskFile = System.IO.Path.Combine(Directory.GetCurrentDirectory(), path);
+            //string embeddedFile = "pack://application:,,,/" + path;
+
             m_Image = new BitmapImage();
             m_Image.BeginInit();
-            m_Image.UriSource = new Uri("pack://application:,,,/" + path, UriKind.Absolute);
+            m_Image.UriSource = new Uri(diskFile, UriKind.Absolute);
             m_Image.CacheOption = BitmapCacheOption.OnLoad;
             m_Image.EndInit();
         }

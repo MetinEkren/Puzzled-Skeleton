@@ -14,6 +14,8 @@ project "GameInteraction"
 	targetdir ("%{wks.location}/bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("%{wks.location}/bin-int/" .. OutputDir .. "/%{prj.name}")
 
+	debugdir("%{prj.location}")
+
 	files
 	{
 		"src/**.cs",

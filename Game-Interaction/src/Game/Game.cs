@@ -21,6 +21,9 @@ namespace GameInteraction
         {
             Instance = this;
             GameWindow.Instance.TickMethod = Tick;
+
+            m_Renderer = new Renderer();
+            m_TESTTexture = new Texture("Resources/Textures/viking_room.png");
         }
         ~Game()
         {
@@ -42,26 +45,19 @@ namespace GameInteraction
 
         private void OnRender()
         {
-            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            m_Renderer.Begin();
 
-            Rectangle rect = new Rectangle
-            {
-                Tag = "TESTRECT",
-                Height = 64,
-                Width = 64,
-                Fill = brush
-            };
+            m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new Maths.Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
-            Canvas.SetLeft(rect, 0.0f);     // X
-            Canvas.SetTop(rect, 0.0f);      // Y
-
-            // finally add the circle to the canvas
-            GameWindow.Instance.WindowCanvas.Children.Add(rect);
+            m_Renderer.End();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private Renderer m_Renderer;
+        private Texture m_TESTTexture;
+        
         public static Game Instance { get; private set; }
 
     }
