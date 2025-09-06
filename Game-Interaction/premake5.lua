@@ -1,7 +1,7 @@
 local OutputDir = OutputDir or "%{cfg.buildcfg}-%{cfg.system}"
 
 project "GameInteraction"
-	kind "WindowedApp" 
+	kind "ConsoleApp" 
 	language "C#"
 
 	dotnetframework "4.8"
@@ -16,8 +16,8 @@ project "GameInteraction"
 
 	files
 	{
-		"src/GameInteraction/**.cs",
-		"src/GameInteraction/**.xaml",
+		"src/**.cs",
+		"src/**.xaml",
 	}
 
 	-- Deprecated and replaced by dotnetsdk ^
@@ -57,6 +57,7 @@ project "GameInteraction"
 		optimize "on"
 
 	filter "configurations:Dist"
+		kind "WindowedApp" 
 		runtime "Release"
 		optimize "Full"
 		linktimeoptimization "on"
