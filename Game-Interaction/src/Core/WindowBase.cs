@@ -16,24 +16,33 @@ namespace GameInteraction
     ////////////////////////////////////////////////////////////////////////////////////
     // Window
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class GameWindow : Window
+    public partial class WindowBase
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public GameWindow()
+        public WindowBase(Window window)
         {
-            Instance = this;
+            m_Window = window;
 
-            InitializeComponent();
+            // Setup loop
             CompositionTarget.Rendering += Tick;
 
-            m_Game = new Game();
+            // Setup callbacks
+            m_Window.SizeChanged += WindowResize;
+            m_Window.Closing += WindowClose;
+
+            m_Window.KeyDown += KeyPressed;
+            m_Window.KeyUp += KeyReleased;
+
+            m_Window.MouseDown += MousePressed;
+            m_Window.MouseUp += MouseReleased;
+            m_Window.MouseMove += MouseMoved;
+            m_Window.MouseWheel += MouseScrolled;
         }
-        ~GameWindow()
+        ~WindowBase()
         {
-            Instance = null;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -48,60 +57,40 @@ namespace GameInteraction
             TickMethod?.Invoke(deltaTime);
         }
 
+        private void OnEvent(Event e)
+        {
+            EventMethod?.Invoke(e);
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Callbacks
         ////////////////////////////////////////////////////////////////////////////////////
-        private void WindowResize(object sender, SizeChangedEventArgs e)
-        {
-            Console.WriteLine("Window resize");
-        }
-        private void WindowClose(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Console.WriteLine("Window close");
-        }
+        private void WindowResize(object sender, SizeChangedEventArgs e) { OnEvent(new WindowResizeEvent((uint)e.NewSize.Width, (uint)e.NewSize.Height)); }
+        private void WindowClose(object sender, System.ComponentModel.CancelEventArgs e) { OnEvent(new WindowCloseEvent()); }
 
-        private void KeyPressed(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine("Key pressed");
-        }
-        private void KeyReleased(object sender, KeyEventArgs e)
-        {
-            Console.WriteLine("Key released");
-        }
+        private void KeyPressed(object sender, KeyEventArgs e) { OnEvent(new KeyPressedEvent(e.Key, e.IsRepeat)); }
+        private void KeyReleased(object sender, KeyEventArgs e) { OnEvent(new KeyReleasedEvent(e.Key)); }
 
-        private void MousePressed(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine("Mouse pressed");
-        }
-        private void MouseReleased(object sender, MouseButtonEventArgs e)
-        {
-            Console.WriteLine("Mouse released");
-        }
-        private void MouseMoved(object sender, MouseEventArgs e)
-        {
-            Console.WriteLine("Mouse moved");
-        }
-        private void MouseScrolled(object sender, MouseWheelEventArgs e)
-        {
-            Console.WriteLine("Mouse scrolled");
-        }
+        private void MousePressed(object sender, MouseButtonEventArgs e) { OnEvent(new MouseButtonPressedEvent(e.ChangedButton)); }
+        private void MouseReleased(object sender, MouseButtonEventArgs e) { OnEvent(new MouseButtonReleasedEvent(e.ChangedButton)); }
+        private void MouseMoved(object sender, MouseEventArgs e) { OnEvent(new MouseMovedEvent((float)e.GetPosition(m_Window).X, (float)e.GetPosition(m_Window).Y)); }
+        private void MouseScrolled(object sender, MouseWheelEventArgs e) { OnEvent(new MouseScrolledEvent(e.Delta / 120.0f)); } // Note: Positive = up, Negative = down, Each scroll is 120 units // TODO: Fact check
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         public Action<double> TickMethod { get; set; }
-        public Canvas WindowCanvas => (Canvas)FindName("GameCanvas"); // Lazy-load canvas // Note: GameCanvas is the name in XAML file
+        public Action<Event> EventMethod { get; set; }
 
-        private Game m_Game;
         private DateTime m_LastTime = DateTime.Now;
 
-        public static GameWindow Instance { get; private set; }
+        private Window m_Window;
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variable throughput
         ////////////////////////////////////////////////////////////////////////////////////
-        public new uint Width { get { return (uint)this.ActualWidth; } }
-        public new uint Height { get { return (uint)this.ActualHeight; } }
+        public uint Width { get { return (uint)m_Window.ActualWidth; } }
+        public uint Height { get { return (uint)m_Window.ActualHeight; } }
 
     }
 
