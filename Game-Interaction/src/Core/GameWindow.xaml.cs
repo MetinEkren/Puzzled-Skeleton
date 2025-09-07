@@ -51,19 +51,39 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         // Callbacks
         ////////////////////////////////////////////////////////////////////////////////////
-        private void MousePressed(object sender, MouseButtonEventArgs e)
+        private void WindowResize(object sender, SizeChangedEventArgs e)
         {
-            Console.WriteLine("Mouse pressed");
+            Console.WriteLine("Window resize");
+        }
+        private void WindowClose(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Window close");
         }
 
         private void KeyPressed(object sender, KeyEventArgs e)
         {
             Console.WriteLine("Key pressed");
         }
-
-        private void WindowResize(object sender, SizeChangedEventArgs e)
+        private void KeyReleased(object sender, KeyEventArgs e)
         {
-            Console.WriteLine("Window resize");
+            Console.WriteLine("Key released");
+        }
+
+        private void MousePressed(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Mouse pressed");
+        }
+        private void MouseReleased(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Mouse released");
+        }
+        private void MouseMoved(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("Mouse moved");
+        }
+        private void MouseScrolled(object sender, MouseWheelEventArgs e)
+        {
+            Console.WriteLine("Mouse scrolled");
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +102,7 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public new uint Width { get { return (uint)this.ActualWidth; } }
         public new uint Height { get { return (uint)this.ActualHeight; } }
-    
+
     }
 
 }

@@ -9,9 +9,16 @@
         Title="GameInteraction" 
         Width="1280" Height="720"
         
-        MouseDown="MousePressed"
+        SizeChanged="WindowResize"
+        Closing="WindowClose"
+        
         KeyDown="KeyPressed"
-        SizeChanged="WindowResize">
+        KeyUp="KeyReleased"
+        
+        MouseDown="MousePressed"
+        MouseUp="MouseReleased"
+        MouseMove="MouseMoved"
+        MouseWheel="MouseScrolled">
     <Canvas 
         Name="GameCanvas" 
         Background="Black"
