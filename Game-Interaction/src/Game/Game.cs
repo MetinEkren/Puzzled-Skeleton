@@ -47,7 +47,8 @@ namespace GameInteraction
         {
             m_Renderer.Begin();
 
-            m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new Maths.Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+            //m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(0, 0, 1024, 1024));
+            m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(0, 0, m_TESTTexture.Width, m_TESTTexture.Height));
 
             m_Renderer.End();
         }
