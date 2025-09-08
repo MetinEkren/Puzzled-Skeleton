@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -81,6 +82,8 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public Action<double> TickMethod { get; set; }
         public Action<Event> EventMethod { get; set; }
+
+        public Canvas WindowCanvas { get { return (Canvas)m_Window.FindName("WindowCanvas"); } }
 
         private DateTime m_LastTime = DateTime.Now;
 

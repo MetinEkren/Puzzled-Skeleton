@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,8 +27,6 @@ namespace GameInteraction
             m_BaseScene.OnUpdateMethod = OnUpdate;
             m_BaseScene.OnRenderMethod = OnRender;
             m_BaseScene.OnEventMethod = OnEvent;
-
-
         }
         ~MainMenu()
         {
@@ -49,6 +48,15 @@ namespace GameInteraction
         public void OnEvent(Event e)
         {
             Console.WriteLine("OnEvent");
+
+            if (e is WindowCloseEvent wce)
+            {
+                Console.WriteLine("Closing...");
+            }
+            if (e is MouseScrolledEvent mse)
+            {
+                Console.WriteLine($"Offset: {mse.YOffset}");
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

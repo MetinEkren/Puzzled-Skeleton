@@ -9,7 +9,7 @@
         Title="MainMenu" 
         Width="1280" Height="720">
     <Canvas 
-        Name="GameCanvas" 
+        Name="WindowCanvas" 
         Background="Black"
     />
 </Window>
