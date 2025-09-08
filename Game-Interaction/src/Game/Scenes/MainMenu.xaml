@@ -6,28 +6,39 @@
         <!-- Root Grid acts as a container for stacking elements -->
         <Grid>
             <!-- Base Canvas for rendering/drawing -->
-            <Canvas x:Name="GameCanvas" Background="Black" />
+            <Canvas x:Name="GameCanvas" Background="Black" 
+            />
 
             <!-- UI Grid overlayed on top of the Canvas -->
             <Grid x:Name="UiOverlay">
                 <!-- Centered Title -->
-                <TextBlock Text="MAIN MENU"
-                       FontSize="64"
+                <TextBlock Text="Puzzled Skeleton"
+                       FontSize="80"
                        FontWeight="Bold"
                        Foreground="White"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Top" Margin="0,125,0,0" />
 
-                <!-- Top-Right Corner Text -->
-                <TextBlock Text="Version 1.0"
-                       FontSize="20"
-                       Foreground="LightGray"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Top"
-                       Margin="20" />
-
-                <!-- Bottom-Right Corner Text -->
-                <TextBlock Text="© 2025 YourGameStudio"
+                <!-- Buttons -->
+                <Button x:Name="Play"
+                    Content="Play"
+                    Margin="390,250,390,346"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Background="DarkRed"
+                    BorderBrush="White"
+                    BorderThickness="2"
+                />
+                <Button x:Name="Saves"
+                    Margin="390,396,390,200" 
+                />
+                <Button x:Name="Exit"
+                    Margin="390,539,390,57" 
+                />
+                
+                <!-- Copyright -->
+                <TextBlock Text="© 2025 G2"
                        FontSize="16"
                        Foreground="Gray"
                        HorizontalAlignment="Right"

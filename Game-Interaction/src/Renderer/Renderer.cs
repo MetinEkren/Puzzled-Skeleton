@@ -49,6 +49,11 @@ namespace GameInteraction
         {
             m_Quads = new List<Quad>();
             m_Canvas = canvas;
+
+            m_Visual = new DrawingVisual();
+            m_VisualHost = new VisualHost(m_Visual);
+            
+            m_Canvas.Children.Add(m_VisualHost);
         }
         ~Renderer()
         {
@@ -64,9 +69,7 @@ namespace GameInteraction
     
         public void End()
         {
-            DrawingVisual visual = new DrawingVisual();
-    
-            using (DrawingContext dc = visual.RenderOpen())
+            using (DrawingContext dc = m_Visual.RenderOpen())
             {
                 foreach (Quad quad in m_Quads)
                 {
@@ -80,10 +83,6 @@ namespace GameInteraction
                     dc.DrawImage(cropped, new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
                 }
             }
-    
-            // Add the visual to the canvas (or layer)
-            VisualHost host = new VisualHost(visual);
-            m_Canvas.Children.Add(host);
         }
     
         public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, Texture texture) { m_Quads.Add(new Quad{ Position = position, Size = size, TextureReference = texture, TextureCoords = new UV(0, 0, texture.Width, texture.Height) }); }
@@ -93,6 +92,9 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         private List<Quad> m_Quads;
         private Canvas m_Canvas;
+
+        private DrawingVisual m_Visual;
+        private VisualHost m_VisualHost;
     
     }
 
