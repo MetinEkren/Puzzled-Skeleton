@@ -25,6 +25,9 @@ namespace GameInteraction
             m_Renderer = new Renderer(GameCanvas);
 
             m_TESTTexture = new Texture("../../../Game-Interaction/Resources/Textures/viking_room.png");
+            
+            m_TESTAudio = new AudioFile("../../../Game-Interaction/Resources/Sounds/pop.mp3");
+            m_TESTAudio.Volume = 10; // %
         }
         ~MainMenu()
         {
@@ -46,6 +49,11 @@ namespace GameInteraction
 
         public void OnEvent(Event e)
         {
+            if (e is MouseButtonPressedEvent mbpe)
+            {
+                Console.WriteLine("AAAA");
+                m_TESTAudio.Play();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +62,7 @@ namespace GameInteraction
         private Renderer m_Renderer;
 
         private Texture m_TESTTexture;
+        private AudioFile m_TESTAudio;
 
     }
 
