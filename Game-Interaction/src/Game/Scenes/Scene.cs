@@ -18,12 +18,10 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public Scene(Window window)
+        public Scene()
         {
-            Window = new WindowBase(window);
-
-            Window.TickMethod = OnTick;
-            Window.EventMethod = OnEvent;
+            MainWindow.Instance.TickMethod = OnTick;
+            MainWindow.Instance.EventMethod = OnEvent;
         }
         ~Scene()
         {
@@ -56,8 +54,6 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        public WindowBase Window { get; set; }
-
         public Action<float> OnUpdateMethod { get; set; }
         public Action OnRenderMethod { get; set; }
         public Action<Event> OnEventMethod { get; set; }

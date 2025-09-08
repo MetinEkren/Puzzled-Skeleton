@@ -1,49 +1,51 @@
 ﻿using System;
-using System.Text;
-using System.Threading;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 
 namespace GameInteraction
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // Window
+    // MainMenu
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class WindowBase
+    public partial class MainWindow : Window
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public WindowBase(Window window)
+        public MainWindow()
         {
-            m_Window = window;
+            Instance = this;
+
+            InitializeComponent();
 
             // Setup loop
             CompositionTarget.Rendering += Tick;
 
             // Setup callbacks
-            m_Window.SizeChanged += WindowResize;
-            m_Window.Closing += WindowClose;
+            this.SizeChanged += WindowResize;
+            this.Closing += WindowClose;
+            
+            this.KeyDown += KeyPressed;
+            this.KeyUp += KeyReleased;
+            
+            this.MouseDown += MousePressed;
+            this.MouseUp += MouseReleased;
+            this.MouseMove += MouseMoved;
+            this.MouseWheel += MouseScrolled;
 
-            m_Window.KeyDown += KeyPressed;
-            m_Window.KeyUp += KeyReleased;
-
-            m_Window.MouseDown += MousePressed;
-            m_Window.MouseUp += MouseReleased;
-            m_Window.MouseMove += MouseMoved;
-            m_Window.MouseWheel += MouseScrolled;
+            SceneContainer.Content = new MainMenu();
         }
-        ~WindowBase()
+        ~MainWindow()
         {
+            Instance = null;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -74,8 +76,8 @@ namespace GameInteraction
 
         private void MousePressed(object sender, MouseButtonEventArgs e) { OnEvent(new MouseButtonPressedEvent(e.ChangedButton)); }
         private void MouseReleased(object sender, MouseButtonEventArgs e) { OnEvent(new MouseButtonReleasedEvent(e.ChangedButton)); }
-        private void MouseMoved(object sender, MouseEventArgs e) { OnEvent(new MouseMovedEvent((float)e.GetPosition(m_Window).X, (float)e.GetPosition(m_Window).Y)); }
-        private void MouseScrolled(object sender, MouseWheelEventArgs e) { OnEvent(new MouseScrolledEvent(e.Delta / 120.0f)); } // Note: Positive = up, Negative = down, Each scroll is 120 units // TODO: Fact check
+        private void MouseMoved(object sender, MouseEventArgs e) { OnEvent(new MouseMovedEvent((float)e.GetPosition(this).X, (float)e.GetPosition(this).Y)); }
+        private void MouseScrolled(object sender, MouseWheelEventArgs e) { OnEvent(new MouseScrolledEvent(e.Delta / 120.0f)); } // Note: Positive = up, Negative = down, Each scroll is 120 units
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
@@ -83,17 +85,17 @@ namespace GameInteraction
         public Action<double> TickMethod { get; set; }
         public Action<Event> EventMethod { get; set; }
 
-        public Canvas WindowCanvas { get { return (Canvas)m_Window.FindName("WindowCanvas"); } }
-
         private DateTime m_LastTime = DateTime.Now;
 
-        private Window m_Window;
+        // TODO: Game
+
+        public static MainWindow Instance { get; private set; }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variable throughput
         ////////////////////////////////////////////////////////////////////////////////////
-        public uint Width { get { return (uint)m_Window.ActualWidth; } }
-        public uint Height { get { return (uint)m_Window.ActualHeight; } }
+        public new uint Width { get { return (uint)this.ActualWidth; } }
+        public new uint Height { get { return (uint)this.ActualHeight; } }
 
     }
 

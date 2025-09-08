@@ -13,7 +13,7 @@ namespace GameInteraction
     ////////////////////////////////////////////////////////////////////////////////////
     // MainMenu
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class MainMenu
+    public partial class MainMenu : UserControl
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@ namespace GameInteraction
         {
             InitializeComponent();
             
-            m_BaseScene = new Scene(this);
+            m_BaseScene = new Scene();
             m_BaseScene.OnUpdateMethod = OnUpdate;
             m_BaseScene.OnRenderMethod = OnRender;
             m_BaseScene.OnEventMethod = OnEvent;
