@@ -22,8 +22,6 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public MainWindow()
         {
-            Instance = this;
-
             InitializeComponent();
 
             // Setup loop
@@ -41,11 +39,10 @@ namespace GameInteraction
             this.MouseMove += MouseMoved;
             this.MouseWheel += MouseScrolled;
 
-            SceneContainer.Content = new MainMenu();
+            m_Game = new Game(this);
         }
         ~MainWindow()
         {
-            Instance = null;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -87,9 +84,8 @@ namespace GameInteraction
 
         private DateTime m_LastTime = DateTime.Now;
 
-        // TODO: Game
-
-        public static MainWindow Instance { get; private set; }
+        private Game m_Game;
+        public object ActiveScene { get { return SceneContainer.Content; } set { SceneContainer.Content = value; } }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variable throughput

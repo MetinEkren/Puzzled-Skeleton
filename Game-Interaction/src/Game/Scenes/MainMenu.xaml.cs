@@ -22,11 +22,7 @@ namespace GameInteraction
         public MainMenu()
         {
             InitializeComponent();
-            
-            m_BaseScene = new Scene();
-            m_BaseScene.OnUpdateMethod = OnUpdate;
-            m_BaseScene.OnRenderMethod = OnRender;
-            m_BaseScene.OnEventMethod = OnEvent;
+            m_BaseScene = new Scene(OnUpdate, OnRender, OnEvent);
         }
         ~MainMenu()
         {

@@ -20,8 +20,17 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public Scene()
         {
-            MainWindow.Instance.TickMethod = OnTick;
-            MainWindow.Instance.EventMethod = OnEvent;
+            Game.Instance.Window.TickMethod = OnTick;
+            Game.Instance.Window.EventMethod = OnEvent;
+        }
+        public Scene(Action<float> onUpdate, Action onRender, Action<Event> onEvent)
+        {
+            Game.Instance.Window.TickMethod = OnTick;
+            Game.Instance.Window.EventMethod = OnEvent;
+
+            OnUpdateMethod = onUpdate;
+            OnRenderMethod = onRender;
+            OnEventMethod = onEvent;
         }
         ~Scene()
         {
