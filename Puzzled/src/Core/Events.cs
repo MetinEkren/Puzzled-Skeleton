@@ -11,7 +11,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GameInteraction
+namespace Puzzled
 {
 
     public class Event { }

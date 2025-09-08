@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 
-namespace GameInteraction
+namespace Puzzled
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
@@ -24,9 +24,9 @@ namespace GameInteraction
             InitializeComponent();
             m_Renderer = new Renderer(GameCanvas);
 
-            m_TESTTexture = new Texture("../../../Game-Interaction/Resources/Textures/viking_room.png");
+            m_TESTTexture = new Texture("../../../Puzzled/Resources/Textures/viking_room.png");
             
-            m_TESTAudio = new AudioFile("../../../Game-Interaction/Resources/Sounds/pop.mp3");
+            m_TESTAudio = new AudioFile("../../../Puzzled/Resources/Sounds/pop.mp3");
             m_TESTAudio.Volume = 10; // %
         }
         ~MainMenu()

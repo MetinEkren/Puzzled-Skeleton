@@ -43,9 +43,9 @@ OutputDir = "%{cfg.buildcfg}-%{cfg.system}"
 ------------------------------------------------------------------------------
 -- Solution
 ------------------------------------------------------------------------------
-workspace "Game-Interaction"
+workspace "Puzzled-Skeleton"
 	architecture "x64"
-	startproject "Game-Interaction"
+	startproject "Puzzled"
 	
 	configurations
 	{
@@ -60,5 +60,5 @@ workspace "Game-Interaction"
 		"MultiProcessorCompile"
 	}
 
-include "Game-Interaction"
+include "Puzzled"
 ------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 local OutputDir = OutputDir or "%{cfg.buildcfg}-%{cfg.system}"
 
-project "GameInteraction"
+project "Puzzled"
 	kind "ConsoleApp" 
 	language "C#"
 
@@ -44,7 +44,6 @@ project "GameInteraction"
 
 	filter "files:**.xaml"
 		buildaction "Page" -- WPF XAML pages
-		--dependentupon(function(f) return f .. ".cs" end)
 
 	filter "system:windows"
 		systemversion "latest"
