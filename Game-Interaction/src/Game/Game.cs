@@ -37,20 +37,17 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnUpdate(float deltaTime)
         {
+            ActiveScene.OnUpdate(deltaTime);
         }
     
         private void OnRender()
         {
-            //m_Renderer.Begin();
-            //
-            ////m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(0, 0, 1024, 1024));
-            //m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(0, 0, m_TESTTexture.Width, m_TESTTexture.Height));
-            //
-            //m_Renderer.End();
+            ActiveScene.OnRender();
         }
 
         private void OnEvent(Event e)
         {
+            ActiveScene.OnEvent(e);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -66,7 +63,7 @@ namespace GameInteraction
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         public MainWindow Window;
-        public object ActiveScene { get { return Window.ActiveScene; } set { Window.ActiveScene = value; } }
+        public Scene ActiveScene { get { return (Scene)Window.ActiveScene; } set { Window.ActiveScene = value; } }
 
         public static Game Instance { get; private set; }
     

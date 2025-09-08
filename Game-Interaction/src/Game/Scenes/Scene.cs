@@ -12,63 +12,15 @@ namespace GameInteraction
     ////////////////////////////////////////////////////////////////////////////////////
     // Scene
     ////////////////////////////////////////////////////////////////////////////////////
-    public class Scene
+    public interface Scene
     {
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Constructor & Destructor
-        ////////////////////////////////////////////////////////////////////////////////////
-        public Scene()
-        {
-            Game.Instance.Window.TickMethod = Tick;
-            Game.Instance.Window.EventMethod = OnEvent;
-        }
-        public Scene(Action<float> onUpdate, Action onRender, Action<Event> onEvent)
-        {
-            Game.Instance.Window.TickMethod = Tick;
-            Game.Instance.Window.EventMethod = OnEvent;
-
-            OnUpdateMethod = onUpdate;
-            OnRenderMethod = onRender;
-            OnEventMethod = onEvent;
-        }
-        ~Scene()
-        {
-        }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
-        private void OnUpdate(float deltaTime)
-        {
-            OnUpdateMethod?.Invoke(deltaTime);
-        }
-
-        private void OnRender()
-        {
-            OnRenderMethod?.Invoke();
-        }
-
-        private void OnEvent(Event e)
-        {
-            OnEventMethod?.Invoke(e);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Hidden
-        ////////////////////////////////////////////////////////////////////////////////////
-        private void Tick(double deltaTime)
-        {
-            OnUpdate((float)deltaTime);
-            OnRender();
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Variables
-        ////////////////////////////////////////////////////////////////////////////////////
-        public Action<float> OnUpdateMethod { get; set; }
-        public Action OnRenderMethod { get; set; }
-        public Action<Event> OnEventMethod { get; set; }
+        void OnUpdate(float deltaTime);
+        void OnRender();
+        void OnEvent(Event e);
 
     }
 
