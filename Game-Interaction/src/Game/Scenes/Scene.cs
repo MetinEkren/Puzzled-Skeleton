@@ -20,12 +20,12 @@ namespace GameInteraction
         ////////////////////////////////////////////////////////////////////////////////////
         public Scene()
         {
-            Game.Instance.Window.TickMethod = OnTick;
+            Game.Instance.Window.TickMethod = Tick;
             Game.Instance.Window.EventMethod = OnEvent;
         }
         public Scene(Action<float> onUpdate, Action onRender, Action<Event> onEvent)
         {
-            Game.Instance.Window.TickMethod = OnTick;
+            Game.Instance.Window.TickMethod = Tick;
             Game.Instance.Window.EventMethod = OnEvent;
 
             OnUpdateMethod = onUpdate;
@@ -53,8 +53,11 @@ namespace GameInteraction
         {
             OnEventMethod?.Invoke(e);
         }
-        
-        private void OnTick(double deltaTime)
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Hidden
+        ////////////////////////////////////////////////////////////////////////////////////
+        private void Tick(double deltaTime)
         {
             OnUpdate((float)deltaTime);
             OnRender();

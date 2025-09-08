@@ -23,6 +23,9 @@ namespace GameInteraction
         {
             InitializeComponent();
             m_BaseScene = new Scene(OnUpdate, OnRender, OnEvent);
+            m_Renderer = new Renderer(GameCanvas);
+
+            m_TESTTexture = new Texture("../../../Game-Interaction/Resources/Textures/viking_room.png");
         }
         ~MainMenu()
         {
@@ -39,6 +42,10 @@ namespace GameInteraction
         public void OnRender()
         {
             Console.WriteLine("OnRender");
+
+            m_Renderer.Begin();
+            m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(m_TESTTexture));
+            m_Renderer.End();
         }
 
         public void OnEvent(Event e)
@@ -59,6 +66,9 @@ namespace GameInteraction
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Scene m_BaseScene;
+        private Renderer m_Renderer;
+
+        private Texture m_TESTTexture;
 
     }
 

@@ -30,6 +30,7 @@ namespace GameInteraction
         // Constructor
         ////////////////////////////////////////////////////////////////////////////////////
         public UV(uint x, uint y, uint width, uint height) { X = x; Y = y; Width = width; Height = height; }
+        public UV(Texture texture) { X = 0; Y = 0; Width = texture.Width; Height = texture.Height; }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////
