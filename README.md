@@ -58,6 +58,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] Time = score
       - [ ] Movable bricks
       - [ ] UV Flashlight
+  - [ ] Audio
+    - [ ] // TODO: Someone outline everything needed.
   - [ ] Easter eggs + Achievements
     - [ ] 25x piano note
     - [ ] Mario (UV flashlight reveal)
