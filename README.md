@@ -24,7 +24,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 - [ ] Core Systems
   - [ ] Renderer
-    - [ ] flip Y-axis
+    - [x] Quad renderer
+    - [x] Textured quad
+    - [x] Texture coordinates
+    - [ ] Make pixel space
+    - [ ] Flip Y-axis
   - [ ] Audio
     - [ ] Stop creating/opening a new file object each time 
 
