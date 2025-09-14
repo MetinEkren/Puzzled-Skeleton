@@ -7,10 +7,11 @@
         <Grid>
             <!-- Base Canvas for rendering/drawing -->
             <Canvas x:Name="GameCanvas" Background="Black"
+                Width="1024" Height="960"
             />
 
             <!-- UI Grid overlayed on top of the Canvas -->
-            <Grid x:Name="UiOverlay">
+            <Grid x:Name="UIOverlay">
                 <!-- Centered Title -->
                 <TextBlock Text="Puzzled Skeleton"
                        FontSize="80"
@@ -19,31 +20,6 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top" Margin="0,125,0,0" />
 
-                <!-- Buttons -->
-                <Button x:Name="Play"
-                    Content="Play"
-                    Margin="390,250,390,346"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Background="DarkRed"
-                    BorderBrush="White"
-                    BorderThickness="2"
-                />
-                <Button x:Name="Saves"
-                    Margin="390,396,390,200" 
-                />
-                <Button x:Name="Exit"
-                    Margin="390,539,390,57" 
-                />
-                
-                <!-- Copyright -->
-                <TextBlock Text="© 2025 G2"
-                       FontSize="16"
-                       Foreground="Gray"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Bottom"
-                       Margin="20" />
             </Grid>
         </Grid>
     </Grid>
