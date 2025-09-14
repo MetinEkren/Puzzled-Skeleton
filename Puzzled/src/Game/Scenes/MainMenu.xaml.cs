@@ -47,6 +47,11 @@ namespace Puzzled
             m_Renderer.End();
         }
 
+        public void OnUIRender()
+        {
+
+        }
+
         public void OnEvent(Event e)
         {
             if (e is MouseButtonPressedEvent mbpe)

@@ -20,6 +20,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         void OnUpdate(float deltaTime);
         void OnRender();
+        void OnUIRender();
         void OnEvent(Event e);
 
     }

@@ -45,6 +45,11 @@ namespace Puzzled
             ActiveScene.OnRender();
         }
 
+        private void OnUIRender()
+        {
+            ActiveScene.OnUIRender();
+        }
+
         private void OnEvent(Event e)
         {
             ActiveScene.OnEvent(e);
@@ -57,6 +62,7 @@ namespace Puzzled
         {
             OnUpdate((float)deltaTime);
             OnRender();
+            OnUIRender();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
