@@ -22,7 +22,7 @@ namespace Puzzled
         public MainMenu()
         {
             InitializeComponent();
-            m_Renderer = new Renderer(GameCanvas);
+            Loaded += OnLoad;
         }
         ~MainMenu()
         {
@@ -31,6 +31,22 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
+        private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
+        {
+            m_Renderer = new Renderer(GameCanvas);
+
+            m_GameName = new UI.Text(
+                "Puzzled Skeleton",
+                64.0f,
+
+                "Courier New",
+                new Maths.Vector2(0.0f, 0.0f)
+            );
+
+            m_GameName.Position = UI.Utils.GetCenter(UICanvas, m_GameName.UIElement);
+            m_GameName.AddToCanvas(UICanvas);
+        }
+
         public void OnUpdate(float deltaTime)
         {
         }
@@ -42,27 +58,10 @@ namespace Puzzled
 
         public void OnUIRender()
         {
-            DrawText("Hello World!", 64, 32);
         }
 
         public void OnEvent(Event e)
         {
-        }
-
-        void DrawText(string text, double x, double y)
-        {
-            TextBlock tb = new TextBlock
-            {
-                Text = text,
-                Foreground = Brushes.White,
-                FontSize = 64, // adjust for scaling
-                FontFamily = new FontFamily("Consolas")
-            };
-
-            Canvas.SetLeft(tb, x * 4); // scale by 4
-            Canvas.SetTop(tb, y * 4);  // scale by 4
-
-            UICanvas.Children.Add(tb);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -70,7 +69,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
 
-        private TextBlock m_GameName;
+        private UI.Text m_GameName;
         
 
     }
