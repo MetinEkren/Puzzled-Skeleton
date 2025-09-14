@@ -46,10 +46,10 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟩 Play mp3 sounds
     - [x] 🟪 Play wav sounds
     - [ ] 🟨 Stop creating/opening a new file object each time
-  - [ ] Input
-    - [ ] 🟪 Live key readback (IsKeyPressed())
-    - [ ] 🟪 Live mouse readback (IsMouseButtonPressed())
-    - [ ] 🟪 Live mouse position readback (GetMousePosition())
+  - [x] Input
+    - [x] 🟪 Live key readback (IsKeyPressed())
+    - [x] 🟪 Live mouse readback (IsMouseButtonPressed())
+    - [x] 🟪 Live mouse position readback (GetMousePosition())
 
 - [ ] Core Game
   - [ ] UI

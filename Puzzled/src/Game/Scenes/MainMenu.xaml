@@ -6,7 +6,7 @@
         <!-- Root Grid acts as a container for stacking elements -->
         <Grid>
             <!-- Base Canvas for rendering/drawing -->
-            <Canvas x:Name="GameCanvas" Background="Black" 
+            <Canvas x:Name="GameCanvas" Background="Black"
             />
 
             <!-- UI Grid overlayed on top of the Canvas -->
