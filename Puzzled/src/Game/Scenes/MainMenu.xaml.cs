@@ -23,11 +23,6 @@ namespace Puzzled
         {
             InitializeComponent();
             m_Renderer = new Renderer(GameCanvas);
-
-            m_TESTTexture = new Texture("../../../Puzzled/Resources/Textures/viking_room.png");
-            
-            m_TESTAudio = new AudioFile("../../../Puzzled/Resources/Sounds/pop.mp3");
-            m_TESTAudio.Volume = 10; // %
         }
         ~MainMenu()
         {
@@ -42,23 +37,32 @@ namespace Puzzled
 
         public void OnRender()
         {
-            m_Renderer.Begin();
-            m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture, new UV(m_TESTTexture));
-            m_Renderer.End();
+            // TODO: Render some sort of background?
         }
 
         public void OnUIRender()
         {
-
+            DrawText("Hello World!", 64, 32);
         }
 
         public void OnEvent(Event e)
         {
-            if (e is MouseButtonPressedEvent mbpe)
+        }
+
+        void DrawText(string text, double x, double y)
+        {
+            TextBlock tb = new TextBlock
             {
-                Console.WriteLine("AAAA");
-                m_TESTAudio.Play();
-            }
+                Text = text,
+                Foreground = Brushes.White,
+                FontSize = 64, // adjust for scaling
+                FontFamily = new FontFamily("Consolas")
+            };
+
+            Canvas.SetLeft(tb, x * 4); // scale by 4
+            Canvas.SetTop(tb, y * 4);  // scale by 4
+
+            UICanvas.Children.Add(tb);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -66,8 +70,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
 
-        private Texture m_TESTTexture;
-        private AudioFile m_TESTAudio;
+        private TextBlock m_GameName;
+        
 
     }
 

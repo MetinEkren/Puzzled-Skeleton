@@ -3,24 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              >
     <Grid>
-        <!-- Root Grid acts as a container for stacking elements -->
         <Grid>
             <!-- Base Canvas for rendering/drawing -->
-            <Canvas x:Name="GameCanvas" Background="Black"
-                Width="1024" Height="960"
-            />
+            <Canvas x:Name="GameCanvas" Background="Black"/>
 
-            <!-- UI Grid overlayed on top of the Canvas -->
-            <Grid x:Name="UIOverlay">
-                <!-- Centered Title -->
-                <TextBlock Text="Puzzled Skeleton"
-                       FontSize="80"
-                       FontWeight="Bold"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top" Margin="0,125,0,0" />
-
-            </Grid>
+            <!-- UI Canvas for UI elements -->
+            <Canvas x:Name="UICanvas" Background="Black"/>
         </Grid>
     </Grid>
 </UserControl>

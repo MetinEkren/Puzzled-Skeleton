@@ -50,6 +50,9 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟪 Live key readback (IsKeyPressed())
     - [x] 🟪 Live mouse readback (IsMouseButtonPressed())
     - [x] 🟪 Live mouse position readback (GetMousePosition())
+  - [ ] UI
+    - [x] 🟪 Font caching
+    - [ ] 🟪 Draw text
 
 - [ ] Core Game
   - [ ] UI
