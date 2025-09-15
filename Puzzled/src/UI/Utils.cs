@@ -30,6 +30,35 @@ namespace Puzzled.UI
             return new Maths.Vector2((float)x, (float)y);
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Static getters // Note: DIPs are Device Independent Pixels 
+        // Note 2: These functions are ChatGPT generated so don't blame me if it doesn't work (Jorben)
+        // TODO: Check functionality
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static double ConvertDIPsToPixels(double dips, Visual visual)
+        {
+            // Get the DPI info from the visual's presentation source
+            var source = PresentationSource.FromVisual(visual);
+            if (source?.CompositionTarget != null)
+            {
+                var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+                return dips * source.CompositionTarget.TransformToDevice.M11;
+            }
+
+            return dips;
+        }
+
+        public static double ConvertPixelsToDIPs(double pixels, Visual visual)
+        {
+            var source = PresentationSource.FromVisual(visual);
+            if (source?.CompositionTarget != null)
+            {
+                return pixels / source.CompositionTarget.TransformToDevice.M11;
+            }
+
+            return pixels;
+        }
+
     }
 
 }
