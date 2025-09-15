@@ -58,12 +58,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
   - [ ] UI
     - [ ] 🟥 Main Menu
     - [ ] 🟧 Pause Menu
-    - [ ] 🟨 Level Menu
-    - [ ] 🟧 Win Menu + Score
+    - [ ] 🟩 Level Menu
+    - [ ] 🟧 Win Menu + Score (🟩 + Leaderboard)
     - [ ] 🟥 Save (selection) Menu
     - [ ] 🟧 Level overlay
-    - [ ] 🟨 Leaderboard
-    - [ ] 🟨 Final win menu (showing achievements)
+    - [ ] 🟩 Final win menu (showing achievements)
   - [ ] Levels
     - [ ] Design
       - [ ] 🟥 Level 1 (🟥 normal / 🟨extra hard)
@@ -72,20 +71,29 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟥 Level 4 (🟥 normal / 🟨extra hard)
       - [ ] 🟥 Level 5 (🟥 normal / 🟨extra hard)
       - [ ] 🟥 Level 6 (🟥 normal / 🟨extra hard)
-      - [ ] 🟥 Texture for skeleton
-      - [ ] 🟧 Texture for background(s)
-      - [ ] 🟥 Texture for objects
-      - [ ] 🟥 Texture for platform blocks
+      - [ ] 🟨 Texture for skeleton
+      - [ ] 🟨 Texture for background(s)
+      - [ ] 🟨 Texture for objects
+      - [ ] 🟨 Texture for platform blocks
   - [ ] Mechanics
     - [ ] 🟥 Gravity
     - [ ] 🟥 Physics (gravity/collision)
     - [ ] 🟥 Movement (WASD/Arrow keys)
     - [ ] Puzzle mechanics
       - [ ] 🟧 Time = score
-      - [ ] 🟧 Movable bricks
-      - [ ] 🟧 UV Flashlight
+      - [ ] 🟨 Movable bricks
+      - [ ] 🟨 UV Flashlight
   - [ ] Audio
-    - [ ] 🟨 // TODO: Someone outline everything needed.
+    - [ ] 🟧 Main menu/save selection music (Start-up, loop)
+    - [ ] 🟨 Level 1
+    - [ ] 🟨 Level 2
+    - [ ] 🟨 Level 3
+    - [ ] 🟨 Level 4
+    - [ ] 🟨 Level 5
+    - [ ] 🟨 Level 6
+    - [ ] 🟨 Win/finish menu
+    - [ ] 🟩 Sound for beating your high score (SFX)
+    - [ ] 🟩 Final win menu
   - [ ] Easter eggs + Achievements
     - [ ] 🟩 25x piano note
     - [ ] 🟩 Mario (UV flashlight reveal)
