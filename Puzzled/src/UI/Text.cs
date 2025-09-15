@@ -47,6 +47,11 @@ namespace Puzzled.UI
             canvas.Children.Add(UIElement);
         }
 
+        public void RemoveFromCanvas(Canvas canvas)
+        {
+            canvas.Children.Remove(UIElement);
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////

@@ -63,46 +63,58 @@ namespace Puzzled
 
                 Maths.Vector2 center = UI.Utils.GetCenter(UICanvas, m_PressStart.UIElement);
                 m_PressStart.Position = new Maths.Vector2(center.X, center.Y + 200.0f);
-                m_PressStart.AddToCanvas(UICanvas);
+                // Note: We don't add it yet since we want it to render later
             }
         }
 
         public void OnUpdate(float deltaTime)
         {
-            // UI updates
-            if (m_Loaded && m_GameName.Position.Y > 157.0f) // TODO: Remove magic number
+            if (!m_Loaded) return;
+
+            // Title movement
+            if (m_GameName.Position.Y > m_GameNameHeight) // Note: The title starts lower (which is higher in this coordinate space)
             {
                 m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameName.Position.Y - (m_UIVelocity * deltaTime));
             }
-
-            // Note: Ugly ass code // Note 2: Proof of concept
-            m_CurrentFlashTimer += deltaTime;
-            if (m_CurrentFlashTimer >= m_FlashTime)
+            else // Note: Only start updating the press start after title reaches height
             {
-                if (m_PressStart.UIElement.Foreground == Brushes.White)
+                // Flashing press start
+                m_CurrentFlashTimer += deltaTime;
+                if (m_CurrentFlashTimer >= m_FlashTime)
                 {
-                    m_PressStart.UIElement.Foreground = Brushes.Black;
+                    if (m_PressStartRendered)
+                    {
+                        m_PressStart.RemoveFromCanvas(UICanvas);
+                        m_PressStartRendered = false;
+                    }
+                    else
+                    {
+                        m_PressStart.AddToCanvas(UICanvas);
+                        m_PressStartRendered = true;
+                    }
+
+                    m_CurrentFlashTimer = 0.0f;
                 }
-                else
-                {
-                    m_PressStart.UIElement.Foreground = Brushes.White;
-                }
-                m_CurrentFlashTimer = 0.0f;
             }
         }
 
         public void OnRender()
         {
+            if (!m_Loaded) return;
+
             // TODO: Render some sort of background?
-            // TODO: Flash press start
         }
 
         public void OnUIRender()
         {
+            if (!m_Loaded) return;
+
         }
 
         public void OnEvent(Event e)
         {
+            if (!m_Loaded) return;
+
             if (e is MouseButtonPressedEvent mbe)
             {
                 Logger.Trace($"Position {{ .x = {m_GameName.Position.X}, .y = {m_GameName.Position.Y} }}");
@@ -118,11 +130,14 @@ namespace Puzzled
         // Animation
         private const float m_UIVelocity = 100.0f;
         
-        private UI.Text m_GameName; // End: 157
+        private UI.Text m_GameName;
+        private const float m_GameNameHeight = 180.0f;
+
         private UI.Text m_PressStart;
 
         private const float m_FlashTime = 0.4f;
         private float m_CurrentFlashTimer = 0.0f;
+        private bool m_PressStartRendered = false;
 
     }
 
