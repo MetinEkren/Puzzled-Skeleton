@@ -23,6 +23,9 @@ namespace Puzzled
         {
             InitializeComponent();
             Loaded += OnLoad;
+
+            m_Loop = new AudioFile("../../../Puzzled/Resources/Music/Title_Screen_Loop.wav");
+            m_Loop.Play();
         }
         ~MainMenu()
         {
@@ -165,6 +168,10 @@ namespace Puzzled
         private const float m_FlashTime = 0.4f;
         private float m_CurrentFlashTimer = 0.0f;
         private bool m_PressStartRendered = false;
+
+        // Sounds
+        private AudioFile m_Startup;
+        private AudioFile m_Loop;
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
