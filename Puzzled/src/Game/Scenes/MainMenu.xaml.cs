@@ -161,7 +161,7 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private const float m_UIVelocity = 86.3f; // Matches Intro.wav
+        private const float m_UIVelocity = 85.8f; // Matches Intro.wav
         
         private UI.Text m_GameName;
         private const float m_GameNameHeight = 180.0f;
@@ -173,8 +173,8 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath, 5); // TODO: Remove volume
-        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
+        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath);
+        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath);
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
