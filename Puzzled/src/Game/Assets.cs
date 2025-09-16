@@ -1,0 +1,25 @@
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Shapes;
+
+namespace Puzzled
+{
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // Assets
+    //////////////////////////////////////////////////////////////////////////////////
+    public class Assets
+    {
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Paths
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static string StartupMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Intro.wav";
+        public static string MainMenuMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Loop.wav";
+
+    }
+
+}

@@ -24,10 +24,7 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
 
-            m_Startup = new AudioFile("../../../Puzzled/Resources/Music/Title_Screen_Intro.wav");
-            m_Loop = new AudioFile("../../../Puzzled/Resources/Music/Title_Screen_Loop.wav");
-
-            m_Startup.Play();
+            m_StartupAudio.Play();
         }
         ~MainMenu()
         {
@@ -38,7 +35,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Loaded = true;
             m_Renderer = new Renderer(GameCanvas);
 
             // Game name
@@ -68,7 +64,7 @@ namespace Puzzled
             // Press start
             {
                 m_PressStart = new UI.Text(
-                    "Press Start",
+                    "Press Any Key",
                     32.0f,
 
                     "Courier New",
@@ -83,7 +79,7 @@ namespace Puzzled
 
         public void OnUpdate(float deltaTime)
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
 
             // Title movement
             if (m_GameName.Position.Y > m_GameNameHeight) // Note: The title starts lower (which is higher in this coordinate space)
@@ -94,7 +90,7 @@ namespace Puzzled
             {
                 if (!s_AnimationPlayed)
                 {
-                    m_Loop.Play();
+                    m_LoopAudio.Play();
                 }
 
                 s_AnimationPlayed = true;
@@ -121,22 +117,21 @@ namespace Puzzled
 
         public void OnRender()
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
 
             // TODO: Render some sort of background?
         }
 
         public void OnUIRender()
         {
-            if (!m_Loaded) return;
-
+            if (!IsLoaded) return;
         }
 
         public void OnEvent(Event e)
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
 
-            Action press = () =>
+            Action press = () => // TODO: Cleanup
             {
                 if (s_AnimationPlayed)
                 {
@@ -148,20 +143,14 @@ namespace Puzzled
                 }
             };
 
-            if (e is MouseButtonPressedEvent mbe)
-            {
-                press();
-            }
-            if (e is KeyPressedEvent kpe)
-            {
-                press();
-            }
+            // On any event do press()
+            if (e is MouseButtonPressedEvent) { press(); }
+            if (e is KeyPressedEvent) { press(); }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private bool m_Loaded = false; // TODO: Find a better way
         private Renderer m_Renderer;
 
         // Animation
@@ -177,12 +166,13 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private AudioFile m_Startup;
-        private AudioFile m_Loop;
+        private AudioFile m_StartupAudio = new AudioFile(Assets.StartupMusicPath, 5); // TODO: Remove volume
+        private AudioFile m_LoopAudio = new AudioFile(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private static bool s_BootUp = true;
         private static bool s_AnimationPlayed = false;
 
     }

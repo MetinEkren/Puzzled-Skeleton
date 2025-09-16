@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Media;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,8 +24,10 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public AudioFile(string path)
+        public AudioFile(string path, uint volume = 50)
         {
+            Volume = volume;
+
             string diskFile = System.IO.Path.Combine(Directory.GetCurrentDirectory(), path);
             //string embeddedFile = "pack://application:,,,/" + path;
 
