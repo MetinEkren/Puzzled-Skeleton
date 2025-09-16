@@ -24,8 +24,10 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
 
+            m_Startup = new AudioFile("../../../Puzzled/Resources/Music/Title_Screen_Intro.wav");
             m_Loop = new AudioFile("../../../Puzzled/Resources/Music/Title_Screen_Loop.wav");
-            m_Loop.Play();
+
+            m_Startup.Play();
         }
         ~MainMenu()
         {
@@ -90,6 +92,11 @@ namespace Puzzled
             }
             else // Note: Only start updating the press start after title reaches height
             {
+                if (!s_AnimationPlayed)
+                {
+                    m_Loop.Play();
+                }
+
                 s_AnimationPlayed = true;
 
                 // Flashing press start
@@ -158,7 +165,7 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private const float m_UIVelocity = 100.0f;
+        private const float m_UIVelocity = 86.3f; // Matches Intro.wav
         
         private UI.Text m_GameName;
         private const float m_GameNameHeight = 180.0f;
