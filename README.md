@@ -25,11 +25,10 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 ---
 ### Priorities
-🟪 **Core** – Must exist (foundation of the game)<br>
-🟥 **Critical** – Game won’t work without it<br>
-🟧 **High** – Very important, adds major value<br>
-🟨 **Medium** – Nice-to-have, improves experience<br>
-🟩 **Low** – Extra polish, not needed for gameplay<br>
+🟥 **Must have** – Game won’t work without it<br>
+🟧 **Should have** – Very important, adds major value<br>
+🟨 **Could have** – Nice-to-have, improves experience<br>
+🟩 **Would have / Wont have** – Extra polish, not needed for gameplay<br>
 
 ---
 
@@ -37,22 +36,22 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 - [ ] Core Systems
   - [ ] Renderer
-    - [x] 🟪 Quad renderer
-    - [x] 🟪 Textured quad
-    - [x] 🟪 Texture coordinates
-    - [ ] 🟪 Make pixel space
-    - [ ] 🟪 Flip Y-axis
+    - [x] 🟥 Quad renderer
+    - [x] 🟥 Textured quad
+    - [x] 🟥 Texture coordinates
+    - [ ] 🟥 Make pixel space
+    - [ ] 🟥 Flip Y-axis
   - [ ] Audio
     - [ ] 🟩 Play mp3 sounds
-    - [x] 🟪 Play wav sounds
+    - [x] 🟥 Play wav sounds
     - [ ] 🟨 Stop creating/opening a new file object each time
   - [x] Input
-    - [x] 🟪 Live key readback (IsKeyPressed())
-    - [x] 🟪 Live mouse readback (IsMouseButtonPressed())
-    - [x] 🟪 Live mouse position readback (GetMousePosition())
+    - [x] 🟥 Live key readback (IsKeyPressed())
+    - [x] 🟥 Live mouse readback (IsMouseButtonPressed())
+    - [x] 🟥 Live mouse position readback (GetMousePosition())
   - [ ] UI
-    - [x] 🟪 Font caching
-    - [ ] 🟪 Draw text
+    - [x] 🟥 Font caching
+    - [ ] 🟥 Draw text
 
 - [ ] Core Game
   - [ ] UI
