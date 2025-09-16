@@ -1,11 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Shapes;
 
 namespace Puzzled
 {
@@ -148,11 +142,18 @@ namespace Puzzled
                     s_StartupAudio.CloseAll();
                     m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameNameHeight);
                 }
-            };
+            }
+            ;
 
             // On any event do press()
             if (e is MouseButtonPressedEvent) { PressCallback(); }
             if (e is KeyPressedEvent) { PressCallback(); }
+
+            // TODO: Remove after testing
+            if (e is MouseScrolledEvent)
+            {
+                Game.Instance.ActiveScene = new LevelOverlay();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -162,7 +163,7 @@ namespace Puzzled
 
         // Animation
         private const float m_UIVelocity = 85.8f; // Matches Intro.wav
-        
+
         private UI.Text m_GameName;
         private const float m_GameNameHeight = 180.0f;
 

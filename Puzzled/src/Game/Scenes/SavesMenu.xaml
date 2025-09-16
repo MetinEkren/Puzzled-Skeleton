@@ -9,7 +9,7 @@
                 Width="1024" Height="960"/>
 
             <!-- UI Canvas for UI elements -->
-            <Canvas x:Name="UICanvas" Background="Black"/>
+            <Canvas x:Name="UICanvas" Background="Transparent"/>
 
             <!-- Save slot buttons -->
             <Button x:Name="SaveSlot1" Width="650" Height="150"

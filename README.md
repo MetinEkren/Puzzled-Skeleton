@@ -41,10 +41,12 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟥 Texture coordinates
     - [ ] 🟥 Make pixel space
     - [ ] 🟥 Flip Y-axis
+    - [ ] 🟥 Improve efficiency
+    - [ ] 🟥 Test performance
   - [ ] Audio
     - [ ] 🟩 Play mp3 sounds
     - [x] 🟥 Play wav sounds
-    - [ ] 🟨 Stop creating/opening a new file object each time
+    - [x] 🟨 Stop creating/opening a new file object each time
   - [x] Input
     - [x] 🟥 Live key readback (IsKeyPressed())
     - [x] 🟥 Live mouse readback (IsMouseButtonPressed())
@@ -52,6 +54,9 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
   - [ ] UI
     - [x] 🟥 Font caching
     - [ ] 🟥 Draw text
+  - [x] Scene
+    - [x] Fix UICanvas blocking GameCanvas
+    - [ ] Allow for scene passthrough of control of objects (sounds)
 
 - [ ] Core Game
   - [ ] UI
@@ -86,7 +91,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] Trap mechanics
       - [ ] 🟨 Spike (respawn bottom level)
   - [ ] Audio
-    - [ ] 🟧 Main menu/save selection music (Start-up, loop)
+    - [x] 🟧 Main menu/save selection music (Start-up, loop)
     - [ ] 🟨 Level 1
     - [ ] 🟨 Level 2
     - [ ] 🟨 Level 3
