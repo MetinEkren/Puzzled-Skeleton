@@ -33,28 +33,27 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Loaded = true;
             m_Renderer = new Renderer(GameCanvas);
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
         }
 
         public void OnRender()
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
         }
 
         public void OnUIRender()
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
         }
 
         public void OnEvent(Event e)
         {
-            if (!m_Loaded) return;
+            if (!IsLoaded) return;
 
             if (e is KeyPressedEvent kpe)
             {
@@ -86,7 +85,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private bool m_Loaded = false; // TODO: Find a better way
         private Renderer m_Renderer;
 
     }

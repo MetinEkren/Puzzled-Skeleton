@@ -136,7 +136,7 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
-            Action press = () => // TODO: Cleanup
+            void PressCallback()
             {
                 if (s_AnimationPlayed)
                 {
@@ -151,8 +151,8 @@ namespace Puzzled
             };
 
             // On any event do press()
-            if (e is MouseButtonPressedEvent) { press(); }
-            if (e is KeyPressedEvent) { press(); }
+            if (e is MouseButtonPressedEvent) { PressCallback(); }
+            if (e is KeyPressedEvent) { PressCallback(); }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
