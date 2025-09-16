@@ -39,7 +39,7 @@ namespace Puzzled
             {
                 m_GameName = new UI.Text(
                     "Puzzled Skeleton",
-                    64.0f,
+                    48.0f,
 
                     "Courier New",
                     new Maths.Vector2(0.0f, 0.0f)
@@ -143,7 +143,6 @@ namespace Puzzled
                     m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameNameHeight);
                 }
             }
-            ;
 
             // On any event do press()
             if (e is MouseButtonPressedEvent) { PressCallback(); }
@@ -162,7 +161,7 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private const float m_UIVelocity = 85.8f; // Matches Intro.wav
+        private const float m_UIVelocity = 61.75f; // Matches Intro.wav
 
         private UI.Text m_GameName;
         private const float m_GameNameHeight = 180.0f;
@@ -174,8 +173,8 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath);
-        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath);
+        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath, 5);
+        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath, 5);
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables

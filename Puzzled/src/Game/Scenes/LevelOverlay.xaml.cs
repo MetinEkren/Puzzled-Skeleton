@@ -40,7 +40,7 @@ namespace Puzzled
             m_Renderer.Begin();
             m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
             m_Renderer.AddQuad(new Maths.Vector2(64.0f, 64.0f), new Maths.Vector2(64.0f, 64.0f), new Maths.Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-            m_Renderer.AddQuad(new Maths.Vector2(128.0f, 896.0f), new Maths.Vector2(64.0f, 64.0f), new Maths.Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+            m_Renderer.AddQuad(new Maths.Vector2(128.0f, 656.0f), new Maths.Vector2(64.0f, 64.0f), new Maths.Vector4(0.0f, 1.0f, 0.0f, 1.0f));
             m_Renderer.End();
         }
 

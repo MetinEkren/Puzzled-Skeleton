@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         
         Title="Puzzled Skeleton" 
-        Width="1024" Height="960"
+        SizeToContent="WidthAndHeight"
         
         WindowStyle="SingleBorderWindow"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
 
-    <Grid>
+    <Grid Width="768" Height="720">
         <ContentControl x:Name="SceneContainer"/>
     </Grid>
 </Window>
