@@ -24,7 +24,11 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
 
-            m_StartupAudio.Play();
+            if (s_BootUp)
+            {
+                s_StartupAudio.Play();
+                s_BootUp = false;
+            }
         }
         ~MainMenu()
         {
@@ -51,10 +55,12 @@ namespace Puzzled
 
                 if (!s_AnimationPlayed)
                 {
+                    // Start at bottom to create the animation
                     m_GameName.Position = new Maths.Vector2(center.X, Game.Instance.Window.Height);
                 }
                 else
                 {
+                    // Startup animation has already been played so just start at desired height
                     m_GameName.Position = new Maths.Vector2(center.X, m_GameNameHeight);
                 }
 
@@ -88,10 +94,8 @@ namespace Puzzled
             }
             else // Note: Only start updating the press start after title reaches height
             {
-                if (!s_AnimationPlayed)
-                {
-                    m_LoopAudio.Play();
-                }
+                if (!s_LoopAudio.IsPlaying())
+                    s_LoopAudio.Play();
 
                 s_AnimationPlayed = true;
 
@@ -139,6 +143,8 @@ namespace Puzzled
                 }
                 else
                 {
+                    // Note: If the startup animation is still playing skip that animation (move title to height)
+                    s_StartupAudio.CloseAll();
                     m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameNameHeight);
                 }
             };
@@ -166,8 +172,8 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private AudioFile m_StartupAudio = new AudioFile(Assets.StartupMusicPath, 5); // TODO: Remove volume
-        private AudioFile m_LoopAudio = new AudioFile(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
+        private static AudioFile s_StartupAudio = new AudioFile(Assets.StartupMusicPath, 5); // TODO: Remove volume
+        private static AudioFile s_LoopAudio = new AudioFile(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
