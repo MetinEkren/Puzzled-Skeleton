@@ -47,7 +47,16 @@ namespace Puzzled
                 );
 
                 Maths.Vector2 center = UI.Utils.GetCenter(UICanvas, m_GameName.UIElement);
-                m_GameName.Position = new Maths.Vector2(center.X, Game.Instance.Window.Height);
+
+                if (!s_AnimationPlayed)
+                {
+                    m_GameName.Position = new Maths.Vector2(center.X, Game.Instance.Window.Height);
+                }
+                else
+                {
+                    m_GameName.Position = new Maths.Vector2(center.X, m_GameNameHeight);
+                }
+
                 m_GameName.AddToCanvas(UICanvas);
             }
 
@@ -78,6 +87,8 @@ namespace Puzzled
             }
             else // Note: Only start updating the press start after title reaches height
             {
+                s_AnimationPlayed = true;
+
                 // Flashing press start
                 m_CurrentFlashTimer += deltaTime;
                 if (m_CurrentFlashTimer >= m_FlashTime)
@@ -115,9 +126,25 @@ namespace Puzzled
         {
             if (!m_Loaded) return;
 
+            Action press = () =>
+            {
+                if (s_AnimationPlayed)
+                {
+                    Game.Instance.ActiveScene = new SavesMenu();
+                }
+                else
+                {
+                    m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameNameHeight);
+                }
+            };
+
             if (e is MouseButtonPressedEvent mbe)
             {
-                Logger.Trace($"Position {{ .x = {m_GameName.Position.X}, .y = {m_GameName.Position.Y} }}");
+                press();
+            }
+            if (e is KeyPressedEvent kpe)
+            {
+                press();
             }
         }
 
@@ -138,6 +165,11 @@ namespace Puzzled
         private const float m_FlashTime = 0.4f;
         private float m_CurrentFlashTimer = 0.0f;
         private bool m_PressStartRendered = false;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Static variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        private static bool s_AnimationPlayed = false;
 
     }
 
