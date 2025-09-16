@@ -94,8 +94,9 @@ namespace Puzzled
             }
             else // Note: Only start updating the press start after title reaches height
             {
+                // TODO: Stop somewhere
                 if (!s_LoopAudio.IsPlaying())
-                    s_LoopAudio.Play();
+                    s_LoopAudio.Start();
 
                 s_AnimationPlayed = true;
 
@@ -172,8 +173,8 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private static AudioFile s_StartupAudio = new AudioFile(Assets.StartupMusicPath, 5); // TODO: Remove volume
-        private static AudioFile s_LoopAudio = new AudioFile(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
+        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath, 5); // TODO: Remove volume
+        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath, 5); // TODO: Remove volume
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables

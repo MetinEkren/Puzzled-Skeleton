@@ -17,15 +17,15 @@ namespace Puzzled
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // AudioFile
+    // FireableAudio // Note: Audio which can be spammed 
     ////////////////////////////////////////////////////////////////////////////////////
-    public class AudioFile
+    public class FireableAudio
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public AudioFile(string path, uint volume = 50)
+        public FireableAudio(string path, uint volume = 50)
         {
             Volume = volume;
 
@@ -34,7 +34,7 @@ namespace Puzzled
 
             m_URI = new Uri(diskFile, UriKind.Absolute);
         }
-        ~AudioFile() 
+        ~FireableAudio() 
         { 
         }
 
@@ -76,6 +76,7 @@ namespace Puzzled
                 instance.Stop();
                 instance.Close();
             }
+            m_ActiveInstances.Clear();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -89,12 +90,77 @@ namespace Puzzled
         private Uri m_URI;
         private double m_Volume = 0.5; // 50%
 
-        private List<MediaPlayer> m_ActiveInstances = new List<MediaPlayer>();
+        private readonly List<MediaPlayer> m_ActiveInstances = new List<MediaPlayer>();
 
         public uint Volume // Note: Percentage from 0% to 100%
         { 
             get { return (uint)(m_Volume * 100); }
             set { m_Volume = Math.Min(value / 100.0, 1.0); } 
+        }
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // LoopAudio
+    ////////////////////////////////////////////////////////////////////////////////////
+    public class LoopAudio
+    {
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Constructor & Destructor
+        ////////////////////////////////////////////////////////////////////////////////////
+        public LoopAudio(string path, uint volume = 50)
+        {
+            Volume = volume;
+
+            string diskFile = System.IO.Path.Combine(Directory.GetCurrentDirectory(), path);
+            //string embeddedFile = "pack://application:,,,/" + path;
+
+            m_URI = new Uri(diskFile, UriKind.Absolute);
+            m_MediaPlayer.Open(m_URI);
+
+            // Setup event handles
+            m_MediaPlayer.MediaEnded += (s, e) =>
+            {
+                m_MediaPlayer.Position = TimeSpan.Zero;
+                m_MediaPlayer.Play();
+            };
+        }
+        ~LoopAudio()
+        {
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        public void Start()
+        {
+            m_MediaPlayer.Play();
+            m_IsPlaying = true;
+        }
+
+        public void Stop()
+        {
+            m_MediaPlayer.Stop();
+            m_IsPlaying = false;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Getter
+        ////////////////////////////////////////////////////////////////////////////////////
+        public bool IsPlaying() { return m_IsPlaying; }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        private Uri m_URI;
+        private MediaPlayer m_MediaPlayer = new MediaPlayer();
+        private bool m_IsPlaying = false;
+
+        public uint Volume // Note: Percentage from 0% to 100%
+        {
+            get { return (uint)(m_MediaPlayer.Volume * 100); }
+            set { m_MediaPlayer.Volume = Math.Min(value / 100.0, 1.0); }
         }
 
     }
