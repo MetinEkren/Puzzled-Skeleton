@@ -22,8 +22,6 @@ namespace Puzzled
             Instance = this;
             Window = window;
 
-            Console.WriteLine("Hello, world!");
-
             Window.TickMethod = Tick;
             Window.EventMethod = OnEvent;
 
