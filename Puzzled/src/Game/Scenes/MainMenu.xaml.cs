@@ -161,7 +161,7 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private const float m_UIVelocity = 61.75f; // Matches Intro.wav
+        private const float m_UIVelocity = 62.75f; // Matches Intro.wav
 
         private UI.Text m_GameName;
         private const float m_GameNameHeight = 180.0f;
