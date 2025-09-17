@@ -45,12 +45,20 @@ namespace Puzzled
             m_Renderer.AddQuad(new Maths.Vector2(128.0f, 128.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
             m_Renderer.AddQuad(new Maths.Vector2(192.0f, 200.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
             m_Renderer.AddQuad(new Maths.Vector2(256.0f, Game.Instance.Window.Height - 64.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
+
+            if (aaa++ > 1)
+            {
+                m_Renderer.AddQuad(new Maths.Vector2(400.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
+            }
+
             m_Renderer.End();
         }
 
         public void OnRender()
         {
             if (!IsLoaded) return;
+
+            GameCanvas.UpdateLayout();
         }
 
         public void OnUIRender()
@@ -69,6 +77,8 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         private Texture m_TESTTexture;
+
+        private int aaa = 0;
 
     }
 

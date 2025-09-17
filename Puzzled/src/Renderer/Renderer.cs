@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Puzzled.Renderer;
 
 namespace Puzzled
 {
@@ -32,27 +33,32 @@ namespace Puzzled
             public Texture TextureReference;
             public UV TextureCoords;
         }
-    
+
         internal class VisualHost : FrameworkElement
         {
-            private readonly Visual m_Visual;
-            public VisualHost(Visual visual) => m_Visual = visual;
-    
-            protected override int VisualChildrenCount => 1;
-            protected override Visual GetVisualChild(int index) => m_Visual;
+            private readonly VisualCollection m_Children;
+
+            public VisualHost() { m_Children = new VisualCollection(this); }
+
+            public void AddVisual(Visual visual) { m_Children.Add(visual); }
+
+            protected override int VisualChildrenCount => m_Children.Count;
+            protected override Visual GetVisualChild(int index) => m_Children[index];
         }
-    
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
         public Renderer(Canvas canvas)
         {
-            m_Quads = new List<Quad>();
             m_Canvas = canvas;
+            m_Quads = new List<Quad>();
 
             m_Visual = new DrawingVisual();
-            m_VisualHost = new VisualHost(m_Visual);
-            
+
+            m_VisualHost = new VisualHost();
+            m_VisualHost.AddVisual(m_Visual);
+
             m_Canvas.Children.Add(m_VisualHost);
         }
         ~Renderer()
@@ -66,7 +72,7 @@ namespace Puzzled
         {
             m_Quads.Clear();
         }
-    
+
         public void End()
         {
             using (DrawingContext dc = m_Visual.RenderOpen())
@@ -82,14 +88,16 @@ namespace Puzzled
                     dc.DrawImage(cropped, new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
                 }
             }
+
+            m_VisualHost.InvalidateVisual();
         }
-    
+
         public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, Texture texture) { AddQuad(position, size, texture, new UV(texture)); }
         public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, Texture texture, UV textureCoords) 
-        { 
+        {
             m_Quads.Add(new Quad
             { 
-                Position = new Maths.Vector2(position.X, Game.Instance.Window.Height - size.Y - position.Y), 
+                Position = new Maths.Vector2(position.X, (float)m_Canvas.ActualHeight - size.Y - position.Y), 
                 Size = size, 
                 TextureReference = texture, 
                 TextureCoords = textureCoords 
@@ -98,12 +106,12 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private List<Quad> m_Quads;
         private Canvas m_Canvas;
+        private List<Quad> m_Quads;
 
         private DrawingVisual m_Visual;
         private VisualHost m_VisualHost;
-    
+
     }
 
 }

@@ -34,31 +34,20 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(GameCanvas);
+            m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y;
 
-            // Game name
+            // Logo // TODO: Center X-Axis
             {
-                m_GameName = new UI.Text(
-                    "Puzzled Skeleton",
-                    48.0f,
-
-                    "Courier New",
-                    new Maths.Vector2(0.0f, 0.0f)
-                );
-
-                Maths.Vector2 center = UI.Utils.GetCenter(UICanvas, m_GameName.UIElement);
-
                 if (!s_AnimationPlayed)
                 {
                     // Start at bottom to create the animation
-                    m_GameName.Position = new Maths.Vector2(center.X, Game.Instance.Window.Height);
+                    m_LogoPosition = new Maths.Vector2(0, -c_LogoSize.Y);
                 }
                 else
                 {
                     // Startup animation has already been played so just start at desired height
-                    m_GameName.Position = new Maths.Vector2(center.X, c_GameNameHeight);
+                    m_LogoPosition = new Maths.Vector2(0, m_DesiredLogoHeight);
                 }
-
-                m_GameName.AddToCanvas(UICanvas);
             }
 
             // Press start
@@ -81,10 +70,12 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
+            Logger.Trace($"Position = {{ .x = {m_LogoPosition.X}, .y = {m_LogoPosition.Y} }}");
+
             // Title movement
-            if (m_GameName.Position.Y > c_GameNameHeight) // Note: The title starts lower (which is higher in this coordinate space)
+            if (m_LogoPosition.Y < m_DesiredLogoHeight) // Note: The title starts lower (which is higher in this coordinate space)
             {
-                m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameName.Position.Y - (c_UIVelocity * deltaTime));
+                m_LogoPosition = new Maths.Vector2(m_LogoPosition.X, m_LogoPosition.Y + (c_UIVelocity * deltaTime));
             }
             else // Note: Only start updating the press start after title reaches height
             {
@@ -118,7 +109,10 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
+            m_Renderer.Begin();
+            m_Renderer.AddQuad(m_LogoPosition, c_LogoSize, Assets.MainMenuLogo);
             // TODO: Render some sort of background?
+            m_Renderer.End();
         }
 
         public void OnUIRender()
@@ -140,7 +134,7 @@ namespace Puzzled
                 {
                     // Note: If the startup animation is still playing skip that animation (move title to height)
                     Assets.IntroMusic.CloseAll();
-                    m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, c_GameNameHeight);
+                    m_LogoPosition = new Maths.Vector2(m_LogoPosition.X, m_DesiredLogoHeight);
                 }
             }
 
@@ -161,7 +155,8 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private UI.Text m_GameName;
+        private Maths.Vector2 m_LogoPosition = new Maths.Vector2(0.0f, 0.0f);
+        private float m_DesiredLogoHeight;
         private UI.Text m_PressStart;
 
         private float m_CurrentFlashTimer = 0.0f;
@@ -174,7 +169,7 @@ namespace Puzzled
         private static bool s_AnimationPlayed = false;
 
         private const float c_UIVelocity = 62.75f; // Matches Intro.wav
-        private const float c_GameNameHeight = 180.0f;
+        private static readonly Maths.Vector2 c_LogoSize = new Maths.Vector2(156.0f * 2.0f, 79.0f * 2.0f);
         private const float c_TimeBetweenFlashes = 0.4f;
 
 

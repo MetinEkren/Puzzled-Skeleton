@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Puzzled
 {
@@ -24,8 +25,9 @@ namespace Puzzled
         {
             InitializeComponent();
 
-            // Setup loop
+            // Setup loop & rendering settings
             CompositionTarget.Rendering += Tick;
+            RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.NearestNeighbor);
 
             // Setup callbacks
             this.SizeChanged += WindowResize;

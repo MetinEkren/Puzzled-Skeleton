@@ -17,14 +17,18 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Paths
         ////////////////////////////////////////////////////////////////////////////////////
-        public static string IntroMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Intro.wav";
-        public static string MainMenuMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Loop.wav";
+        public static string IntroMusicPath = "../../../Puzzled/Resources/Music/MainMenu_Intro.wav";
+        public static string MainMenuMusicPath = "../../../Puzzled/Resources/Music/MainMenu_Loop.wav";
+
+        public static string MainMenuLogoPath = "../../../Puzzled/Resources/Textures/Main-Logo.png";
 
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, 5); // TODO: Remove volume
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, 5); // TODO: Remove volume
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath);
+
+        public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
 
     }
 
