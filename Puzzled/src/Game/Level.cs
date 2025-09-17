@@ -20,8 +20,7 @@ namespace Puzzled
         public Level(Canvas canvas, string levelPath)
         {
             m_Renderer = new Renderer(canvas);
-
-            Logger.Info($"Loading level from: {levelPath}");
+            Load(levelPath);
         }
         ~Level()
         {
@@ -37,12 +36,24 @@ namespace Puzzled
 
         public void OnRender()
         {
+            m_Renderer.Begin();
 
+            m_Renderer.End();
         }
 
         public void OnEvent(Event e)
         {
 
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Loading
+        ////////////////////////////////////////////////////////////////////////////////////
+        public void Load(string path)
+        {
+            Logger.Info($"Loading level from: {path}");
+
+            // TODO: ...
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
