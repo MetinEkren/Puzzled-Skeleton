@@ -63,7 +63,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟥 Main Menu
     - [ ] 🟧 Pause Menu
     - [ ] 🟩 Level Menu
-    - [ ] 🟧 Win Menu + Score (🟩 + Leaderboard)
+    - [ ] 🟥 Win Menu + Score (🟩 + Leaderboard)
     - [ ] 🟥 Save (selection) Menu
     - [ ] 🟧 Level overlay
     - [ ] 🟩 Final win menu (showing achievements)
@@ -85,7 +85,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟥 Physics (gravity/collision)
     - [ ] 🟥 Movement (WASD/Arrow keys)
     - [ ] Puzzle mechanics
-      - [ ] 🟧 Time = score
+      - [ ] 🟥 Time = score
       - [ ] 🟨 Movable bricks (on to moving platform?)
       - [ ] 🟨 UV Flashlight
     - [ ] Trap mechanics
