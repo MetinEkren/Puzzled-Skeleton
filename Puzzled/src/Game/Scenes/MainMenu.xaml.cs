@@ -20,7 +20,7 @@ namespace Puzzled
 
             if (s_BootUp)
             {
-                s_StartupAudio.Play();
+                Assets.IntroMusic.Play();
                 s_BootUp = false;
             }
         }
@@ -55,7 +55,7 @@ namespace Puzzled
                 else
                 {
                     // Startup animation has already been played so just start at desired height
-                    m_GameName.Position = new Maths.Vector2(center.X, m_GameNameHeight);
+                    m_GameName.Position = new Maths.Vector2(center.X, c_GameNameHeight);
                 }
 
                 m_GameName.AddToCanvas(UICanvas);
@@ -82,21 +82,21 @@ namespace Puzzled
             if (!IsLoaded) return;
 
             // Title movement
-            if (m_GameName.Position.Y > m_GameNameHeight) // Note: The title starts lower (which is higher in this coordinate space)
+            if (m_GameName.Position.Y > c_GameNameHeight) // Note: The title starts lower (which is higher in this coordinate space)
             {
-                m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameName.Position.Y - (m_UIVelocity * deltaTime));
+                m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameName.Position.Y - (c_UIVelocity * deltaTime));
             }
             else // Note: Only start updating the press start after title reaches height
             {
                 // TODO: Stop somewhere
-                if (!s_LoopAudio.IsPlaying())
-                    s_LoopAudio.Start();
+                if (!Assets.MainMenuMusic.IsPlaying())
+                    Assets.MainMenuMusic.Start();
 
                 s_AnimationPlayed = true;
 
                 // Flashing press start
                 m_CurrentFlashTimer += deltaTime;
-                if (m_CurrentFlashTimer >= m_FlashTime)
+                if (m_CurrentFlashTimer >= c_TimeBetweenFlashes)
                 {
                     if (m_PressStartRendered)
                     {
@@ -139,8 +139,8 @@ namespace Puzzled
                 else
                 {
                     // Note: If the startup animation is still playing skip that animation (move title to height)
-                    s_StartupAudio.CloseAll();
-                    m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, m_GameNameHeight);
+                    Assets.IntroMusic.CloseAll();
+                    m_GameName.Position = new Maths.Vector2(m_GameName.Position.X, c_GameNameHeight);
                 }
             }
 
@@ -161,26 +161,22 @@ namespace Puzzled
         private Renderer m_Renderer;
 
         // Animation
-        private const float m_UIVelocity = 62.75f; // Matches Intro.wav
-
         private UI.Text m_GameName;
-        private const float m_GameNameHeight = 180.0f;
-
         private UI.Text m_PressStart;
 
-        private const float m_FlashTime = 0.4f;
         private float m_CurrentFlashTimer = 0.0f;
         private bool m_PressStartRendered = false;
-
-        // Sounds
-        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath);
-        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath);
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
         ////////////////////////////////////////////////////////////////////////////////////
         private static bool s_BootUp = true;
         private static bool s_AnimationPlayed = false;
+
+        private const float c_UIVelocity = 62.75f; // Matches Intro.wav
+        private const float c_GameNameHeight = 180.0f;
+        private const float c_TimeBetweenFlashes = 0.4f;
+
 
     }
 

@@ -44,7 +44,6 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟥 Improve efficiency
     - [ ] 🟥 Test performance
   - [ ] Audio
-    - [ ] 🟩 Play mp3 sounds
     - [x] 🟥 Play wav sounds
     - [x] 🟨 Stop creating/opening a new file object each time
   - [x] Input
@@ -63,11 +62,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟥 Main Menu
     - [ ] 🟧 Pause Menu
     - [ ] 🟩 Level Menu
-    - [ ] 🟥 Win Menu + Score (🟥 + Leaderboard)
+    - [ ] 🟥 Win Menu + Score + Leaderboard
     - [ ] 🟥 Save (selection) Menu
     - [ ] 🟧 Level overlay
     - [ ] 🟩 Final win menu (showing achievements)
-    - [ ] 🟩🟩 Options menu (sound slider)
+    - [ ] 🟩 Options menu (sound slider)
   - [ ] Levels
     - [ ] Design
       - [ ] 🟥 Level 1 (🟥 normal / 🟨extra hard)

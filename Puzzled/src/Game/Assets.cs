@@ -17,8 +17,14 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Paths
         ////////////////////////////////////////////////////////////////////////////////////
-        public static string StartupMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Intro.wav";
+        public static string IntroMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Intro.wav";
         public static string MainMenuMusicPath = "../../../Puzzled/Resources/Music/Title_Screen_Loop.wav";
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // MainMenu/Saves menu
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath);
 
     }
 
