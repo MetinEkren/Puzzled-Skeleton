@@ -34,19 +34,20 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(GameCanvas);
-            m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y;
+            m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y - m_DesiredLogoHeight;
+            m_LogoCenterX = (Game.Instance.Window.Width / 2.0f) - (c_LogoSize.X / 2.0f);
 
             // Logo // TODO: Center X-Axis
             {
                 if (!s_AnimationPlayed)
                 {
                     // Start at bottom to create the animation
-                    m_LogoPosition = new Maths.Vector2(0, -c_LogoSize.Y);
+                    m_LogoPosition = new Maths.Vector2(m_LogoCenterX, -c_LogoSize.Y);
                 }
                 else
                 {
                     // Startup animation has already been played so just start at desired height
-                    m_LogoPosition = new Maths.Vector2(0, m_DesiredLogoHeight);
+                    m_LogoPosition = new Maths.Vector2(m_LogoCenterX, m_DesiredLogoHeight);
                 }
             }
 
@@ -79,7 +80,6 @@ namespace Puzzled
             }
             else // Note: Only start updating the press start after title reaches height
             {
-                // TODO: Stop somewhere
                 if (!Assets.MainMenuMusic.IsPlaying())
                     Assets.MainMenuMusic.Start();
 
@@ -156,7 +156,8 @@ namespace Puzzled
 
         // Animation
         private Maths.Vector2 m_LogoPosition = new Maths.Vector2(0.0f, 0.0f);
-        private float m_DesiredLogoHeight;
+        private float m_DesiredLogoHeight = 100.0f; // Note: This is the size from the top of the window, it get properly calculated in the constructor.
+        private float m_LogoCenterX;
         private UI.Text m_PressStart;
 
         private float m_CurrentFlashTimer = 0.0f;
@@ -168,8 +169,8 @@ namespace Puzzled
         private static bool s_BootUp = true;
         private static bool s_AnimationPlayed = false;
 
-        private const float c_UIVelocity = 62.75f; // Matches Intro.wav
-        private static readonly Maths.Vector2 c_LogoSize = new Maths.Vector2(156.0f * 2.0f, 79.0f * 2.0f);
+        private const float c_UIVelocity = 67.45f; // Matches Intro.wav
+        private static readonly Maths.Vector2 c_LogoSize = new Maths.Vector2(156.0f * 3.0f, 79.0f * 3.0f); // Note: 156x79 are the dimensions of the logo.
         private const float c_TimeBetweenFlashes = 0.4f;
 
 
