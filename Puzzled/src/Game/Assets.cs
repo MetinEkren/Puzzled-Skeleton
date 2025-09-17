@@ -23,8 +23,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath);
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath);
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, 5); // TODO: Remove volume
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, 5); // TODO: Remove volume
 
     }
 

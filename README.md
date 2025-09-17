@@ -39,8 +39,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟥 Quad renderer
     - [x] 🟥 Textured quad
     - [x] 🟥 Texture coordinates
-    - [ ] 🟥 Make pixel space
-    - [ ] 🟥 Flip Y-axis
+    - [x] 🟥 Make pixel space
+    - [x] 🟥 Flip Y-axis
     - [ ] 🟥 Improve efficiency
     - [ ] 🟥 Test performance
   - [ ] Audio

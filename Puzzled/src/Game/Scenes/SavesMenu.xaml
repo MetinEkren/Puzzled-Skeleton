@@ -5,8 +5,7 @@
     <Grid>
         <Grid>
             <!-- Base Canvas for rendering/drawing -->
-            <Canvas x:Name="GameCanvas" Background="Black"
-                Width="1024" Height="960"/>
+            <Canvas x:Name="GameCanvas" Background="Black"/>
 
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>

@@ -36,11 +36,15 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
+            Logger.Trace($"Width = {Game.Instance.Window.Width}, Height = {Game.Instance.Window.Height}");
+
             // TODO: Move to OnRender, currently used to update positions
             m_Renderer.Begin();
             m_Renderer.AddQuad(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
-            m_Renderer.AddQuad(new Maths.Vector2(64.0f, 64.0f), new Maths.Vector2(64.0f, 64.0f), new Maths.Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-            m_Renderer.AddQuad(new Maths.Vector2(128.0f, 656.0f), new Maths.Vector2(64.0f, 64.0f), new Maths.Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+            m_Renderer.AddQuad(new Maths.Vector2(64.0f, 64.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
+            m_Renderer.AddQuad(new Maths.Vector2(128.0f, 128.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
+            m_Renderer.AddQuad(new Maths.Vector2(192.0f, 200.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
+            m_Renderer.AddQuad(new Maths.Vector2(256.0f, Game.Instance.Window.Height - 64.0f), new Maths.Vector2(64.0f, 64.0f), m_TESTTexture);
             m_Renderer.End();
         }
 

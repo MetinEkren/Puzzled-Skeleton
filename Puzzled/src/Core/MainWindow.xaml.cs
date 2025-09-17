@@ -90,8 +90,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variable throughput
         ////////////////////////////////////////////////////////////////////////////////////
-        public new uint Width { get { return (uint)this.ActualWidth; } }
-        public new uint Height { get { return (uint)this.ActualHeight; } }
+        public new uint Width { get { return (uint)(this.Content as FrameworkElement).ActualWidth; ; } }
+        public new uint Height { get { return (uint)(this.Content as FrameworkElement).ActualHeight; ; } }
 
     }
 
