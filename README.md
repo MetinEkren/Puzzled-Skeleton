@@ -25,90 +25,90 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 ---
 ### Priorities
-🟥 **Must have** – Game won’t work without it<br>
-🟧 **Should have** – Very important, adds major value<br>
-🟨 **Could have** – Nice-to-have, improves experience<br>
-🟩 **Would have / Wont have** – Extra polish, not needed for gameplay<br>
+🟩 **Must have** – Game won’t work without it<br>
+🟨 **Should have** – Very important, adds major value<br>
+🟧 **Could have** – Nice-to-have, improves experience<br>
+🟥 **Would have / Wont have** – Extra polish, not needed for gameplay<br>
 
 ---
 
-- [x] 🟧 Rename repository
+- [x] 🟨 Rename repository
 
 - [ ] Core Systems
   - [ ] Renderer
-    - [x] 🟥 Quad renderer
-    - [x] 🟥 Textured quad
-    - [x] 🟥 Texture coordinates
-    - [x] 🟥 Make pixel space
-    - [x] 🟥 Flip Y-axis
-    - [ ] 🟥 Improve efficiency
-    - [ ] 🟥 Test performance
+    - [x] 🟩 Quad renderer
+    - [x] 🟩 Textured quad
+    - [x] 🟩 Texture coordinates
+    - [x] 🟩 Make pixel space
+    - [x] 🟩 Flip Y-axis
+    - [ ] 🟩 Improve efficiency
+    - [ ] 🟩 Test performance
   - [ ] Audio
-    - [x] 🟥 Play wav sounds
-    - [x] 🟨 Stop creating/opening a new file object each time
+    - [x] 🟩 Play wav sounds
+    - [x] 🟧 Stop creating/opening a new file object each time
   - [x] Input
-    - [x] 🟥 Live key readback (IsKeyPressed())
-    - [x] 🟥 Live mouse readback (IsMouseButtonPressed())
-    - [x] 🟥 Live mouse position readback (GetMousePosition())
+    - [x] 🟩 Live key readback (IsKeyPressed())
+    - [x] 🟩 Live mouse readback (IsMouseButtonPressed())
+    - [x] 🟩 Live mouse position readback (GetMousePosition())
   - [ ] UI
-    - [x] 🟥 Font caching
-    - [ ] 🟥 Draw text
+    - [x] 🟩 Font caching
+    - [ ] 🟩 Draw text
   - [x] Scene
     - [x] Fix UICanvas blocking GameCanvas
     - [ ] Allow for scene passthrough of control of objects (sounds)
 
 - [ ] Core Game
   - [ ] UI
-    - [ ] 🟥 Main Menu
-    - [ ] 🟧 Pause Menu
-    - [ ] 🟩 Level Menu
-    - [ ] 🟥 Win Menu + Score + Leaderboard
-    - [ ] 🟥 Save (selection) Menu
-    - [ ] 🟧 Level overlay
-    - [ ] 🟩 Final win menu (showing achievements)
-    - [ ] 🟩 Options menu (sound slider)
+    - [ ] 🟩 Main Menu
+    - [ ] 🟨 Pause Menu
+    - [ ] 🟥 Level Menu
+    - [ ] 🟩 Win Menu + Score + Leaderboard
+    - [ ] 🟩 Save (selection) Menu
+    - [ ] 🟨 Level overlay
+    - [ ] 🟥 Final win menu (showing achievements)
+    - [ ] 🟥 Options menu (sound slider)
   - [ ] Levels
     - [ ] Design
-      - [ ] 🟥 Level 1 (🟥 normal / 🟨extra hard)
-      - [ ] 🟥 Level 2 (🟥 normal / 🟨extra hard)
-      - [ ] 🟥 Level 3 (🟥 normal / 🟨extra hard)
-      - [ ] 🟧 Level 4 (🟧 normal / 🟨extra hard)
-      - [ ] 🟧 Level 5 (🟧 normal / 🟨extra hard)
-      - [ ] 🟧 Level 6 (🟧 normal / 🟨extra hard)
-      - [ ] 🟨 Texture for skeleton
-      - [ ] 🟨 Texture for background(s)
-      - [ ] 🟨 Texture for objects
-      - [ ] 🟨 Texture for platform blocks
+      - [ ] 🟩 Level 1 (🟩 normal / 🟧extra hard)
+      - [ ] 🟨 Level 2 (🟨 normal / 🟧extra hard)
+      - [ ] 🟨 Level 3 (🟨 normal / 🟧extra hard)
+      - [ ] 🟨 Level 4 (🟨 normal / 🟧extra hard)
+      - [ ] 🟨 Level 5 (🟨 normal / 🟧extra hard)
+      - [ ] 🟨 Level 6 (🟨 normal / 🟧extra hard)
+      - [ ] 🟧 Texture for skeleton
+      - [ ] 🟧 Texture for background(s)
+      - [ ] 🟧 Texture for objects
+      - [ ] 🟧 Texture for platform blocks
   - [ ] Mechanics
-    - [ ] 🟥 Gravity
-    - [ ] 🟥 Physics (gravity/collision)
-    - [ ] 🟥 Movement (WASD/Arrow keys)
+    - [ ] 🟩 Gravity
+    - [ ] 🟩 Physics (gravity/collision)
+    - [ ] 🟩 Movement (WASD/Arrow keys)
     - [ ] Puzzle mechanics
-      - [ ] 🟥 Time = score
-      - [ ] 🟨 Movable bricks (on to moving platform?)
-      - [ ] 🟨 UV Flashlight
+      - [ ] 🟩 Time = score
+      - [ ] 🟧 Movable bricks (on to moving platform?)
+      - [ ] 🟧 UV Flashlight
     - [ ] Trap mechanics
-      - [ ] 🟨 Spike (respawn bottom level)
+      - [ ] 🟧 Spike (respawn bottom level)
   - [ ] Audio
-    - [x] 🟧 Main menu/save selection music (Start-up, loop)
-    - [ ] 🟨 Level 1
-    - [ ] 🟨 Level 2
-    - [ ] 🟨 Level 3
-    - [ ] 🟨 Level 4
-    - [ ] 🟨 Level 5
-    - [ ] 🟨 Level 6
-    - [ ] 🟨 Win/finish menu
-    - [ ] 🟩 Sound for beating your high score (SFX)
-    - [ ] 🟩 Final win menu
-    - [ ] 🟧 Jump SFX
-    - [ ] 🟩 Moving brick
-    - [ ] 🟨 Flashlight click
-    - [ ] 🟨 Moving sound
-    - [ ] 🟨 Collect key sound
-    - [ ] 🟨 Open door with key sound
+    - [x] 🟨 Main menu/save selection music (Start-up, loop)
+    - [ ] 🟧 Level 1
+    - [ ] 🟧 Level 2
+    - [ ] 🟧 Level 3
+    - [ ] 🟧 Level 4
+    - [ ] 🟧 Level 5
+    - [ ] 🟧 Level 6
+    - [ ] 🟧 Win/finish menu
+    - [ ] 🟥 Sound for beating your high score (SFX)
+    - [ ] 🟥 Final win menu
+    - [ ] 🟨 Jump SFX
+    - [ ] 🟥 Moving brick
+    - [ ] 🟧 Flashlight click
+    - [ ] 🟧 Moving sound
+    - [ ] 🟧 Collect key sound
+    - [ ] 🟧 Open door with key sound
   - [ ] Easter eggs + Achievements
-    - [ ] 🟩 25x piano note
-    - [ ] 🟩 Mario (UV flashlight reveal)
+    - [ ] 🟥 25x piano note
+    - [ ] 🟥 Mario (UV flashlight reveal)
 
 ## License
 
