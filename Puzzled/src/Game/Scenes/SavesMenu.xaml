@@ -3,16 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              >
     <Grid>
-        <Grid>
+        <Grid Width="768" Height="720">
             <!-- Base Canvas for rendering/drawing -->
             <Canvas x:Name="GameCanvas" Background="Black"/>
 
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
+            <!-- Save slots text -->
+            <TextBlock Text="Choose a Save slot"
+                FontSize="80"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Foreground="White"
+                Margin="0,64,0,0" />
+
             <!-- Save slot buttons -->
-            <Button x:Name="SaveSlot1" Width="650" Height="150"
-                Content="Save Slot 1"
+            <Button x:Name="SaveSlot1" Width="549" Height="127"
+                Content=" Slot #1&#x0a;Score: 0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 FontSize="24"
@@ -20,9 +28,9 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="SaveSlot1Pressed" Margin="0,195,0,0"/>
-            <Button x:Name="SaveSlot2" Width="650" Height="150"
-                Content="Save Slot 2"
+                Click="SaveSlot1Pressed" Margin="0,233,0,0"/>
+            <Button x:Name="SaveSlot2" Width="549" Height="127"
+                Content=" Slot #2&#x0a;Score: 0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 FontSize="24"
@@ -30,9 +38,9 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="SaveSlot2Pressed" Margin="0,397,0,0"/>
-            <Button x:Name="SaveSlot3" Width="650" Height="150"
-                Content="Save Slot 3"
+                Click="SaveSlot2Pressed" Margin="0,380,0,0"/>
+            <Button x:Name="SaveSlot3" Width="548" Height="127"
+                Content=" Slot #3&#x0a;Score: 0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 FontSize="24"
@@ -40,7 +48,7 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="SaveSlot3Pressed" Margin="0,601,0,0"/>
+                Click="SaveSlot3Pressed" Margin="0,531,0,0"/>
         </Grid>
     </Grid>
 </UserControl>

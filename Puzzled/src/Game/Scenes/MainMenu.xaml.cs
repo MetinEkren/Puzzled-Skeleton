@@ -71,8 +71,6 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
-            Logger.Trace($"Position = {{ .x = {m_LogoPosition.X}, .y = {m_LogoPosition.Y} }}");
-
             // Title movement
             if (m_LogoPosition.Y < m_DesiredLogoHeight) // Note: The title starts lower (which is higher in this coordinate space)
             {
@@ -128,6 +126,7 @@ namespace Puzzled
             {
                 if (s_AnimationPlayed)
                 {
+                    Logger.Info("Pressed start.");
                     Game.Instance.ActiveScene = new SavesMenu();
                 }
                 else

@@ -67,20 +67,20 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Callbacks
         ////////////////////////////////////////////////////////////////////////////////////
-        void SaveSlot1Pressed(object sender, RoutedEventArgs args)
-        {
+        void SaveSlot1Pressed(object sender, RoutedEventArgs args) { SaveSlotPressed(1); }
+        void SaveSlot2Pressed(object sender, RoutedEventArgs args) { SaveSlotPressed(2); }
+        void SaveSlot3Pressed(object sender, RoutedEventArgs args) { SaveSlotPressed(3); }
 
+        void SaveSlotPressed(uint slot)
+        {
+            Logger.Info($"Save slot {slot} being loaded");
+
+            // TODO: Load save and load newest level based on that
+
+            Game.Instance.ActiveScene = new LevelOverlay("TODO: Path");
+
+            Assets.MainMenuMusic.Stop();
         }
-
-        void SaveSlot2Pressed(object sender, RoutedEventArgs args)
-        {
-
-        }
-
-        void SaveSlot3Pressed(object sender, RoutedEventArgs args)
-        {
-
-        } 
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
