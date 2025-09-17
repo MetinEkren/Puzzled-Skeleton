@@ -173,8 +173,8 @@ namespace Puzzled
         private bool m_PressStartRendered = false;
 
         // Sounds
-        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath, 5);
-        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath, 5);
+        private static FireableAudio s_StartupAudio = new FireableAudio(Assets.StartupMusicPath);
+        private static LoopAudio s_LoopAudio = new LoopAudio(Assets.MainMenuMusicPath);
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
