@@ -39,6 +39,8 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+
+            Logger.Trace($"FPS: { 1 / deltaTime }");
         }
 
         public void OnRender()
@@ -59,6 +61,7 @@ namespace Puzzled
             {
                 if (kpe.KeyCode == System.Windows.Input.Key.Escape)
                 {
+                    Logger.Info("Pressed Esc, going back to main menu.");
                     Game.Instance.ActiveScene = new MainMenu();
                 }
             }
