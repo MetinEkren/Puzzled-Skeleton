@@ -30,8 +30,7 @@ namespace Puzzled
             public Maths.Vector2 Size;
             public Maths.Vector2 Position;
     
-            public Texture TextureReference;
-            public UV TextureCoords;
+            public ITexture TextureReference;
         }
 
         internal class VisualHost : FrameworkElement
@@ -79,28 +78,20 @@ namespace Puzzled
             {
                 foreach (Quad quad in m_Quads)
                 {
-                    CroppedBitmap cropped = new CroppedBitmap(
-                        quad.TextureReference.GetInternalImage(),
-                        new Int32Rect((int)quad.TextureCoords.X, (int)quad.TextureCoords.Y, (int)quad.TextureCoords.Width, (int)quad.TextureCoords.Height) // UV rectangle in pixels
-                    );
-                    cropped.Freeze(); // TODO: Optimize cropping
-
-                    dc.DrawImage(cropped, new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
+                    dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
                 }
             }
 
             m_VisualHost.InvalidateVisual();
         }
 
-        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, Texture texture) { AddQuad(position, size, texture, new UV(texture)); }
-        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, Texture texture, UV textureCoords) 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture) 
         {
             m_Quads.Add(new Quad
             { 
                 Position = new Maths.Vector2(position.X, (float)m_Canvas.ActualHeight - size.Y - position.Y), 
                 Size = size, 
                 TextureReference = texture, 
-                TextureCoords = textureCoords 
             }); 
         }
         ////////////////////////////////////////////////////////////////////////////////////

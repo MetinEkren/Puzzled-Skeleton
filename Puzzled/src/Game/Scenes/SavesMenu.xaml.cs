@@ -79,10 +79,19 @@ namespace Puzzled
             Logger.Info($"Save slot {slot} being loaded");
 
             // TODO: Load save and load newest level based on that
+            uint level = Load("TODO: Save file");
 
             Game.Instance.ActiveScene = new LevelOverlay("TODO: Path");
 
             Assets.MainMenuMusic.Stop();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Private methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        private uint Load(string path)
+        {
+            return 0;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
