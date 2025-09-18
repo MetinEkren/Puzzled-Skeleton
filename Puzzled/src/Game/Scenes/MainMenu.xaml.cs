@@ -140,12 +140,6 @@ namespace Puzzled
             // On any event do press()
             if (e is MouseButtonPressedEvent) { PressCallback(); }
             if (e is KeyPressedEvent) { PressCallback(); }
-
-            // TODO: Remove after testing
-            if (e is MouseScrolledEvent)
-            {
-                Game.Instance.ActiveScene = new LevelOverlay();
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
