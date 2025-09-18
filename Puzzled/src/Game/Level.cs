@@ -37,7 +37,7 @@ namespace Puzzled
         public void OnRender()
         {
             m_Renderer.Begin();
-
+            m_StaticTile.RenderTo(m_Renderer);
             m_Renderer.End();
         }
 
@@ -60,6 +60,8 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
+
+        private StaticTile m_StaticTile = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(16.0f * 3, 16.0f * 3), Assets.TESTTexture);
 
     }
 

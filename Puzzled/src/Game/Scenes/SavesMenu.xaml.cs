@@ -39,8 +39,6 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
-
-            Logger.Trace($"FPS: { 1 / deltaTime }");
         }
 
         public void OnRender()
