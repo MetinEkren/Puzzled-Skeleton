@@ -43,6 +43,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟩 Flip Y-axis
     - [ ] 🟩 Improve efficiency
     - [ ] 🟩 Test performance
+    - [x] 🟩 Animation system
+    - [ ] 🟩 Flip sprites
   - [ ] Audio
     - [x] 🟩 Play wav sounds
     - [x] 🟧 Stop creating/opening a new file object each time
