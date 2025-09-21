@@ -35,7 +35,8 @@ namespace Puzzled
             m_URI = new Uri(diskFile, UriKind.Absolute);
         }
         ~FireableAudio() 
-        { 
+        {
+            //CloseAll();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +129,7 @@ namespace Puzzled
         }
         ~LoopAudio()
         {
+            //m_MediaPlayer.Stop();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

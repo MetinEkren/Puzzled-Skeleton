@@ -44,10 +44,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [ ] 🟩 Improve efficiency
     - [ ] 🟩 Test performance
     - [x] 🟩 Animation system
-    - [ ] 🟩 Flip sprites
+    - [x] 🟩 Flip sprites
   - [ ] Audio
     - [x] 🟩 Play wav sounds
     - [x] 🟧 Stop creating/opening a new file object each time
+    - [ ] 🟩 Close audio on close window to prevent lag/screen tear
   - [x] Input
     - [x] 🟩 Live key readback (IsKeyPressed())
     - [x] 🟩 Live mouse readback (IsMouseButtonPressed())

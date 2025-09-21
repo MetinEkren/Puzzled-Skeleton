@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace Puzzled
 {
@@ -42,25 +43,27 @@ namespace Puzzled
             // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
             // TODO: Remove this movement code and replace with velocity and friction
             bool isMoving = false;
-            if (Input.IsKeyPressed(System.Windows.Input.Key.W) || Input.IsKeyPressed(System.Windows.Input.Key.Up))
+            if (Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up))
             {
                 m_Position.Y += c_RunningVelocity * deltaTime;
                 isMoving = true;
             }
-            if (Input.IsKeyPressed(System.Windows.Input.Key.S) || Input.IsKeyPressed(System.Windows.Input.Key.Down))
+            if (Input.IsKeyPressed(Key.S) || Input.IsKeyPressed(Key.Down))
             {
                 m_Position.Y -= c_RunningVelocity * deltaTime;
                 isMoving = true;
             }
-            if (Input.IsKeyPressed(System.Windows.Input.Key.A) || Input.IsKeyPressed(System.Windows.Input.Key.Left))
+            if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
             {
                 m_Position.X -= c_RunningVelocity * deltaTime;
                 isMoving = true;
+                m_Flipped = true;
             }
-            if (Input.IsKeyPressed(System.Windows.Input.Key.D) || Input.IsKeyPressed(System.Windows.Input.Key.Right))
+            if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
             {
                 m_Position.X += c_RunningVelocity * deltaTime;
                 isMoving = true;
+                m_Flipped = false;
             }
 
             if (isMoving && m_State != State.Running)
@@ -73,7 +76,7 @@ namespace Puzzled
 
         public void RenderTo(Renderer renderer)
         {
-            renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), GetCurrentAnimation().GetCurrentTexture());
+            renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -104,6 +107,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private State m_State = State.Idle;
         private Maths.Vector2 m_Position = new Maths.Vector2(0.0f, 0.0f);
+        private bool m_Flipped = false;
 
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);

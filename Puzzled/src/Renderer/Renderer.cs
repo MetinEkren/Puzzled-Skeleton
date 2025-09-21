@@ -31,6 +31,7 @@ namespace Puzzled
             public Maths.Vector2 Position;
     
             public ITexture TextureReference;
+            public bool FlipTexture;
         }
 
         internal class VisualHost : FrameworkElement
@@ -78,20 +79,32 @@ namespace Puzzled
             {
                 foreach (Quad quad in m_Quads)
                 {
+                    if (quad.FlipTexture)
+                    {
+                        double centerX = quad.Position.X + quad.Size.X / 2;
+                        double centerY = quad.Position.Y + quad.Size.Y / 2;
+
+                        dc.PushTransform(new ScaleTransform(-1.0f, 1.0f, centerX, centerY));
+                    }
+
                     dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
+                    
+                    if (quad.FlipTexture)
+                        dc.Pop();
                 }
             }
 
             //m_VisualHost.InvalidateVisual();
         }
 
-        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture) 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture, bool flipTexture = false) 
         {
             m_Quads.Add(new Quad
             { 
                 Position = new Maths.Vector2(position.X, (float)m_Canvas.ActualHeight - size.Y - position.Y), 
                 Size = size, 
-                TextureReference = texture, 
+                TextureReference = texture,
+                FlipTexture = flipTexture
             }); 
         }
         ////////////////////////////////////////////////////////////////////////////////////
