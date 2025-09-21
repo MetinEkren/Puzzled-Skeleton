@@ -82,7 +82,7 @@ namespace Puzzled
                 }
             }
 
-            m_VisualHost.InvalidateVisual();
+            //m_VisualHost.InvalidateVisual();
         }
 
         public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture) 

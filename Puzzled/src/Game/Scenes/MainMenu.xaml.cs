@@ -166,7 +166,6 @@ namespace Puzzled
         private static readonly Maths.Vector2 c_LogoSize = new Maths.Vector2(156.0f * 3.0f, 79.0f * 3.0f); // Note: 156x79 are the dimensions of the logo.
         private const float c_TimeBetweenFlashes = 0.4f;
 
-
     }
 
 }

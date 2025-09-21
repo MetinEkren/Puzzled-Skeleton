@@ -31,13 +31,18 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void OnUpdate(float deltaTime)
         {
+            m_IdleAnimation.Update(deltaTime);
 
+            Logger.Trace($"Current sprite: {m_IdleAnimation.GetCurrentSpriteID()}");
         }
 
         public void OnRender()
         {
             m_Renderer.Begin();
             m_StaticTile.RenderTo(m_Renderer);
+
+            m_Renderer.AddQuad(new Maths.Vector2(48.0f, 48.0f), new Maths.Vector2(48.0f, 48.0f), m_IdleAnimation.GetCurrentTexture());
+
             m_Renderer.End();
         }
 
@@ -61,7 +66,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
 
-        private StaticTile m_StaticTile = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(16.0f * 3, 16.0f * 3), Assets.TESTTexture);
+        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
+        private StaticTile m_StaticTile = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(16.0f * 3, 16.0f * 3), Assets.PainSheet);
 
     }
 
