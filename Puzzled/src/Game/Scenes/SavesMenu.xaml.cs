@@ -63,6 +63,13 @@ namespace Puzzled
                     Game.Instance.ActiveScene = new MainMenu();
                 }
             }
+
+            // Fix Audio lagging when closing
+            if (e is WindowCloseEvent)
+            {
+                Assets.IntroMusic.CloseAll(); // Note: Just in case the intro music was still playing from main menu
+                Assets.MainMenuMusic.Stop();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

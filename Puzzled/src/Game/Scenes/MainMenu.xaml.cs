@@ -140,6 +140,13 @@ namespace Puzzled
             // On any event do press()
             if (e is MouseButtonPressedEvent) { PressCallback(); }
             if (e is KeyPressedEvent) { PressCallback(); }
+
+            // Fix Audio lagging when closing
+            if (e is WindowCloseEvent)
+            {
+                Assets.IntroMusic.CloseAll();
+                Assets.MainMenuMusic.Stop();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
