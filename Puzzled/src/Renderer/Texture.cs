@@ -52,16 +52,28 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
+        public Texture() // Creates a white 1x1 texture
+        {
+            WriteableBitmap bmp = new WriteableBitmap(1, 1, 96, 96, PixelFormats.Bgra32, null);
+            byte[] colorData = { 255, 255, 255, 255 }; // B=255, G=255, R=255, A=255
+            Int32Rect rect = new Int32Rect(0, 0, 1, 1);
+            bmp.WritePixels(rect, colorData, 4, 0);
+
+            m_Image = bmp;
+        }
+        
         public Texture(string path)
         {
             string diskFile = System.IO.Path.Combine(Directory.GetCurrentDirectory(), path);
             //string embeddedFile = "pack://application:,,,/" + path;
 
-            m_Image = new BitmapImage();
-            m_Image.BeginInit();
-            m_Image.UriSource = new Uri(diskFile, UriKind.Absolute);
-            m_Image.CacheOption = BitmapCacheOption.OnLoad;
-            m_Image.EndInit();
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(diskFile, UriKind.Absolute);
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.EndInit();
+
+            m_Image = image;
         }
         ~Texture()
         {
@@ -76,7 +88,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private BitmapImage m_Image;
+        private BitmapSource m_Image;
 
         public uint Width { get { return (uint)m_Image.PixelWidth; } }
         public uint Height { get { return (uint)m_Image.PixelHeight; } }

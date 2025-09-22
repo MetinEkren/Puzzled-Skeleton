@@ -37,6 +37,7 @@ namespace Puzzled
         public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 2u)); // Note: This is so it plays softer on Jorben's PC
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
+        public static Texture WhiteTexture = new Texture();
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Tilesheets

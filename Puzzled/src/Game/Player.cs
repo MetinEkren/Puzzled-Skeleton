@@ -76,6 +76,7 @@ namespace Puzzled
 
         public void RenderTo(Renderer renderer)
         {
+            renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture, m_Flipped);
             renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
         }
 
@@ -112,6 +113,9 @@ namespace Puzzled
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
         // TODO: More animations
+
+        public Maths.Vector2 Position { get { return m_Position; } }
+        public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
