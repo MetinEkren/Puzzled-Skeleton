@@ -42,8 +42,8 @@ namespace Puzzled
         private Maths.Vector2 m_Size;
         private ITexture m_Texture;
 
-        public Maths.Vector2 Position { get { return m_Position; } }
-        public Maths.Vector2 Size { get { return m_Size; } }
+        public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
+        public Maths.Vector2 Size { get { return m_Size; } set { m_Size = value; } }
 
     }
 

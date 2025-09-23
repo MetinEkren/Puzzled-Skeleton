@@ -71,13 +71,15 @@ namespace Puzzled
             if (!isMoving && m_State != State.Idle)
                 SetNewState(State.Idle);
 
+            //m_Position.Y -= Settings.Gravity * deltaTime;
+
             GetCurrentAnimation().Update(deltaTime);
         }
 
         public void RenderTo(Renderer renderer)
         {
-            renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture, m_Flipped);
-            renderer.AddQuad(m_Position, new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
+            renderer.AddQuad(HitboxPosition, HitboxSize, Assets.WhiteTexture);
+            renderer.AddQuad(Position, Size, GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -95,7 +97,7 @@ namespace Puzzled
             {
             case State.Idle:            return m_IdleAnimation;
             case State.Running:         return m_RunningAnimation;
-
+            
             default:
                 break;
             }
@@ -110,12 +112,18 @@ namespace Puzzled
         private Maths.Vector2 m_Position = new Maths.Vector2(0.0f, 0.0f);
         private bool m_Flipped = false;
 
+        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (3 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (4 * Settings.Scale));
+
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
         // TODO: More animations
 
-        public Maths.Vector2 Position { get { return m_Position; } }
+        public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
+
+        public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (3 * Settings.Scale), m_Position.Y); } }
+        //public Maths.Vector2 HitboxPosition { get { return m_Position; } }
+        public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables

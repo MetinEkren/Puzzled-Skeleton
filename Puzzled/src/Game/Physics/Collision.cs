@@ -21,6 +21,15 @@ namespace Puzzled.Physics
     }
 
     //////////////////////////////////////////////////////////////////////////////////
+    // CollisionResult
+    //////////////////////////////////////////////////////////////////////////////////
+    public struct CollisionResult
+    { 
+        public CollisionSide Side;
+        public float Overlap;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////
     // Collision
     //////////////////////////////////////////////////////////////////////////////////
     public class Collision
@@ -29,55 +38,34 @@ namespace Puzzled.Physics
         //////////////////////////////////////////////////////////////////////////////////
         // Static methods
         //////////////////////////////////////////////////////////////////////////////////
-        public static CollisionSide AABB(Maths.Vector2 positionA, Maths.Vector2 sizeA, Maths.Vector2 positionB, Maths.Vector2 sizeB)
-        // Note: The CollisionSide return is calculated from boxA // TODO: Return multiple sides? with weight?
+        public static CollisionResult AABB(Maths.Vector2 positionA, Maths.Vector2 sizeA, Maths.Vector2 positionB, Maths.Vector2 sizeB)
+        // TODO: Return multiple sides? with weight?
         {
-            CollisionSide side = CollisionSide.None;
-
-            // Get half extents
-            float halfWidthA = sizeA.X / 2.0f;
-            float halfHeightA = sizeA.Y / 2.0f;
-            float halfWidthB = sizeB.X / 2.0f;
-            float halfHeightB = sizeB.Y / 2.0f;
-
-            // Get centers
-            float centerAx = positionA.X + halfWidthA;
-            float centerAy = positionA.Y + halfHeightA;
-            float centerBx = positionB.X + halfWidthB;
-            float centerBy = positionB.Y + halfHeightB;
-
-            // Calculate difference
-            float dx = centerBx - centerAx;
-            float dy = centerBy - centerAy;
-
-            // Calculate combined half extents
-            float combinedHalfWidths = halfWidthA + halfWidthB;
-            float combinedHalfHeights = halfHeightA + halfHeightB;
-
-            // Check for collision
-            if (Math.Abs(dx) < combinedHalfWidths && Math.Abs(dy) < combinedHalfHeights)
+            float overlapLeft = (positionA.X + sizeA.X) - positionB.X;   // A right - B left
+            float overlapRight = (positionB.X + sizeB.X) - positionA.X; // B right - A left
+            float overlapTop = (positionA.Y + sizeA.Y) - positionB.Y;   // A bottom - B top
+            float overlapBottom = (positionB.Y + sizeB.Y) - positionA.Y; // B bottom - A top
+            
+            CollisionResult result = new CollisionResult { Side = CollisionSide.None, Overlap = 0.0f };
+            
+            if (overlapLeft > 0 && overlapRight > 0 && overlapTop > 0 && overlapBottom > 0)
             {
-                // Collision occurred, now determine the side
-                float overlapX = combinedHalfWidths - Math.Abs(dx);
-                float overlapY = combinedHalfHeights - Math.Abs(dy);
-
-                if (overlapX < overlapY)
+                float minX = Math.Min(overlapLeft, overlapRight);
+                float minY = Math.Min(overlapTop, overlapBottom);
+            
+                if (minX < minY)
                 {
-                    if (dx > 0)
-                        side = CollisionSide.Right; // boxB is on the right of A
-                    else
-                        side = CollisionSide.Left;  // boxB is on the left of A
+                    result.Overlap = minX;
+                    result.Side = (overlapLeft < overlapRight) ? CollisionSide.Right : CollisionSide.Left;
                 }
                 else
                 {
-                    if (dy > 0)
-                        side = CollisionSide.Top; // boxB is above A
-                    else
-                        side = CollisionSide.Bottom; // boxB is below A
+                    result.Overlap = minY;
+                    result.Side = (overlapTop < overlapBottom) ? CollisionSide.Top : CollisionSide.Bottom;
                 }
             }
 
-            return side;
+            return result;
         }
 
     }

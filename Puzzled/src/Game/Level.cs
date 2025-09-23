@@ -34,30 +34,45 @@ namespace Puzzled
         {
             m_Player.Update(deltaTime);
 
-            var side = Collision.AABB(m_Player.Position, m_Player.Size, m_TESTTile.Position, m_TESTTile.Size);
-            if (side != CollisionSide.None)
+            var collision = Collision.AABB(m_TESTTile.Position, m_TESTTile.Size, m_Player.HitboxPosition, m_Player.HitboxSize);
+            if (collision.Side != CollisionSide.None)
             {
-                switch (side)
+                switch (collision.Side)
                 { 
                 case CollisionSide.Left:
                     Logger.Trace("Left");
+                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X + collision.Overlap, m_TESTTile.Position.Y);
                     break;
-
+                
                 case CollisionSide.Right:
                     Logger.Trace("Right");
+                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X - collision.Overlap, m_TESTTile.Position.Y);
                     break;
-
+                
                 case CollisionSide.Top:
                     Logger.Trace("Top");
+                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y - collision.Overlap);
                     break;
-
+                
                 case CollisionSide.Bottom:
                     Logger.Trace("Bottom");
+                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y + collision.Overlap);
                     break;
-
+                
                 default:
                     break;
                 }
+
+                Logger.Trace($"Player edges: L={m_Player.HitboxPosition.X}, R={m_Player.HitboxPosition.X + m_Player.HitboxSize.X}, " +
+             $"T={m_Player.HitboxPosition.Y}, B={m_Player.HitboxPosition.Y + m_Player.HitboxSize.Y}");
+
+                Logger.Trace($"Tile edges:   L={m_TESTTile.Position.X}, R={m_TESTTile.Position.X + m_TESTTile.Size.X}, " +
+                             $"T={m_TESTTile.Position.Y}, B={m_TESTTile.Position.Y + m_TESTTile.Size.Y}");
+
+                Logger.Trace($"Overlap={collision.Overlap}, Side={collision.Side}");
+
+
+                Logger.Trace($"{collision.Overlap}");
             }
         }
 
