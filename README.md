@@ -41,7 +41,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟩 Texture coordinates
     - [x] 🟩 Make pixel space
     - [x] 🟩 Flip Y-axis
-    - [ ] 🟩 Improve efficiency
+    - [ ] 🟩 US22 Improve efficiency
     - [ ] 🟩 Test performance
     - [x] 🟩 Animation system
     - [x] 🟩 Flip sprites
@@ -62,6 +62,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 - [ ] Core Game
   - [ ] UI
+    - [ ] 🟩 US21/US41 Simpele interface
+     
     - [ ] 🟩 Main Menu
     - [ ] 🟨 Pause Menu
     - [ ] 🟥 Level Menu
@@ -91,7 +93,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟧 Movable bricks (on to moving platform?)
       - [ ] 🟧 UV Flashlight
     - [ ] Trap mechanics
-      - [ ] 🟧 Spike (respawn bottom level)
+      - [ ] 🟧 US23 Spike (respawn bottom level)
   - [ ] Audio
     - [x] 🟨 Main menu/save selection music (Start-up, loop)
     - [ ] 🟧 Level 1
