@@ -30,7 +30,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public void RenderTo(Renderer renderer)
+        public void RenderTo(Renderer renderer, bool debug = false)
         {
             renderer.AddQuad(m_Position, m_Size, m_Texture);
         }

@@ -76,9 +76,11 @@ namespace Puzzled
             GetCurrentAnimation().Update(deltaTime);
         }
 
-        public void RenderTo(Renderer renderer)
+        public void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(HitboxPosition, HitboxSize, Assets.WhiteTexture);
+            if (debug)
+                renderer.AddQuad(HitboxPosition, HitboxSize, Assets.WhiteTexture);
+
             renderer.AddQuad(Position, Size, GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
         }
 
@@ -112,7 +114,7 @@ namespace Puzzled
         private Maths.Vector2 m_Position = new Maths.Vector2(0.0f, 0.0f);
         private bool m_Flipped = false;
 
-        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (3 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (4 * Settings.Scale));
+        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));
 
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
@@ -121,8 +123,7 @@ namespace Puzzled
         public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
 
-        public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (3 * Settings.Scale), m_Position.Y); } }
-        //public Maths.Vector2 HitboxPosition { get { return m_Position; } }
+        public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 
         ////////////////////////////////////////////////////////////////////////////////////
