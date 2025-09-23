@@ -66,6 +66,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟩 US21/US41 Simpele interface
     - [ ] Menus
       - [ ] 🟩 Main Menu
+        - [ ] 🟩 "Press Any Key" Font selection
       - [ ] 🟨 Pause Menu
       - [ ] 🟥 Level Menu
       - [ ] 🟩 Win Menu + Score + Leaderboard
