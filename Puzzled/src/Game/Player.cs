@@ -44,7 +44,7 @@ namespace Puzzled
             Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
             // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
-            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && !IsMovingVertically())
+            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && !IsMovingVertically()) // TODO: Fix bug with falling down and being able to jump at 0.0f velocity
             {
                 m_Velocity.Y = c_JumpingVelocity;
             }
@@ -58,16 +58,19 @@ namespace Puzzled
                 m_Velocity.X = c_RunningVelocity;
                 m_Flipped = false;
             }
-
-            m_Position.X += m_Velocity.X * deltaTime;
-            m_Position.Y += m_Velocity.Y * deltaTime;
+            
+            // Velocity
+            {
+                m_Position.X += m_Velocity.X * deltaTime;
+                m_Position.Y += m_Velocity.Y * deltaTime;
+            }
 
             if (IsMovingHorizontally() && m_State != State.Running)
                 SetNewState(State.Running);
             if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
                 SetNewState(State.Idle);
 
-            // Friction
+            // Friction & Gravity
             {
                 if (m_Velocity.X != 0.0f)
                 {

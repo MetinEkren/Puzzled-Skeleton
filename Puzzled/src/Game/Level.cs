@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace Puzzled
 {
@@ -20,15 +21,13 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public Level(Canvas canvas, string levelPath)
         {
+            s_CurrentLevel = this;
             m_Renderer = new Renderer(canvas);
-
-            // TODO: Remove
-            m_Ground = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Game.Instance.Window.Width, Settings.SpriteSize), Assets.WhiteTexture);
-
             Load(levelPath);
         }
         ~Level()
         {
+            s_CurrentLevel = null;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +78,7 @@ namespace Puzzled
             if (e is KeyPressedEvent kpe)
             {
                 // Note: For testing a debug 
-                if (kpe.KeyCode == System.Windows.Input.Key.H)
+                if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
             }
         }
@@ -91,6 +90,11 @@ namespace Puzzled
         {
             Logger.Info($"Loading level from: {path}");
 
+            m_Player = new Player();
+            
+            // TODO: Remove
+            m_Ground = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Game.Instance.Window.Width, Settings.SpriteSize), Assets.WhiteTexture);
+
             // TODO: ...
         }
 
@@ -100,8 +104,15 @@ namespace Puzzled
         private Renderer m_Renderer;
         private bool m_Debug = false;
 
-        private Player m_Player = new Player();
-        private StaticTile m_Ground; 
+        private Player m_Player;
+        private StaticTile m_Ground;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Static variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        private static Level s_CurrentLevel;
+
+        public static Level Active { get { return s_CurrentLevel; } }
 
     }
 

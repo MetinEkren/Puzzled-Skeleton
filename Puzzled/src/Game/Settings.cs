@@ -20,9 +20,17 @@ namespace Puzzled
         public const uint Scale = 3;
         public const uint SpriteSize = 16 * Scale; // 16x16 pixels
 
-        public const float Gravity = 0.50f * Scale;
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Map
+        ////////////////////////////////////////////////////////////////////////////////////
+        public const uint ChunkSize = 16; // 16x16 tiles, so from 16x(16 * Scale) pixels
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Physics
+        ////////////////////////////////////////////////////////////////////////////////////
+        public const float Gravity = 2.50f * Scale;
         public const float GroundFriction = 2.0f * Scale;
-        public const float PlayerTerminalVelocity = 100.0f * Scale;
+        public const float PlayerTerminalVelocity = 100.0f * Scale; // Note: For downards, so it doesn't keep accelerating
 
     }
 
