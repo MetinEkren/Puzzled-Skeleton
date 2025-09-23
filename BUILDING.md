@@ -2,8 +2,8 @@
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/ggjorven/Game-Interaction.git
-    cd Game-Interaction
+    git clone https://github.com/ggjorven/Puzzled-Skeleton.git
+    cd Puzzled-Skeleton
     ```
 
 2. Navigate to the scripts folder:
@@ -23,10 +23,10 @@
 
 ## Building
 1. Navigate to the root of the directory
-2. Open the Game-Interaction.sln file
+2. Open the Puzzled-Skeleton.sln file
 3. Start building in your desired configuration
-4. Build files can be in the bin/%Config%-windows/Game-Interaction/ folder.
+4. Build files can be in the bin/%Config%-windows/Puzzled/ folder.
 5. (Optional) Open a terminal and run the Sandbox project:
     ```sh
-    ./Game-Interaction.exe 
+    ./Puzzled.exe 
     ```

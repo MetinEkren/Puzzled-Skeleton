@@ -115,7 +115,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 ## License
 
-This project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE.txt) for details.
+All rights reserved.
+
+This project is provided for viewing purposes only.  
+You may not copy, modify, distribute, or use any part of this code  
+without explicit written permission from the authors.
 
 ## Contributing
 
