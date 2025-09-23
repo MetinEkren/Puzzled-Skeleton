@@ -62,16 +62,17 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 
 - [ ] Core Game
   - [ ] UI
-    - [ ] 🟩 US21/US41 Simpele interface
-     
-    - [ ] 🟩 Main Menu
-    - [ ] 🟨 Pause Menu
-    - [ ] 🟥 Level Menu
-    - [ ] 🟩 Win Menu + Score + Leaderboard
-    - [ ] 🟩 Save (selection) Menu
-    - [ ] 🟨 Level overlay
-    - [ ] 🟥 Final win menu (showing achievements)
-    - [ ] 🟥 Options menu (sound slider)
+    - [ ] Global
+      - [ ] 🟩 US21/US41 Simpele interface
+    - [ ] Menus
+      - [ ] 🟩 Main Menu
+      - [ ] 🟨 Pause Menu
+      - [ ] 🟥 Level Menu
+      - [ ] 🟩 Win Menu + Score + Leaderboard
+      - [ ] 🟩 Save (selection) Menu
+      - [ ] 🟨 Level overlay
+      - [ ] 🟥 Final win menu (showing achievements)
+      - [ ] 🟥 Options menu (sound slider)
   - [ ] Levels
     - [ ] Design
       - [ ] 🟩 Level 1 (🟩 normal / 🟧extra hard)
