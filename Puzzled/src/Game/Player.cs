@@ -41,12 +41,13 @@ namespace Puzzled
         public void Update(float deltaTime)
         {
             Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
-            Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
+            //Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
             // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
-            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && !IsMovingVertically()) // TODO: Fix bug with falling down and being able to jump at 0.0f velocity
+            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
             {
                 m_Velocity.Y = c_JumpingVelocity;
+                m_CanJump = false;
             }
             if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
             {
@@ -137,6 +138,7 @@ namespace Puzzled
         private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));
         private Maths.Vector2 m_Velocity = new Maths.Vector2(0.0f, 0.0f);
         private bool m_Flipped = false;
+        private bool m_CanJump = true;
 
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
@@ -149,10 +151,12 @@ namespace Puzzled
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 
+        public bool CanJump { get { return m_CanJump; } set { m_CanJump = value; } }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private const float c_JumpingVelocity = 1000.0f;
+        private const float c_JumpingVelocity = 980.0f;
         private const float c_RunningVelocity = 125.0f;
 
     }

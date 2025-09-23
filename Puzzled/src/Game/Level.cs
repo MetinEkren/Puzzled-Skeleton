@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Puzzled
 {
@@ -37,30 +39,60 @@ namespace Puzzled
         {
             m_Player.Update(deltaTime);
 
-            var collision = Collision.AABB(m_Player.HitboxPosition, m_Player.HitboxSize, m_Ground.Position, m_Ground.Size);
-            if (collision.Side != CollisionSide.None)
+            // Player collision
             {
-                switch (collision.Side)
-                { 
-                //case CollisionSide.Left:
-                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X + collision.Overlap, m_TESTTile.Position.Y);
-                //    break;
-                //
-                //case CollisionSide.Right:
-                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X - collision.Overlap, m_TESTTile.Position.Y);
-                //    break;
-                //
-                //case CollisionSide.Top:
-                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y - collision.Overlap);
-                //    break;
-                
-                case CollisionSide.Bottom:
-                    m_Player.Position = new Maths.Vector2(m_Player.Position.X, m_Player.Position.Y + collision.Overlap);
-                    m_Player.Velocity = new Maths.Vector2(m_Player.Velocity.X, 0.0f);
-                    break;
-                
-                default:
-                    break;
+                uint chunkBottomLeftX = (uint)Math.Floor(m_Player.Position.X / (Settings.SpriteSize * Settings.ChunkSize));
+                uint chunkBottomLeftY = (uint)Math.Floor(m_Player.Position.Y / (Settings.SpriteSize * Settings.ChunkSize));
+
+                // Note: Subtract a tiny epsilon (0.01f) to avoid rounding issues when the edge is exactly on a chunk boundary
+                uint chunkTopRightX = (uint)Math.Floor((m_Player.Position.X + m_Player.Size.X - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+                uint chunkTopRightY = (uint)Math.Floor((m_Player.Position.Y + m_Player.Size.Y - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+
+                // Check collisions with chunks
+                for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
+                {
+                    for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
+                    {
+                        if (!m_Chunks.ContainsKey((x, y)))
+                            continue;
+
+                        Chunk chunk = m_Chunks[(x, y)];
+
+                        foreach (Tile tile in chunk.Tiles)
+                        {
+                            if (tile == null)
+                                continue;
+
+                            CollisionResult result = Collision.AABB(m_Player.HitboxPosition, m_Player.HitboxSize, tile.Position, tile.Size);
+
+                            if (result.Side != CollisionSide.None)
+                            {
+                                switch (result.Side) // TODO: All sides
+                                { 
+                                //case CollisionSide.Left:
+                                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X + collision.Overlap, m_TESTTile.Position.Y);
+                                //    break;
+                                //
+                                //case CollisionSide.Right:
+                                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X - collision.Overlap, m_TESTTile.Position.Y);
+                                //    break;
+                                //
+                                //case CollisionSide.Top:
+                                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y - collision.Overlap);
+                                //    break;
+                                
+                                case CollisionSide.Bottom:
+                                    m_Player.Position = new Maths.Vector2(m_Player.Position.X, m_Player.Position.Y + result.Overlap);
+                                    m_Player.Velocity = new Maths.Vector2(m_Player.Velocity.X, 0.0f);
+                                    m_Player.CanJump = true;
+                                    break;
+                                
+                                default:
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -68,8 +100,12 @@ namespace Puzzled
         public void OnRender()
         {
             m_Renderer.Begin();
-            m_Ground.RenderTo(m_Renderer, m_Debug);
+
+            foreach (KeyValuePair<(uint x, uint y), Chunk> chunk in m_Chunks)
+                chunk.Value.RenderTo(m_Renderer, m_Debug);
+            
             m_Player.RenderTo(m_Renderer, m_Debug);
+            
             m_Renderer.End();
         }
 
@@ -91,11 +127,18 @@ namespace Puzzled
             Logger.Info($"Loading level from: {path}");
 
             m_Player = new Player();
-            
-            // TODO: Remove
-            m_Ground = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Game.Instance.Window.Width, Settings.SpriteSize), Assets.WhiteTexture);
 
-            // TODO: ...
+            // TODO: Remove
+            List<Tile> tiles = new List<Tile>();
+            tiles.Add(new Tile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 2, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 3, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+
+            m_Chunks.Add((0, 0), new Chunk(0, 0, tiles));
+            m_Chunks.Add((1, 0), new Chunk(1, 0, tiles));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +148,7 @@ namespace Puzzled
         private bool m_Debug = false;
 
         private Player m_Player;
-        private StaticTile m_Ground;
+        private Dictionary<(uint x, uint y), Chunk> m_Chunks = new Dictionary<(uint x, uint y), Chunk>();
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables

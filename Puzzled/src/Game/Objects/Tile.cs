@@ -9,21 +9,21 @@ namespace Puzzled
 {
 
     //////////////////////////////////////////////////////////////////////////////////
-    // StaticTile
+    // Tile
     //////////////////////////////////////////////////////////////////////////////////
-    public class DynamicTile
+    public class Tile
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public DynamicTile(Maths.Vector2 position, Maths.Vector2 size, ITexture texture)
+        public Tile(Maths.Vector2 position, Maths.Vector2 size, ITexture texture)
         {
             m_Position = position;
             m_Size = size;
             m_Texture = texture;
         }
-        ~DynamicTile()
+        ~Tile()
         {
         }
 
@@ -44,6 +44,7 @@ namespace Puzzled
 
         public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public Maths.Vector2 Size { get { return m_Size; } set { m_Size = value; } }
+        public ITexture Texture { get { return m_Texture; } }
 
     }
 
