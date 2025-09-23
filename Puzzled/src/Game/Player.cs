@@ -44,13 +44,9 @@ namespace Puzzled
             Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
             // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
-            if (Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up))
+            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && !IsMovingVertically())
             {
-                m_Velocity.Y = c_RunningVelocity;
-            }
-            if (Input.IsKeyPressed(Key.S) || Input.IsKeyPressed(Key.Down))
-            {
-                m_Velocity.Y = -c_RunningVelocity;
+                m_Velocity.Y = c_JumpingVelocity;
             }
             if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
             {
@@ -66,29 +62,24 @@ namespace Puzzled
             m_Position.X += m_Velocity.X * deltaTime;
             m_Position.Y += m_Velocity.Y * deltaTime;
 
-            if (IsMovingVertically() && m_State != State.Running)
+            if (IsMovingHorizontally() && m_State != State.Running)
                 SetNewState(State.Running);
-            if (!IsMovingVertically() && m_State != State.Idle) // TODO: Something with !IsMovingHorizontally()
+            if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
                 SetNewState(State.Idle);
 
-            // Apply friction on X
-            if (m_Velocity.X != 0.0f)
+            // Friction
             {
-                m_Velocity.X -= Settings.GroundFriction * Math.Sign(m_Velocity.X);
+                if (m_Velocity.X != 0.0f)
+                {
+                    m_Velocity.X -= Settings.GroundFriction * Math.Sign(m_Velocity.X);
 
-                // Snap to zero if it overshoots
-                if (Math.Abs(m_Velocity.X) < Settings.GroundFriction)
-                    m_Velocity.X = 0.0f;
-            }
+                    // Snap to zero if it overshoots
+                    if (Math.Abs(m_Velocity.X) < Settings.GroundFriction)
+                        m_Velocity.X = 0.0f;
+                }
 
-            // Apply friction on Y
-            if (m_Velocity.Y != 0.0f)
-            {
-                m_Velocity.Y -= Settings.GroundFriction * Math.Sign(m_Velocity.Y);
-
-                // Snap to zero if it overshoots
-                if (Math.Abs(m_Velocity.Y) < Settings.GroundFriction)
-                    m_Velocity.Y = 0.0f;
+                m_Velocity.Y -= Settings.Gravity;
+                m_Velocity.Y = Math.Min(m_Velocity.Y, Settings.PlayerTerminalVelocity);
             }
 
             GetCurrentAnimation().Update(deltaTime);
@@ -113,15 +104,14 @@ namespace Puzzled
         
         public Animation GetCurrentAnimation()
         {
-            // TODO: Re-enable animations after testing movement
-            //switch (m_State)
-            //{
-            //case State.Idle:            return m_IdleAnimation;
-            //case State.Running:         return m_RunningAnimation;
-            //
-            //default:
-            //    break;
-            //}
+            switch (m_State)
+            {
+            case State.Idle:            return m_IdleAnimation;
+            case State.Running:         return m_RunningAnimation;
+            
+            default:
+                break;
+            }
 
             return m_IdleAnimation;
         }
@@ -131,16 +121,16 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public bool IsMovingUp() { return m_Velocity.Y > 0.0f; }
         public bool IsMovingDown() { return m_Velocity.Y < 0.0f; }
-        public bool IsMovingHorizontally() { return IsMovingUp() || IsMovingDown(); }
+        public bool IsMovingVertically() { return IsMovingUp() || IsMovingDown(); }
         public bool IsTryingToMoveLeft() { return m_Velocity.X < 0.0f; }
         public bool IsTryingToMoveRight() { return m_Velocity.X > 0.0f; }
-        public bool IsMovingVertically() { return IsTryingToMoveLeft() || IsTryingToMoveRight(); }
+        public bool IsMovingHorizontally() { return IsTryingToMoveLeft() || IsTryingToMoveRight(); }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private State m_State = State.Idle;
-        private Maths.Vector2 m_Position = new Maths.Vector2(0.0f, 0.0f);
+        private Maths.Vector2 m_Position = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));
         private Maths.Vector2 m_Velocity = new Maths.Vector2(0.0f, 0.0f);
         private bool m_Flipped = false;
@@ -151,6 +141,7 @@ namespace Puzzled
 
         public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
+        public Maths.Vector2 Velocity { get { return m_Velocity; } set { m_Velocity = value; } }
 
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
@@ -158,6 +149,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private const float c_JumpingVelocity = 1000.0f;
         private const float c_RunningVelocity = 125.0f;
 
     }

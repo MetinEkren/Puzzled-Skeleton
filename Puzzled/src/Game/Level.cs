@@ -21,6 +21,10 @@ namespace Puzzled
         public Level(Canvas canvas, string levelPath)
         {
             m_Renderer = new Renderer(canvas);
+
+            // TODO: Remove
+            m_Ground = new StaticTile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Game.Instance.Window.Width, Settings.SpriteSize), Assets.WhiteTexture);
+
             Load(levelPath);
         }
         ~Level()
@@ -34,25 +38,26 @@ namespace Puzzled
         {
             m_Player.Update(deltaTime);
 
-            var collision = Collision.AABB(m_TESTTile.Position, m_TESTTile.Size, m_Player.HitboxPosition, m_Player.HitboxSize);
+            var collision = Collision.AABB(m_Player.HitboxPosition, m_Player.HitboxSize, m_Ground.Position, m_Ground.Size);
             if (collision.Side != CollisionSide.None)
             {
                 switch (collision.Side)
                 { 
-                case CollisionSide.Left:
-                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X + collision.Overlap, m_TESTTile.Position.Y);
-                    break;
-                
-                case CollisionSide.Right:
-                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X - collision.Overlap, m_TESTTile.Position.Y);
-                    break;
-                
-                case CollisionSide.Top:
-                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y - collision.Overlap);
-                    break;
+                //case CollisionSide.Left:
+                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X + collision.Overlap, m_TESTTile.Position.Y);
+                //    break;
+                //
+                //case CollisionSide.Right:
+                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X - collision.Overlap, m_TESTTile.Position.Y);
+                //    break;
+                //
+                //case CollisionSide.Top:
+                //    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y - collision.Overlap);
+                //    break;
                 
                 case CollisionSide.Bottom:
-                    m_TESTTile.Position = new Maths.Vector2(m_TESTTile.Position.X, m_TESTTile.Position.Y + collision.Overlap);
+                    m_Player.Position = new Maths.Vector2(m_Player.Position.X, m_Player.Position.Y + collision.Overlap);
+                    m_Player.Velocity = new Maths.Vector2(m_Player.Velocity.X, 0.0f);
                     break;
                 
                 default:
@@ -64,7 +69,7 @@ namespace Puzzled
         public void OnRender()
         {
             m_Renderer.Begin();
-            m_TESTTile.RenderTo(m_Renderer, m_Debug);
+            m_Ground.RenderTo(m_Renderer, m_Debug);
             m_Player.RenderTo(m_Renderer, m_Debug);
             m_Renderer.End();
         }
@@ -96,7 +101,7 @@ namespace Puzzled
         private bool m_Debug = false;
 
         private Player m_Player = new Player();
-        private StaticTile m_TESTTile = new StaticTile(new Maths.Vector2(100.0f, 100.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture);
+        private StaticTile m_Ground; 
 
     }
 

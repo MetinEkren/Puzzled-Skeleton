@@ -20,8 +20,9 @@ namespace Puzzled
         public const uint Scale = 3;
         public const uint SpriteSize = 16 * Scale; // 16x16 pixels
 
-        public const float Gravity = 9.81f * Scale;
+        public const float Gravity = 0.50f * Scale;
         public const float GroundFriction = 2.0f * Scale;
+        public const float PlayerTerminalVelocity = 100.0f * Scale;
 
     }
 
