@@ -25,10 +25,12 @@ namespace Puzzled
 
             foreach (Tile tile in allTiles)
             {
-                if (tile.Position.X >= m_ChunkX * (Settings.ChunkSize * Settings.SpriteSize) && tile.Position.X < (m_ChunkX + 1) * (Settings.ChunkSize * Settings.SpriteSize) &&
-                    tile.Position.Y >= m_ChunkY * (Settings.ChunkSize * Settings.SpriteSize) && tile.Position.Y < (m_ChunkY + 1) * (Settings.ChunkSize * Settings.SpriteSize))
+                if (tile.Position.X >= m_ChunkX * (Settings.ChunkSize * Settings.SpriteSize) && tile.Position.X < ((m_ChunkX + 1) * (Settings.ChunkSize * Settings.SpriteSize)) &&
+                    tile.Position.Y >= m_ChunkY * (Settings.ChunkSize * Settings.SpriteSize) && tile.Position.Y < ((m_ChunkY + 1) * (Settings.ChunkSize * Settings.SpriteSize)))
                 {
-                    m_Tiles[(int)(tile.Position.X / Settings.SpriteSize / (x + 1)), (int)(tile.Position.Y / Settings.SpriteSize / (y + 1))] = tile;
+                    int xIndex = (int)((tile.Position.X - (Settings.ChunkSize * Settings.SpriteSize * x)) / Settings.SpriteSize);
+                    int yIndex = (int)((tile.Position.Y - (Settings.ChunkSize * Settings.SpriteSize * y)) / Settings.SpriteSize);
+                    m_Tiles[xIndex, yIndex] = tile;
                 }
             }
         }
@@ -49,6 +51,22 @@ namespace Puzzled
                     continue;
 
                 renderer.AddQuad(tile.Position, tile.Size, tile.Texture);
+
+                if (debug) // Outline tile hitboxes
+                {
+                    renderer.AddQuad(tile.Position, new Maths.Vector2(tile.Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                    renderer.AddQuad(tile.Position, new Maths.Vector2(1 * Settings.Scale, tile.Size.Y), Assets.WhiteTexture);
+                    renderer.AddQuad(new Maths.Vector2(tile.Position.X, tile.Position.Y + tile.Size.Y - (1 * Settings.Scale)), new Maths.Vector2(tile.Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                    renderer.AddQuad(new Maths.Vector2(tile.Position.X + tile.Size.X - (1 * Settings.Scale), tile.Position.Y), new Maths.Vector2(1 * Settings.Scale, tile.Size.Y), Assets.WhiteTexture);
+                }
+            }
+
+            if (debug) // Outline chunk size
+            {
+                renderer.AddQuad(Position, new Maths.Vector2(Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(Position, new Maths.Vector2(1 * Settings.Scale, Size.Y), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(Position.X, Position.Y + Size.Y - (1 * Settings.Scale)), new Maths.Vector2(Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(Position.X + Size.X - (1 * Settings.Scale), Position.Y), new Maths.Vector2(1 * Settings.Scale, Size.Y), Assets.WhiteTexture);
             }
         }
 
@@ -59,6 +77,9 @@ namespace Puzzled
         private Tile[,] m_Tiles = new Tile[Settings.ChunkSize, Settings.ChunkSize]; // [x,y]
 
         public Tile[,] Tiles { get { return m_Tiles; } }
+
+        public Maths.Vector2 Position { get { return new Maths.Vector2(m_ChunkX * (Settings.ChunkSize * Settings.SpriteSize), m_ChunkY * (Settings.ChunkSize * Settings.SpriteSize)); } }
+        public Maths.Vector2 Size { get { return new Maths.Vector2((Settings.ChunkSize * Settings.SpriteSize), (Settings.ChunkSize * Settings.SpriteSize)); } }
     
     }
 

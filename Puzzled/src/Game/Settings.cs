@@ -26,7 +26,7 @@ namespace Puzzled
         public const uint ChunkSize = 4; // 4x4 tiles
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Physics
+        // Physics // TODO: tweak these
         ////////////////////////////////////////////////////////////////////////////////////
         public const float Gravity = 9.81f * 4 * Scale;
         public const float GroundFriction = Gravity;

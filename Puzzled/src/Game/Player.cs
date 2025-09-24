@@ -91,10 +91,15 @@ namespace Puzzled
 
         public void RenderTo(Renderer renderer, bool debug = false)
         {
-            if (debug)
-                renderer.AddQuad(HitboxPosition, HitboxSize, Assets.WhiteTexture);
-
             renderer.AddQuad(Position, Size, GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
+            
+            if (debug) // Outline hitbox
+            {
+                renderer.AddQuad(HitboxPosition, new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(HitboxPosition, new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(HitboxPosition.X, HitboxPosition.Y + HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
