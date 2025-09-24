@@ -28,9 +28,11 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Physics
         ////////////////////////////////////////////////////////////////////////////////////
-        public const float Gravity = 2.25f * Scale;
-        public const float GroundFriction = 2.0f * Scale;
-        public const float PlayerTerminalVelocity = 100.0f * Scale; // Note: For downards, so it doesn't keep accelerating
+        public const float Gravity = 9.81f * 4 * Scale;
+        public const float GroundFriction = Gravity;
+        public const float PlayerRunningVelocity = 35.0f * Scale;
+        public const float PlayerJumpingVelocity = 35.0f * Scale;
+        public const float PlayerTerminalVelocity = PlayerJumpingVelocity; // Note: For downards, so it doesn't keep accelerating
 
     }
 

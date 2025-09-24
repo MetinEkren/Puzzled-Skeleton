@@ -41,22 +41,22 @@ namespace Puzzled
         public void Update(float deltaTime)
         {
             Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
-            //Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
+            Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
             // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
             if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
             {
-                m_Velocity.Y = c_JumpingVelocity;
+                m_Velocity.Y = Settings.PlayerJumpingVelocity;
                 m_CanJump = false;
             }
             if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
             {
-                m_Velocity.X = -c_RunningVelocity;
+                m_Velocity.X = -Settings.PlayerRunningVelocity;
                 m_Flipped = true;
             }
             if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
             {
-                m_Velocity.X = c_RunningVelocity;
+                m_Velocity.X = Settings.PlayerRunningVelocity;
                 m_Flipped = false;
             }
             
@@ -75,14 +75,14 @@ namespace Puzzled
             {
                 if (m_Velocity.X != 0.0f)
                 {
-                    m_Velocity.X -= Settings.GroundFriction * Math.Sign(m_Velocity.X);
+                    m_Velocity.X -= Settings.GroundFriction * Math.Sign(m_Velocity.X) * deltaTime;
 
                     // Snap to zero if it overshoots
                     if (Math.Abs(m_Velocity.X) < Settings.GroundFriction)
                         m_Velocity.X = 0.0f;
                 }
 
-                m_Velocity.Y -= Settings.Gravity;
+                m_Velocity.Y -= Settings.Gravity * deltaTime;
                 m_Velocity.Y = Math.Min(m_Velocity.Y, Settings.PlayerTerminalVelocity);
             }
 
@@ -152,12 +152,6 @@ namespace Puzzled
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 
         public bool CanJump { get { return m_CanJump; } set { m_CanJump = value; } }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Static variables
-        ////////////////////////////////////////////////////////////////////////////////////
-        private const float c_JumpingVelocity = 980.0f;
-        private const float c_RunningVelocity = 125.0f;
 
     }
 

@@ -8,6 +8,7 @@ using System.Windows.Shapes;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Puzzled
 {
@@ -130,12 +131,15 @@ namespace Puzzled
 
             // TODO: Remove
             List<Tile> tiles = new List<Tile>();
-            tiles.Add(new Tile(new Maths.Vector2(0.0f, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 0, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 1, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
             tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 2, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
             tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 3, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            
+            //tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            //tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 6, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+            //tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 7, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
 
             m_Chunks.Add((0, 0), new Chunk(0, 0, tiles));
             m_Chunks.Add((1, 0), new Chunk(1, 0, tiles));
