@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Puzzled.Physics;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Windows.Input;
 
 namespace Puzzled
 {
@@ -43,21 +45,23 @@ namespace Puzzled
             Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
             Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
-            // TODO: Fix diagonal movement being 1.4x higher than horizontal and vertical
-            if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
+            // Movement
             {
-                m_Velocity.Y = Settings.PlayerJumpingVelocity;
-                m_CanJump = false;
-            }
-            if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
-            {
-                m_Velocity.X = -Settings.PlayerRunningVelocity;
-                m_Flipped = true;
-            }
-            if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
-            {
-                m_Velocity.X = Settings.PlayerRunningVelocity;
-                m_Flipped = false;
+                if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
+                {
+                    m_Velocity.Y = Settings.PlayerJumpingVelocity;
+                    m_CanJump = false;
+                }
+                if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
+                {
+                    m_Velocity.X = -Settings.PlayerRunningVelocity;
+                    m_Flipped = true;
+                }
+                if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
+                {
+                    m_Velocity.X = Settings.PlayerRunningVelocity;
+                    m_Flipped = false;
+                }
             }
             
             // Velocity
@@ -66,10 +70,13 @@ namespace Puzzled
                 m_Position.Y += m_Velocity.Y * deltaTime;
             }
 
-            if (IsMovingHorizontally() && m_State != State.Running)
-                SetNewState(State.Running);
-            if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
-                SetNewState(State.Idle);
+            // Animation
+            {
+                if (IsMovingHorizontally() && m_State != State.Running)
+                    SetNewState(State.Running);
+                if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
+                    SetNewState(State.Idle);
+            }
 
             // Friction & Gravity
             {
@@ -87,6 +94,57 @@ namespace Puzzled
             }
 
             GetCurrentAnimation().Update(deltaTime);
+        }
+
+        public void HandleStaticCollisions(Dictionary<(uint x, uint y), Chunk> chunks)
+        {
+            uint chunkBottomLeftX = (uint)Math.Floor(HitboxPosition.X / (Settings.SpriteSize * Settings.ChunkSize));
+            uint chunkBottomLeftY = (uint)Math.Floor(HitboxPosition.Y / (Settings.SpriteSize * Settings.ChunkSize));
+
+            // Note: Subtract a tiny epsilon (0.01f) to avoid rounding issues when the edge is exactly on a chunk boundary
+            uint chunkTopRightX = (uint)Math.Floor((HitboxPosition.X + HitboxSize.X - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+            uint chunkTopRightY = (uint)Math.Floor((HitboxPosition.Y + HitboxSize.Y - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+
+            // Check collisions with chunks
+            for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
+            {
+                for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
+                {
+                    if (!chunks.ContainsKey((x, y)))
+                        continue;
+
+                    Chunk chunk = chunks[(x, y)];
+
+                    foreach (Tile tile in chunk.Tiles)
+                    {
+                        if (tile == null)
+                            continue;
+
+                        CollisionResult result = Collision.AABB(HitboxPosition, HitboxSize, tile.Position, tile.Size);
+
+                        switch (result.Side)
+                        {
+                        case CollisionSide.Left:
+                            m_Position = new Maths.Vector2(m_Position.X + result.Overlap, m_Position.Y);
+                            break;
+                        case CollisionSide.Right:
+                            m_Position = new Maths.Vector2(m_Position.X - result.Overlap, m_Position.Y);
+                            break;
+                        case CollisionSide.Top:
+                            m_Position = new Maths.Vector2(m_Position.X, m_Position.Y - result.Overlap);
+                            break;
+                        case CollisionSide.Bottom:
+                            m_Position = new Maths.Vector2(m_Position.X, m_Position.Y + result.Overlap);
+                            m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
+                            m_CanJump = true;
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public void RenderTo(Renderer renderer, bool debug = false)
@@ -155,8 +213,6 @@ namespace Puzzled
 
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
-
-        public bool CanJump { get { return m_CanJump; } set { m_CanJump = value; } }
 
     }
 

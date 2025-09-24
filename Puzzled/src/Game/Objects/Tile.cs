@@ -33,6 +33,14 @@ namespace Puzzled
         public void RenderTo(Renderer renderer, bool debug = false)
         {
             renderer.AddQuad(m_Position, m_Size, m_Texture);
+
+            if (debug) // Outline tile hitbox
+            {
+                renderer.AddQuad(m_Position, new Maths.Vector2(m_Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(m_Position, new Maths.Vector2(1 * Settings.Scale, m_Size.Y), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(m_Position.X, m_Position.Y + m_Size.Y - (1 * Settings.Scale)), new Maths.Vector2(m_Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(m_Position.X + m_Size.X - (1 * Settings.Scale), m_Position.Y), new Maths.Vector2(1 * Settings.Scale, m_Size.Y), Assets.WhiteTexture);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

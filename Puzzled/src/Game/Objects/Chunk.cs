@@ -49,16 +49,8 @@ namespace Puzzled
             {
                 if (tile == null)
                     continue;
-
-                renderer.AddQuad(tile.Position, tile.Size, tile.Texture);
-
-                if (debug) // Outline tile hitboxes
-                {
-                    renderer.AddQuad(tile.Position, new Maths.Vector2(tile.Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
-                    renderer.AddQuad(tile.Position, new Maths.Vector2(1 * Settings.Scale, tile.Size.Y), Assets.WhiteTexture);
-                    renderer.AddQuad(new Maths.Vector2(tile.Position.X, tile.Position.Y + tile.Size.Y - (1 * Settings.Scale)), new Maths.Vector2(tile.Size.X, 1 * Settings.Scale), Assets.WhiteTexture);
-                    renderer.AddQuad(new Maths.Vector2(tile.Position.X + tile.Size.X - (1 * Settings.Scale), tile.Position.Y), new Maths.Vector2(1 * Settings.Scale, tile.Size.Y), Assets.WhiteTexture);
-                }
+                
+                tile.RenderTo(renderer, debug);
             }
 
             if (debug) // Outline chunk size

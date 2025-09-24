@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Puzzled
 {
@@ -57,6 +58,15 @@ namespace Puzzled
         public void OnEvent(Event e)
         {
             if (!IsLoaded) return;
+
+            if (e is KeyPressedEvent kpe) // TODO: Remove
+            {
+                if (kpe.KeyCode == Key.Escape)
+                {
+                    Game.Instance.ActiveScene = new SavesMenu();
+                }
+            }
+
             m_Level.OnEvent(e);
         }
 
