@@ -29,6 +29,7 @@ namespace Puzzled
         // Map
         ////////////////////////////////////////////////////////////////////////////////////
         public const uint ChunkSize = 4; // 4x4 tiles
+        public const uint MaxChunks = 100; // 100x100 chunks, this is for stopping checks and crashes when moving outside of uint range
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Physics // TODO: tweak these

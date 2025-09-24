@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +54,7 @@ namespace Puzzled
             case Severity.Error:    return ConsoleColor.Red;
 
             default:
+                Debug.Assert(false, "Unreachable.");
                 break;
             }
 
@@ -69,6 +71,7 @@ namespace Puzzled
             case Severity.Error:    return "ERROR";
 
             default:
+                Debug.Assert(false, "Unreachable.");
                 break;
             }
 

@@ -42,8 +42,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void Update(float deltaTime)
         {
-            Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
-            Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
+            //Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
+            //Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
 
             // Movement
             {
@@ -91,6 +91,10 @@ namespace Puzzled
 
                 m_Velocity.Y -= Settings.Gravity * deltaTime;
                 m_Velocity.Y = Math.Min(m_Velocity.Y, Settings.PlayerTerminalVelocity);
+
+                // When falling (or jumping) you are no longer able to jump again
+                if (m_Velocity.Y != 0.0f)
+                    m_CanJump = false;
             }
 
             GetCurrentAnimation().Update(deltaTime);
@@ -105,13 +109,27 @@ namespace Puzzled
             uint chunkTopRightX = (uint)Math.Floor((HitboxPosition.X + HitboxSize.X - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
             uint chunkTopRightY = (uint)Math.Floor((HitboxPosition.Y + HitboxSize.Y - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
 
+            // Fix collisions no longer working when moving out of chunk coordinate space
+            // + Fix chunks out of coordinate space being checked, instead set them to 0,0 (useless check, but easiest solution)
+            {
+                if (chunkBottomLeftX > Settings.MaxChunks) { chunkBottomLeftX = 0; chunkTopRightX = 0; }
+                if (chunkBottomLeftY > Settings.MaxChunks) { chunkBottomLeftY = 0; chunkTopRightY = 0; }
+                
+                //if (chunkBottomLeftX > chunkTopRightX) chunkBottomLeftX = chunkTopRightX;
+                //if (chunkBottomLeftY > chunkTopRightY) chunkBottomLeftY = chunkTopRightY;
+            }
+
             // Check collisions with chunks
+            Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
             for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
             {
                 for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
                 {
                     if (!chunks.ContainsKey((x, y)))
+                    {
+                        Logger.Warn($"Player is outside of any chunks. Position = {{ .x = { Position.X }, .y = {Position.Y} }}");
                         continue;
+                    }
 
                     Chunk chunk = chunks[(x, y)];
 
@@ -145,6 +163,7 @@ namespace Puzzled
                     }
                 }
             }
+            Logger.Trace("Ending chunk checks");
         }
 
         public void RenderTo(Renderer renderer, bool debug = false)
