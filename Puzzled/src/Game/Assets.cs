@@ -30,6 +30,8 @@ namespace Puzzled
         public static string PushSheetPath = ResourcesDirectory + "Resources/Sprites/push.png";
         public static string RunSheetPath = ResourcesDirectory + "Resources/Sprites/run.png";
 
+        public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
+
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +49,16 @@ namespace Puzzled
         public static Texture PainSheet = new Texture(PainSheetPath);
         public static Texture PushSheet = new Texture(PushSheetPath);
         public static Texture RunSheet = new Texture(RunSheetPath);
+
+        public static Texture TileSheet = new Texture(TileSheetPath);
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Tiles
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static CroppedTexture LeftBlock = new CroppedTexture(TileSheet, new UV(0, 0, 16, 16));
+        public static CroppedTexture MiddleBlock = new CroppedTexture(TileSheet, new UV(16, 0, 16, 16));
+        public static CroppedTexture RightBlock = new CroppedTexture(TileSheet, new UV(32, 0, 16, 16));
+        public static CroppedTexture SingleBlock = new CroppedTexture(TileSheet, new UV(48, 0, 16, 16));
 
     }
 

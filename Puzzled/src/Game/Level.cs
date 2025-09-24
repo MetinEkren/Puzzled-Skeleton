@@ -77,19 +77,19 @@ namespace Puzzled
 
             // Loading // TODO: Remove and replace with loading from file
             {
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 0, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 1, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 2, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 3, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 0, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.LeftBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 1, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 2, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 3, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
 
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 6, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 7, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 6, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 7, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
 
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 8, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 9, Settings.SpriteSize * 1), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 10, Settings.SpriteSize * 2), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.WhiteTexture));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 8, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.RightBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 9, Settings.SpriteSize * 1), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.SingleBlock));
+                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 10, Settings.SpriteSize * 2), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.SingleBlock));
             }
 
             // Putting all tiles into chunks // TODO: Proper chunk management
