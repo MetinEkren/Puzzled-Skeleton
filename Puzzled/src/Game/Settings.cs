@@ -17,8 +17,17 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Audio
         ////////////////////////////////////////////////////////////////////////////////////
-        public static uint MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 2u); // % // TODO: This is for Jorben's PC, ignore
-
+        private static uint s_MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 2u); // % // TODO: This is for Jorben's PC, ignore
+        public static uint MasterVolume { get { return s_MasterVolume; }
+            set 
+            {
+                // Note: Currently all audio files must manually be added... // FUTURE TODO: ...
+                s_MasterVolume = value;
+                Assets.IntroMusic.Volume = value;
+                Assets.MainMenuMusic.Volume = value;
+            }
+        }
+        
         ////////////////////////////////////////////////////////////////////////////////////
         // Renderer
         ////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +38,7 @@ namespace Puzzled
         // Map
         ////////////////////////////////////////////////////////////////////////////////////
         public const uint ChunkSize = 4; // 4x4 tiles
-        public const uint MaxChunks = 100; // 100x100 chunks, this is for stopping checks and crashes when moving outside of uint range
+        public const uint MaxChunks = 100; // 100x100 chunks, this is for stopping checks and crashes when moving outside of uint range, it can easily be increased.
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Physics // TODO: tweak these
