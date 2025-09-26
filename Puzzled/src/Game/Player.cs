@@ -120,14 +120,14 @@ namespace Puzzled
             }
 
             // Check collisions with chunks
-            Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
+            //Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
             for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
             {
                 for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
                 {
                     if (!chunks.ContainsKey((x, y)))
                     {
-                        Logger.Warn($"Player is outside of any chunks. Position = {{ .x = { Position.X }, .y = {Position.Y} }}");
+                        Logger.Warn($"Trying to check for chunk ({x}, {y}), it doesn't exist. Position = {{ .x = { Position.X }, .y = {Position.Y} }}");
                         continue;
                     }
 
@@ -163,7 +163,7 @@ namespace Puzzled
                     }
                 }
             }
-            Logger.Trace("Ending chunk checks");
+            //Logger.Trace("Ending chunk checks");
         }
 
         public void RenderTo(Renderer renderer, bool debug = false)

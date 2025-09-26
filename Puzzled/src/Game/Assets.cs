@@ -58,7 +58,7 @@ namespace Puzzled
         public static CroppedTexture LeftBlock = new CroppedTexture(TileSheet, new UV(0, 0, 16, 16));
         public static CroppedTexture MiddleBlock = new CroppedTexture(TileSheet, new UV(16, 0, 16, 16));
         public static CroppedTexture RightBlock = new CroppedTexture(TileSheet, new UV(32, 0, 16, 16));
-        public static CroppedTexture SingleBlock = new CroppedTexture(TileSheet, new UV(48, 0, 16, 16));
+        public static CroppedTexture SingleBlock = new CroppedTexture(TileSheet, new UV(64, 0, 16, 16));
 
     }
 
