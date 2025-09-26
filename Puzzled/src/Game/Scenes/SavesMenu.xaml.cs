@@ -84,9 +84,7 @@ namespace Puzzled
             Logger.Info($"Save slot {slot} being loaded");
 
             // TODO: Load save and load newest level based on that
-            uint level = Load("TODO: Save file");
-
-            Game.Instance.ActiveScene = new LevelOverlay("TODO: Path");
+            Game.Instance.ActiveScene = new LevelOverlay(Load(1));
 
             Assets.MainMenuMusic.Stop();
         }
@@ -94,9 +92,21 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Private methods
         ////////////////////////////////////////////////////////////////////////////////////
-        private uint Load(string path)
+        private string Load(uint level)
         {
-            return 0;
+            string path = "";
+
+            switch (level)
+            {
+            case 1:
+                path = Assets.Level1Path; 
+                break;
+
+            default:
+                break;
+            }
+
+            return path;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

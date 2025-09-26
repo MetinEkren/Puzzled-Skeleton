@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,6 +33,8 @@ namespace Puzzled
 
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
 
+        public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
+
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
@@ -55,10 +58,23 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Tiles
         ////////////////////////////////////////////////////////////////////////////////////
-        public static CroppedTexture LeftBlock = new CroppedTexture(TileSheet, new UV(0, 0, 16, 16));
-        public static CroppedTexture MiddleBlock = new CroppedTexture(TileSheet, new UV(16, 0, 16, 16));
-        public static CroppedTexture RightBlock = new CroppedTexture(TileSheet, new UV(32, 0, 16, 16));
-        public static CroppedTexture SingleBlock = new CroppedTexture(TileSheet, new UV(64, 0, 16, 16));
+        private static Dictionary<Texture, 
+            Dictionary<(uint x, uint y), CroppedTexture>
+        > s_TextureCache = new Dictionary<Texture, Dictionary<(uint x, uint y), CroppedTexture>>();
+
+        public static CroppedTexture GetTexture(Texture texture, uint x, uint y)
+        {
+            if (!s_TextureCache.ContainsKey(texture))
+                s_TextureCache.Add(texture, new Dictionary<(uint x, uint y), CroppedTexture>());
+
+            Dictionary<(uint x, uint y), CroppedTexture> textureCache = s_TextureCache[texture];
+
+            if (textureCache.ContainsKey((x, y)))
+                return textureCache[(x, y)];
+
+            textureCache.Add((x, y), new CroppedTexture(texture, new UV(x, y, (Settings.SpriteSize / Settings.Scale), (Settings.SpriteSize / Settings.Scale))));
+            return textureCache[(x, y)];
+        }
 
     }
 

@@ -72,30 +72,29 @@ namespace Puzzled
             Logger.Info($"Loading level from: {path}");
 
             m_Player = new Player();
-            m_Tiles = new List<Tile>();
-
-            // Loading // TODO: Remove and replace with loading from file
-            {
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 0, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.LeftBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 1, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 2, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 3, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 4, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 5, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 6, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 7, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.MiddleBlock));
-
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 8, 0.0f), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.RightBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 9, Settings.SpriteSize * 1), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.SingleBlock));
-                m_Tiles.Add(new Tile(new Maths.Vector2(Settings.SpriteSize * 10, Settings.SpriteSize * 2), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.SingleBlock));
-            }
+            m_Tiles = LevelLoader.Load(path);
 
             // Putting all tiles into chunks // TODO: Proper chunk management
             {
                 m_Chunks.Add((0, 0), new Chunk(0, 0, m_Tiles));
                 m_Chunks.Add((1, 0), new Chunk(1, 0, m_Tiles));
                 m_Chunks.Add((2, 0), new Chunk(2, 0, m_Tiles));
+                m_Chunks.Add((3, 0), new Chunk(3, 0, m_Tiles));
+
+                m_Chunks.Add((0, 1), new Chunk(0, 1, m_Tiles));
+                m_Chunks.Add((1, 1), new Chunk(1, 1, m_Tiles));
+                m_Chunks.Add((2, 1), new Chunk(2, 1, m_Tiles));
+                m_Chunks.Add((3, 1), new Chunk(3, 1, m_Tiles));
+
+                m_Chunks.Add((0, 2), new Chunk(0, 2, m_Tiles));
+                m_Chunks.Add((1, 2), new Chunk(1, 2, m_Tiles));
+                m_Chunks.Add((2, 2), new Chunk(2, 2, m_Tiles));
+                m_Chunks.Add((3, 2), new Chunk(3, 2, m_Tiles));
+
+                m_Chunks.Add((0, 3), new Chunk(0, 3, m_Tiles));
+                m_Chunks.Add((1, 3), new Chunk(1, 3, m_Tiles));
+                m_Chunks.Add((2, 3), new Chunk(2, 3, m_Tiles));
+                m_Chunks.Add((3, 3), new Chunk(3, 3, m_Tiles));
             }
         }
 
