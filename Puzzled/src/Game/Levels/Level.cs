@@ -72,29 +72,22 @@ namespace Puzzled
             Logger.Info($"Loading level from: {path}");
 
             m_Player = new Player();
-            m_Tiles = LevelLoader.Load(path);
 
-            // Putting all tiles into chunks // TODO: Proper chunk management
+            uint tilesX, tilesY;
+            m_Tiles = LevelLoader.Load(path, out tilesX, out tilesY);
+
+            // Putting all tiles into chunks 
             {
-                m_Chunks.Add((0, 0), new Chunk(0, 0, m_Tiles));
-                m_Chunks.Add((1, 0), new Chunk(1, 0, m_Tiles));
-                m_Chunks.Add((2, 0), new Chunk(2, 0, m_Tiles));
-                m_Chunks.Add((3, 0), new Chunk(3, 0, m_Tiles));
+                uint chunksX = (uint)Math.Ceiling((double)(tilesX / (float)Settings.ChunkSize));
+                uint chunksY = (uint)Math.Ceiling((double)(tilesY / (float)Settings.ChunkSize));
 
-                m_Chunks.Add((0, 1), new Chunk(0, 1, m_Tiles));
-                m_Chunks.Add((1, 1), new Chunk(1, 1, m_Tiles));
-                m_Chunks.Add((2, 1), new Chunk(2, 1, m_Tiles));
-                m_Chunks.Add((3, 1), new Chunk(3, 1, m_Tiles));
-
-                m_Chunks.Add((0, 2), new Chunk(0, 2, m_Tiles));
-                m_Chunks.Add((1, 2), new Chunk(1, 2, m_Tiles));
-                m_Chunks.Add((2, 2), new Chunk(2, 2, m_Tiles));
-                m_Chunks.Add((3, 2), new Chunk(3, 2, m_Tiles));
-
-                m_Chunks.Add((0, 3), new Chunk(0, 3, m_Tiles));
-                m_Chunks.Add((1, 3), new Chunk(1, 3, m_Tiles));
-                m_Chunks.Add((2, 3), new Chunk(2, 3, m_Tiles));
-                m_Chunks.Add((3, 3), new Chunk(3, 3, m_Tiles));
+                for (uint x = 0; x < chunksX; x++)
+                {
+                    for (uint y = 0; y < chunksY; y++)
+                    {
+                        m_Chunks.Add((x, y), new Chunk(x, y, m_Tiles));
+                    }
+                }
             }
         }
 

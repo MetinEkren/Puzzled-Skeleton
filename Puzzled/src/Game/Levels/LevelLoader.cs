@@ -24,7 +24,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public static List<Tile> Load(string levelPath)
+        public static List<Tile> Load(string levelPath, out uint outWidth, out uint outHeight)
         {
             List<Tile> tiles = new List<Tile>();
 
@@ -40,6 +40,8 @@ namespace Puzzled
                 // Get size
                 uint width = firstLayer.GetProperty("width").GetUInt32();
                 uint height = firstLayer.GetProperty("height").GetUInt32();
+                outWidth = width;
+                outHeight = height;
 
                 uint tileSize = (Settings.SpriteSize / Settings.Scale);
                 uint tilesX = Assets.TileSheet.Width / tileSize;
