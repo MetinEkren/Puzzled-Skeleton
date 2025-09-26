@@ -5,6 +5,7 @@ project "Puzzled"
 	language "C#"
 
 	dotnetframework "4.8"
+	--dotnetframework "net8.0-windows"
 	dotnetsdk "WindowsDesktop" -- Note: This is the WPF flag
 
 	architecture "x64"
@@ -37,6 +38,12 @@ project "Puzzled"
 		"System.Data",
 		"System.Xaml",
 		"System.CodeDom"
+	}
+
+	-- Dependencies
+	nuget 
+	{ 
+		"System.Text.Json:9.0.9" 
 	}
 
     clr "Unsafe"

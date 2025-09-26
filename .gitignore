@@ -40,6 +40,9 @@
 /bin/
 /bin-int/
 
+/Puzzled/bin
+/Puzzled/obj
+
 # Makefiles
 make
 **.make
