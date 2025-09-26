@@ -150,10 +150,16 @@ namespace Puzzled
                             break;
                         case CollisionSide.Top:
                             m_Position = new Maths.Vector2(m_Position.X, m_Position.Y - result.Overlap);
+
+                            if (m_Velocity.Y > 0.0f)
+                                m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
                             break;
                         case CollisionSide.Bottom:
                             m_Position = new Maths.Vector2(m_Position.X, m_Position.Y + result.Overlap);
-                            m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
+
+                            if (m_Velocity.Y < 0.0f)
+                                m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
+                            
                             m_CanJump = true;
                             break;
 
