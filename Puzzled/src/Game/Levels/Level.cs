@@ -21,16 +21,14 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public Level(Canvas canvas, string levelPath)
+        public Level(Canvas canvas, Renderer renderer, string levelPath)
         {
-            s_CurrentLevel = this;
-            m_Renderer = new Renderer(canvas);
+            m_Renderer = renderer;
 
             Load(levelPath);
         }
         ~Level()
         {
-            s_CurrentLevel = null;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -102,13 +100,6 @@ namespace Puzzled
         private Player m_Player;
         private List<Tile> m_Tiles; // Note: Contiguous list of all tiles, not used at the moment, but for level loading is useful
         private Dictionary<(uint x, uint y), Chunk> m_Chunks = new Dictionary<(uint x, uint y), Chunk>();
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Static variables
-        ////////////////////////////////////////////////////////////////////////////////////
-        private static Level s_CurrentLevel;
-
-        public static Level Active { get { return s_CurrentLevel; } }
 
     }
 

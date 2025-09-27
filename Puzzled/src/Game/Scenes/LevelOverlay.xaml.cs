@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -37,7 +38,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Level = new Level(GameCanvas, Assets.LevelToPath(m_Save.Level));
+            m_Renderer = new Renderer(GameCanvas);
+
+            LoadLevel(m_Save.Level);
             Loaded -= OnLoad;
         }
 
@@ -70,7 +73,6 @@ namespace Puzzled
                 }
                 if (kpe.KeyCode == Key.Enter)
                 {
-                    Save();
                     Game.Instance.ActiveScene = new WinMenu(this);
                 }
             }
@@ -78,10 +80,16 @@ namespace Puzzled
             m_Level.OnEvent(e);
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Private methods
-        ////////////////////////////////////////////////////////////////////////////////////
-        private void Save()
+        public void LoadLevel(uint level)
+        {
+            Debug.Assert(((level <= Assets.LevelCount) && (level != 0)), "Invalid level passed in.");
+            
+            m_Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
+            
+            m_Save.Level = level;
+        }
+
+        public void Save()
         {
             // TODO: ...
         }
@@ -89,10 +97,14 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private Renderer m_Renderer;
+        
         private Save m_Save;
         private readonly uint m_SaveSlot;
 
         private Level m_Level;
+
+        public Save ActiveSave { get { return m_Save; } }
 
     }
 

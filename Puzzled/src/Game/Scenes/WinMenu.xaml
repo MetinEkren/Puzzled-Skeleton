@@ -9,6 +9,26 @@
 
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
+
+            <!-- Win text -->
+            <TextBlock Text="Loser, jk you win"
+                FontSize="80"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Foreground="White"
+                Margin="0,64,0,0" />
+
+            <!-- Next level -->
+            <Button x:Name="SaveSlot2" Width="549" Height="127"
+                Content="Next"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                FontSize="24"
+                Foreground="Black"
+                BorderBrush="Blue"
+                BorderThickness="2"
+                Background="White"
+                Click="NextLevelPressed" Margin="0,380,0,0"/>
         </Grid>
     </Grid>
 </UserControl>

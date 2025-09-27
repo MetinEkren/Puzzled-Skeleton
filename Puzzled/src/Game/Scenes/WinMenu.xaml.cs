@@ -72,6 +72,27 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
+        // Callbacks
+        ////////////////////////////////////////////////////////////////////////////////////
+        void NextLevelPressed(object sender, RoutedEventArgs args)
+        {
+            if (m_Level.ActiveSave.Level + 1 > Assets.LevelCount)
+            {
+                Logger.Info($"Going to final win menu.");
+                // TODO: Final win menu
+            }
+            else
+            {
+                Logger.Info($"Going to next level, {m_Level.ActiveSave.Level + 1}.");
+                
+                m_Level.LoadLevel(m_Level.ActiveSave.Level + 1);
+                m_Level.Save();
+
+                Game.Instance.ActiveScene = m_Level;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private LevelOverlay m_Level;

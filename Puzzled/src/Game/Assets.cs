@@ -34,12 +34,23 @@ namespace Puzzled
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
 
         public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
+        public static string Level2Path = ResourcesDirectory + "Resources/Levels/level-2.json";
+        public static string Level3Path = ResourcesDirectory + "Resources/Levels/level-3.json";
+        public static string Level4Path = ResourcesDirectory + "Resources/Levels/level-4.json";
+        public static string Level5Path = ResourcesDirectory + "Resources/Levels/level-5.json";
+        public static string Level6Path = ResourcesDirectory + "Resources/Levels/level-6.json";
+        public const uint LevelCount = 6;
 
         public static string LevelToPath(uint level)
         {
             switch (level)
             {
             case 1:     return Level1Path;
+            case 2:     return Level2Path;
+            case 3:     return Level3Path;
+            case 4:     return Level4Path;
+            case 5:     return Level5Path;
+            case 6:     return Level6Path;
 
             default:
                 break;
