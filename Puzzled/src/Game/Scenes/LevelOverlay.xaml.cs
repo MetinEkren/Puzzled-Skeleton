@@ -19,15 +19,17 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
-        public LevelOverlay(Save save)
+        public LevelOverlay(Save save, uint slot)
         {
             m_Save = save;
+            m_SaveSlot = slot;
 
             InitializeComponent();
             Loaded += OnLoad;
         }
         ~LevelOverlay()
         {
+            Save();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +73,19 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
+        // Private methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        private void Save()
+        {
+            // TODO: ...
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Save m_Save;
+        private readonly uint m_SaveSlot;
+
         private Level m_Level;
 
     }

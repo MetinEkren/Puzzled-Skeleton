@@ -51,6 +51,15 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(GameCanvas);
+
+            m_Saves[0] = Load(1);
+            Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = <NOT IMPLEMENTED> }}");
+
+            m_Saves[1] = Load(2);
+            Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = <NOT IMPLEMENTED> }}");
+
+            m_Saves[2] = Load(3);
+            Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
         }
 
         public void OnUpdate(float deltaTime)
@@ -98,38 +107,33 @@ namespace Puzzled
 
         void SaveSlotPressed(uint slot)
         {
-            Logger.Info($"Save slot {slot} being loaded");
+            Logger.Info($"Save slot {slot} being loaded.");
+
             Load(slot);
+
+            Game.Instance.ActiveScene = new LevelOverlay(m_Saves[slot - 1], slot);
             Assets.MainMenuMusic.Stop();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Private methods
         ////////////////////////////////////////////////////////////////////////////////////
-        private void Load(uint slot)
+        private Save Load(uint slot)
         {
             //string directory = Directory.GetCurrentDirectory(); // TODO: Set it to a set directory
             string directory = Assets.ResourcesDirectory + "Resources/Saves/";
             string saveSlotFilename = "save-" + slot + ".json";
             string saveSlotPath = System.IO.Path.Combine(directory, saveSlotFilename);
 
-            Logger.Info($"Loading save from: {saveSlotPath}");
-
-            Save save;
-            {
-                string json = File.ReadAllText(saveSlotPath);
-                save = JsonSerializer.Deserialize<Save>(json);
-
-                Logger.Trace($"Name = {save.Name}, Level = {save.Level}, Scores = {save.Scores.ToString()}");
-            }
-
-            // TODO: Extract current level
-            Game.Instance.ActiveScene = new LevelOverlay(save);
+            string json = File.ReadAllText(saveSlotPath);
+            return JsonSerializer.Deserialize<Save>(json);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private Save[] m_Saves = new Save[3];
+        
         private Renderer m_Renderer;
 
     }
