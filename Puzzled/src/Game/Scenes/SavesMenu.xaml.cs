@@ -30,7 +30,7 @@ namespace Puzzled
     ////////////////////////////////////////////////////////////////////////////////////
     // SavesMenu
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class SavesMenu : UserControl, Scene
+    public partial class SavesMenu : UserControl, IScene
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -41,8 +41,16 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+        public SavesMenu(MainMenu mainMenu)
+        {
+            m_MainMenu = mainMenu;
+
+            InitializeComponent();
+            Loaded += OnLoad;
+        }
         ~SavesMenu()
         {
+            // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +96,7 @@ namespace Puzzled
                 if (kpe.KeyCode == System.Windows.Input.Key.Escape)
                 {
                     Logger.Info("Pressed Esc, going back to main menu.");
-                    Game.Instance.ActiveScene = new MainMenu();
+                    Game.Instance.ActiveScene = ((m_MainMenu != null) ? m_MainMenu : new MainMenu());
                 }
             }
 
@@ -136,6 +144,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private MainMenu m_MainMenu = null;
         private Save[] m_Saves = new Save[3];
         
         private Renderer m_Renderer;

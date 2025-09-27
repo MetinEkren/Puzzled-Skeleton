@@ -69,7 +69,7 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         public MainWindow Window;
-        public Scene ActiveScene { get { return (Scene)Window.ActiveScene; } set { Window.ActiveScene = value; } }
+        public IScene ActiveScene { get { return (IScene)Window.ActiveScene; } set { Window.ActiveScene = value; } }
 
         public static Game Instance { get; private set; }
     

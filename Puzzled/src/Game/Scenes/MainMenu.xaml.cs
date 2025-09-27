@@ -7,7 +7,7 @@ namespace Puzzled
     ////////////////////////////////////////////////////////////////////////////////////
     // MainMenu
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class MainMenu : UserControl, Scene
+    public partial class MainMenu : UserControl, IScene
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +26,7 @@ namespace Puzzled
         }
         ~MainMenu()
         {
+            // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +38,7 @@ namespace Puzzled
             m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y - m_DesiredLogoHeight;
             m_LogoCenterX = (Game.Instance.Window.Width / 2.0f) - (c_LogoSize.X / 2.0f);
 
-            // Logo // TODO: Center X-Axis
+            // Logo
             {
                 if (!s_AnimationPlayed)
                 {
@@ -111,7 +112,6 @@ namespace Puzzled
 
             m_Renderer.Begin();
             m_Renderer.AddQuad(m_LogoPosition, c_LogoSize, Assets.MainMenuLogo);
-            // TODO: Render some sort of background?
             m_Renderer.End();
         }
 
@@ -129,7 +129,7 @@ namespace Puzzled
                 if (s_AnimationPlayed)
                 {
                     Logger.Info("Pressed start.");
-                    Game.Instance.ActiveScene = new SavesMenu();
+                    Game.Instance.ActiveScene = new SavesMenu(this);
                 }
                 else
                 {

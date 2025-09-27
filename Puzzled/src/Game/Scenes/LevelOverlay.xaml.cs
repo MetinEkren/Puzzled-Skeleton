@@ -8,7 +8,7 @@ namespace Puzzled
     ////////////////////////////////////////////////////////////////////////////////////
     // LevelOverlay // Note: Currently being used to test functionality
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class LevelOverlay : UserControl, Scene
+    public partial class LevelOverlay : UserControl, IScene
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ namespace Puzzled
         }
         ~LevelOverlay()
         {
-            Save();
+            // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -70,6 +70,7 @@ namespace Puzzled
                 }
                 if (kpe.KeyCode == Key.Enter)
                 {
+                    Save();
                     Game.Instance.ActiveScene = new WinMenu(this);
                 }
             }
