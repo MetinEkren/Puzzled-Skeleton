@@ -36,6 +36,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
+            m_Level.SetLevel(m_Level.ActiveSave.Level + 1);
+            m_Level.Save();
+            
             Loaded -= OnLoad;
         }
 
@@ -76,18 +79,19 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         void NextLevelPressed(object sender, RoutedEventArgs args)
         {
-            if (m_Level.ActiveSave.Level + 1 > Assets.LevelCount)
+            if (m_Level.ActiveSave.Level > Assets.LevelCount) // TODO: Remove the ifs // Note: They are currently here for checking logic and seeing output.
             {
                 Logger.Info($"Going to final win menu.");
-                // TODO: Final win menu
+
+                // Note: Even when it's the final menu it should load a level, since the final win menu is a level.
+                m_Level.LoadLevel(m_Level.ActiveSave.Level);
+
+                Game.Instance.ActiveScene = m_Level;
             }
             else
             {
-                Logger.Info($"Going to next level, {m_Level.ActiveSave.Level + 1}.");
-                
-                m_Level.LoadLevel(m_Level.ActiveSave.Level + 1);
-                m_Level.Save();
-
+                Logger.Info($"Going to next level, {m_Level.ActiveSave.Level}.");
+                m_Level.LoadLevel(m_Level.ActiveSave.Level);
                 Game.Instance.ActiveScene = m_Level;
             }
         }

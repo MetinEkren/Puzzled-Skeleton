@@ -126,18 +126,24 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Private methods
+        // Getters
         ////////////////////////////////////////////////////////////////////////////////////
-        private Save Load(uint slot)
+        public static string GetSaveSlotPath(uint slot)
         {
             //string directory = Directory.GetCurrentDirectory(); // TODO: Set it to a set directory
             string directory = Assets.ResourcesDirectory + "Resources/Saves/";
             string saveSlotFilename = "save-" + slot + ".json";
-            string saveSlotPath = System.IO.Path.Combine(directory, saveSlotFilename);
+            return System.IO.Path.Combine(directory, saveSlotFilename);
+        }
 
-            Logger.Info($"Save file loading from: {saveSlotPath}.");
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Private methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        private Save Load(uint slot)
+        {
+            Logger.Info($"Save file loading from: {GetSaveSlotPath(slot)}.");
 
-            string json = File.ReadAllText(saveSlotPath);
+            string json = File.ReadAllText(GetSaveSlotPath(slot));
             return JsonSerializer.Deserialize<Save>(json);
         }
 

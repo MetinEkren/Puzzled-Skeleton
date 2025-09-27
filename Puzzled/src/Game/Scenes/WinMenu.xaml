@@ -11,7 +11,7 @@
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
             <!-- Win text -->
-            <TextBlock Text="Loser, jk you win"
+            <TextBlock Text="Win Screen"
                 FontSize="80"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"

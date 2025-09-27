@@ -41,6 +41,9 @@ namespace Puzzled
         public static string Level6Path = ResourcesDirectory + "Resources/Levels/level-6.json";
         public const uint LevelCount = 6;
 
+        public static string Level7Path = ResourcesDirectory + "Resources/Levels/level-7.json";
+        public static string FinalLevelPath = Level7Path;
+
         public static string LevelToPath(uint level)
         {
             switch (level)
@@ -51,6 +54,7 @@ namespace Puzzled
             case 4:     return Level4Path;
             case 5:     return Level5Path;
             case 6:     return Level6Path;
+            case 7:     return FinalLevelPath;
 
             default:
                 break;

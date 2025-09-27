@@ -1,7 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.IO;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Text.Json;
 
 namespace Puzzled
 {
@@ -80,9 +83,16 @@ namespace Puzzled
             m_Level.OnEvent(e);
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Extra methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Note: Used for setting the level we're on before calling Save(), which uses that value.
+        public void SetLevel(uint level) { m_Save.Level = level; }
+        
         public void LoadLevel(uint level)
         {
-            Debug.Assert(((level <= Assets.LevelCount) && (level != 0)), "Invalid level passed in.");
+            // Note: +1 for final level
+            Debug.Assert(((level <= Assets.LevelCount + 1) && (level != 0)), "Invalid level passed in.");
             
             m_Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
@@ -91,7 +101,12 @@ namespace Puzzled
 
         public void Save()
         {
-            // TODO: ...
+            Logger.Info($"Saving to slot {m_SaveSlot}.");
+
+            string path = SavesMenu.GetSaveSlotPath(m_SaveSlot);
+            string text = JsonSerializer.Serialize<Save>(m_Save);
+
+            File.WriteAllText(path, text);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
