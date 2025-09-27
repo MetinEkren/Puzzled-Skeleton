@@ -8,28 +8,26 @@ namespace Puzzled
     ////////////////////////////////////////////////////////////////////////////////////
     // LevelOverlay // Note: Currently being used to test functionality
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class LevelOverlay : UserControl, Scene
+    public partial class WinMenu : UserControl, Scene
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public LevelOverlay()
+        public WinMenu()
         {
             InitializeComponent();
             Loaded += OnLoad;
         }
-        public LevelOverlay(Save save, uint slot)
+        public WinMenu(LevelOverlay instance)
         {
-            m_Save = save;
-            m_SaveSlot = slot;
+            m_Level = instance;
 
             InitializeComponent();
             Loaded += OnLoad;
         }
-        ~LevelOverlay()
+        ~WinMenu()
         {
-            Save();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -37,20 +35,17 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Level = new Level(GameCanvas, Assets.LevelToPath(m_Save.Level));
             Loaded -= OnLoad;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
-            m_Level.OnUpdate(deltaTime);
         }
 
         public void OnRender()
         {
             if (!IsLoaded) return;
-            m_Level.OnRender();
         }
 
         public void OnUIRender()
@@ -70,28 +65,15 @@ namespace Puzzled
                 }
                 if (kpe.KeyCode == Key.Enter)
                 {
-                    Game.Instance.ActiveScene = new WinMenu(this);
+                    Game.Instance.ActiveScene = m_Level;
                 }
             }
-
-            m_Level.OnEvent(e);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Private methods
-        ////////////////////////////////////////////////////////////////////////////////////
-        private void Save()
-        {
-            // TODO: ...
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private Save m_Save;
-        private readonly uint m_SaveSlot;
-
-        private Level m_Level;
+        private LevelOverlay m_Level;
 
     }
 

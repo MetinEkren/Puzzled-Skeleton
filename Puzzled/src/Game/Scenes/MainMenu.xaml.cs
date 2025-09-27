@@ -65,6 +65,8 @@ namespace Puzzled
                 m_PressStart.Position = new Maths.Vector2(center.X, center.Y + 200.0f);
                 // Note: We don't add it yet since we want it to render later
             }
+
+            Loaded -= OnLoad;
         }
 
         public void OnUpdate(float deltaTime)

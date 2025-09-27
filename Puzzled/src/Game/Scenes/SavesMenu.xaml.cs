@@ -60,6 +60,8 @@ namespace Puzzled
 
             m_Saves[2] = Load(3);
             Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
+
+            Loaded -= OnLoad;
         }
 
         public void OnUpdate(float deltaTime)
@@ -108,10 +110,10 @@ namespace Puzzled
         void SaveSlotPressed(uint slot)
         {
             Logger.Info($"Save slot {slot} being loaded.");
-
-            Load(slot);
-
+            
             Game.Instance.ActiveScene = new LevelOverlay(m_Saves[slot - 1], slot);
+            
+            Assets.IntroMusic.CloseAll();
             Assets.MainMenuMusic.Stop();
         }
 
@@ -124,6 +126,8 @@ namespace Puzzled
             string directory = Assets.ResourcesDirectory + "Resources/Saves/";
             string saveSlotFilename = "save-" + slot + ".json";
             string saveSlotPath = System.IO.Path.Combine(directory, saveSlotFilename);
+
+            Logger.Info($"Save file loading from: {saveSlotPath}.");
 
             string json = File.ReadAllText(saveSlotPath);
             return JsonSerializer.Deserialize<Save>(json);
