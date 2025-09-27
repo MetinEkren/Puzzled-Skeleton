@@ -74,7 +74,9 @@ namespace Puzzled
             m_Player = new Player();
 
             uint tilesX, tilesY;
-            m_Tiles = LevelLoader.Load(path, out tilesX, out tilesY);
+            m_Tiles = new List<Tile>();
+            
+            LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
             // Putting all tiles into chunks 
             {

@@ -35,6 +35,19 @@ namespace Puzzled
 
         public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
 
+        public static string LevelToPath(uint level)
+        {
+            switch (level)
+            {
+            case 1:     return Level1Path;
+
+            default:
+                break;
+            }
+
+            return "<INVALID>";
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////

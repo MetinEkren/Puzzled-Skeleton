@@ -67,6 +67,8 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private uint m_ChunkX, m_ChunkY;
+        
+        // TODO: Maybe make a dynamic list, better performance, since many tiles are null otherwise.
         private Tile[,] m_Tiles = new Tile[Settings.ChunkSize, Settings.ChunkSize]; // [x,y]
 
         public Tile[,] Tiles { get { return m_Tiles; } }

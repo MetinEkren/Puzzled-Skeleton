@@ -17,7 +17,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Audio
         ////////////////////////////////////////////////////////////////////////////////////
-        private static uint s_MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 2u); // % // TODO: This is for Jorben's PC, ignore
+        private static uint s_MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 1u); // % // TODO: This is for Jorben's PC, ignore
         public static uint MasterVolume { get { return s_MasterVolume; }
             set 
             {
@@ -47,7 +47,7 @@ namespace Puzzled
         public const float GroundFriction = Gravity;
         public const float PlayerRunningVelocity = 35.0f * Scale;
         public const float PlayerJumpingVelocity = 40.0f * Scale;
-        public const float PlayerTerminalVelocity = PlayerJumpingVelocity; // Note: For downards, so it doesn't keep accelerating
+        public const float PlayerTerminalVelocity = PlayerJumpingVelocity; // Note: For downwards, so it doesn't keep accelerating
 
     }
 

@@ -24,10 +24,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public static List<Tile> Load(string levelPath, out uint outWidth, out uint outHeight)
+        public static void Load(string levelPath, ref List<Tile> outTiles, out uint outWidth, out uint outHeight)
         {
-            List<Tile> tiles = new List<Tile>();
-
             string json = File.ReadAllText(levelPath);
             using (JsonDocument doc = JsonDocument.Parse(json))
             {
@@ -83,12 +81,10 @@ namespace Puzzled
                     }
 
                     // Note: (width - x) because x is flipped because we .Reverse()
-                    tiles.Add(new Tile(new Maths.Vector2(((width - 1) - x) * (Settings.SpriteSize), y * (Settings.SpriteSize)), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.GetTexture(Assets.TileSheet, uvX, uvY)));
+                    outTiles.Add(new Tile(new Maths.Vector2(((width - 1) - x) * (Settings.SpriteSize), y * (Settings.SpriteSize)), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.GetTexture(Assets.TileSheet, uvX, uvY)));
                     next();
                 }
             }
-
-            return tiles;
         }
 
     }

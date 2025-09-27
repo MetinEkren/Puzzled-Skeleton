@@ -19,9 +19,9 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
-        public LevelOverlay(string path)
+        public LevelOverlay(Save save)
         {
-            m_Path = path;
+            m_Save = save;
 
             InitializeComponent();
             Loaded += OnLoad;
@@ -35,7 +35,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Level = new Level(GameCanvas, m_Path);
+            m_Level = new Level(GameCanvas, Assets.LevelToPath(m_Save.Level));
         }
 
         public void OnUpdate(float deltaTime)
@@ -73,7 +73,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private string m_Path;
+        private Save m_Save;
         private Level m_Level;
 
     }

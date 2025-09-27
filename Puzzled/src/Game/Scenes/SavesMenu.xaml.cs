@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,7 +14,21 @@ namespace Puzzled
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // MainMenu
+    // Save
+    ////////////////////////////////////////////////////////////////////////////////////
+    public struct Save
+    {
+        [JsonInclude]
+        public string Name;
+        [JsonInclude]
+        public uint Level;
+
+        [JsonInclude]
+        public List<uint> Scores;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // SavesMenu
     ////////////////////////////////////////////////////////////////////////////////////
     public partial class SavesMenu : UserControl, Scene
     {
@@ -82,31 +99,32 @@ namespace Puzzled
         void SaveSlotPressed(uint slot)
         {
             Logger.Info($"Save slot {slot} being loaded");
-
-            // TODO: Load save and load newest level based on that
-            Game.Instance.ActiveScene = new LevelOverlay(Load(1));
-
+            Load(slot);
             Assets.MainMenuMusic.Stop();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Private methods
         ////////////////////////////////////////////////////////////////////////////////////
-        private string Load(uint level)
+        private void Load(uint slot)
         {
-            string path = "";
+            //string directory = Directory.GetCurrentDirectory(); // TODO: Set it to a set directory
+            string directory = Assets.ResourcesDirectory + "Resources/Saves/";
+            string saveSlotFilename = "save-" + slot + ".json";
+            string saveSlotPath = System.IO.Path.Combine(directory, saveSlotFilename);
 
-            switch (level)
+            Logger.Info($"Loading save from: {saveSlotPath}");
+
+            Save save;
             {
-            case 1:
-                path = Assets.Level1Path; 
-                break;
+                string json = File.ReadAllText(saveSlotPath);
+                save = JsonSerializer.Deserialize<Save>(json);
 
-            default:
-                break;
+                Logger.Trace($"Name = {save.Name}, Level = {save.Level}, Scores = {save.Scores.ToString()}");
             }
 
-            return path;
+            // TODO: Extract current level
+            Game.Instance.ActiveScene = new LevelOverlay(save);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
