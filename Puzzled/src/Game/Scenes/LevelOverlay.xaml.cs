@@ -74,9 +74,19 @@ namespace Puzzled
                 {
                     Game.Instance.ActiveScene = new SavesMenu();
                 }
-                if (kpe.KeyCode == Key.Enter)
+                if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
                 {
-                    Game.Instance.ActiveScene = new WinMenu(this);
+                    if (m_Save.Level == Assets.LevelCount) // Finish the game
+                    {
+                        Game.Instance.ActiveScene = new MainMenu();
+                    }
+                    else // Win a level
+                    {
+                        ++m_Save.Level;
+                        Save();
+                        
+                        Game.Instance.ActiveScene = new WinMenu(this);
+                    }
                 }
             }
 
