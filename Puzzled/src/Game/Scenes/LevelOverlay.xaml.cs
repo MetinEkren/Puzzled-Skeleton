@@ -94,11 +94,8 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Extra methods
+        // Extra method
         ////////////////////////////////////////////////////////////////////////////////////
-        // Note: Used for setting the level we're on before calling Save(), which uses that value.
-        public void SetLevel(uint level) { m_Save.Level = level; }
-        
         public void LoadLevel(uint level)
         {
             // Note: +1 for final level
@@ -109,7 +106,10 @@ namespace Puzzled
             m_Save.Level = level;
         }
 
-        public void Save()
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Private methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        private void Save()
         {
             Logger.Info($"Saving to slot {m_SaveSlot}.");
 
