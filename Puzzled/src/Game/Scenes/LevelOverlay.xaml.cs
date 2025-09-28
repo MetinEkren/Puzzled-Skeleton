@@ -68,11 +68,11 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
-            if (e is KeyPressedEvent kpe) // TODO: Remove
+            if (e is KeyPressedEvent kpe)
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    Game.Instance.ActiveScene = new SavesMenu();
+                    Game.Instance.ActiveScene = new PauseMenu(this);
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
                 {

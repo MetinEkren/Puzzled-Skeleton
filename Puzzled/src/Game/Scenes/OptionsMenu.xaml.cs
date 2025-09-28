@@ -6,27 +6,27 @@ namespace Puzzled
 {
 
     ////////////////////////////////////////////////////////////////////////////////////
-    // WinMenu // Note: Currently being used to test functionality
+    // LevelOverlay // Note: Currently being used to test functionality
     ////////////////////////////////////////////////////////////////////////////////////
-    public partial class WinMenu : UserControl, IScene
+    public partial class OptionsMenu : UserControl, IScene
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public WinMenu()
+        public OptionsMenu()
         {
             InitializeComponent();
             Loaded += OnLoad;
         }
-        public WinMenu(LevelOverlay instance)
+        public OptionsMenu(IScene previousScene)
         {
-            m_Level = instance;
+            m_PreviousScene = previousScene;
 
             InitializeComponent();
             Loaded += OnLoad;
         }
-        ~WinMenu()
+        ~OptionsMenu()
         {
             // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
         }
@@ -58,33 +58,19 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
-            if (e is KeyPressedEvent kpe) // TODO: Remove
+            if (e is KeyPressedEvent kpe)
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    Game.Instance.ActiveScene = new SavesMenu();
-                }
-                if (kpe.KeyCode == Key.Enter)
-                {
-                    Game.Instance.ActiveScene = m_Level;
+                    Game.Instance.ActiveScene = m_PreviousScene;
                 }
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Callbacks
-        ////////////////////////////////////////////////////////////////////////////////////
-        void NextLevelPressed(object sender, RoutedEventArgs args)
-        {
-            Logger.Info($"Going to next level, {m_Level.ActiveSave.Level}.");
-            m_Level.LoadLevel(m_Level.ActiveSave.Level);
-            Game.Instance.ActiveScene = m_Level;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private LevelOverlay m_Level;
+        private IScene m_PreviousScene;
 
     }
 
