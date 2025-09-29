@@ -39,7 +39,7 @@ namespace Puzzled.Physics
         // Static methods
         //////////////////////////////////////////////////////////////////////////////////
         public static CollisionResult AABB(Maths.Vector2 positionA, Maths.Vector2 sizeA, Maths.Vector2 positionB, Maths.Vector2 sizeB)
-        // TODO: Return multiple sides? with weight?
+        // FUTURE TODO: Return multiple sides? with weight?
         {
             float overlapLeft = (positionA.X + sizeA.X) - positionB.X;   // A right - B left
             float overlapRight = (positionB.X + sizeB.X) - positionA.X; // B right - A left

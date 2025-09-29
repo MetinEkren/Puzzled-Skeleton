@@ -115,7 +115,7 @@ namespace Puzzled
                 texture.GetBitmapSource(),
                 new Int32Rect((int)textureCoords.X, (int)textureCoords.Y, (int)textureCoords.Width, (int)textureCoords.Height) // UV rectangle in pixels
             );
-            m_Image.Freeze(); // TODO: Optimize cropping
+            m_Image.Freeze();
         }
         ~CroppedTexture()
         {

@@ -34,7 +34,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
-            m_Renderer = new Renderer(GameCanvas);
+            m_UIRenderer = new Renderer(UICanvas);
+            
             m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y - m_DesiredLogoHeight;
             m_LogoCenterX = (Game.Instance.Window.Width / 2.0f) - (c_LogoSize.X / 2.0f);
 
@@ -111,9 +112,9 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
 
-            m_Renderer.Begin();
-            m_Renderer.AddQuad(m_LogoPosition, c_LogoSize, Assets.MainMenuLogo);
-            m_Renderer.End();
+            m_UIRenderer.Begin();
+            m_UIRenderer.AddQuad(m_LogoPosition, c_LogoSize, Assets.MainMenuLogo);
+            m_UIRenderer.End();
         }
 
         public void OnUIRender()
@@ -155,7 +156,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private Renderer m_Renderer;
+        private Renderer m_UIRenderer;
 
         // Animation
         private Maths.Vector2 m_LogoPosition = new Maths.Vector2(0.0f, 0.0f);
