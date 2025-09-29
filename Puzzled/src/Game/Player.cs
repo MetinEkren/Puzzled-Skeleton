@@ -209,7 +209,7 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Private getters // TODO: Check if this is the proper way to do this (since yk gravity)
+        // Private getters // FUTURE TODO: Check if this is the proper way to do this (since yk gravity)
         ////////////////////////////////////////////////////////////////////////////////////
         public bool IsMovingUp() { return m_Velocity.Y > 0.0f; }
         public bool IsMovingDown() { return m_Velocity.Y < 0.0f; }

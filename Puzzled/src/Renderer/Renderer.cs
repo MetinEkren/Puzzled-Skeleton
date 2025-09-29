@@ -11,7 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Puzzled.Renderer;
 
 namespace Puzzled
 {
@@ -31,7 +30,14 @@ namespace Puzzled
             public Maths.Vector2 Position;
     
             public ITexture TextureReference;
+
             public bool FlipTexture;
+
+            // Note: 2 Aliases
+            public uint Opacity { get { return m_Opacity; } set { m_Opacity = (uint)Math.Min(value, 100.0); } }
+            public uint Transparency { get { return Opacity; } set { Opacity = value; } }
+
+            private uint m_Opacity;
         }
 
         internal class VisualHost : FrameworkElement
@@ -87,8 +93,10 @@ namespace Puzzled
                         dc.PushTransform(new ScaleTransform(-1.0f, 1.0f, centerX, centerY));
                     }
 
+                    dc.PushOpacity(quad.Opacity / 100.0);
                     dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
-                    
+                    dc.Pop();
+
                     if (quad.FlipTexture)
                         dc.Pop();
                 }
@@ -97,14 +105,19 @@ namespace Puzzled
             //m_VisualHost.InvalidateVisual();
         }
 
-        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture, bool flipTexture = false) 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture) { AddQuad(position, size, texture, false, 100); } 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture, uint opacity) { AddQuad(position, size, texture, false, opacity); } 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture, bool flipTexture) { AddQuad(position, size, texture, flipTexture, 100); } 
+        public void AddQuad(Maths.Vector2 position, Maths.Vector2 size, ITexture texture, bool flipTexture, uint opacity)
         {
             m_Quads.Add(new Quad
             { 
                 Position = new Maths.Vector2(position.X, (float)m_Canvas.ActualHeight - size.Y - position.Y), 
                 Size = size, 
                 TextureReference = texture,
-                FlipTexture = flipTexture
+
+                FlipTexture = flipTexture,
+                Opacity = opacity,
             }); 
         }
         ////////////////////////////////////////////////////////////////////////////////////
