@@ -69,6 +69,7 @@ namespace Puzzled
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
+        public static Texture BlackTexture = new Texture(new byte[]{ 0, 0, 0, 255 });
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Tilesheets

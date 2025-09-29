@@ -42,14 +42,10 @@ namespace Puzzled
 
         public void OnRender()
         {
-            m_Renderer.Begin();
-
             foreach (KeyValuePair<(uint x, uint y), Chunk> chunk in m_Chunks)
                 chunk.Value.RenderTo(m_Renderer, m_Debug);
             
             m_Player.RenderTo(m_Renderer, m_Debug);
-            
-            m_Renderer.End();
         }
 
         public void OnEvent(Event e)

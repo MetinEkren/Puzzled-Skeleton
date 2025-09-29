@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -53,15 +54,19 @@ namespace Puzzled
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
         public Texture() // Creates a white 1x1 texture
+            : this(new byte[]{ 255, 255, 255, 255 })
         {
+        }
+        public Texture(byte[] colorData) // 4 Bytes
+        {
+            Debug.Assert(colorData.Length == 4, "Must specify RGBA, in BGRA format.");
+
             WriteableBitmap bmp = new WriteableBitmap(1, 1, 96, 96, PixelFormats.Bgra32, null);
-            byte[] colorData = { 255, 255, 255, 255 }; // B=255, G=255, R=255, A=255
             Int32Rect rect = new Int32Rect(0, 0, 1, 1);
             bmp.WritePixels(rect, colorData, 4, 0);
 
             m_Image = bmp;
         }
-        
         public Texture(string path)
         {
             string diskFile = System.IO.Path.Combine(Directory.GetCurrentDirectory(), path);
