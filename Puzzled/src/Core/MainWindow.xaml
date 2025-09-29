@@ -11,7 +11,9 @@
         
         WindowStyle="SingleBorderWindow"
         ResizeMode="CanMinimize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        
+        Icon="/Resources/Icons/window-icon.png">
 
     <Grid Width="768" Height="720">
         <ContentControl x:Name="SceneContainer"/>

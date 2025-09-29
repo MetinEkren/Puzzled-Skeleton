@@ -21,6 +21,8 @@ project "Puzzled"
 	{
 		"src/**.cs",
 		"src/**.xaml",
+
+		"Resources/**"
 	}
 
 	-- Deprecated and replaced by dotnetsdk ^
@@ -51,6 +53,9 @@ project "Puzzled"
 
 	filter "files:**.xaml"
 		buildaction "Page" -- WPF XAML pages
+
+	filter "files:Resources/Icons/**"
+		buildaction "Resource"
 
 	filter "system:windows"
 		systemversion "latest"

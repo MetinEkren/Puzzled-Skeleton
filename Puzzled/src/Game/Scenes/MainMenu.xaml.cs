@@ -54,6 +54,7 @@ namespace Puzzled
 
             // Press start
             {
+                // TODO: Make a grid with rows and colums and add it to the xaml with x:Name we can then access it here.
                 m_PressStart = new UI.Text(
                     "Press Any Key",
                     32.0f,
