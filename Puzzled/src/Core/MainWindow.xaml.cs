@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Puzzled
 {
@@ -56,12 +55,14 @@ namespace Puzzled
             double deltaTime = (now - m_LastTime).TotalSeconds;
             m_LastTime = now;
 
-            TickMethod?.Invoke(deltaTime);
+            m_Game.OnUpdate((float)deltaTime);
+            m_Game.OnRender();
+            m_Game.OnUIRender();
         }
 
         private void OnEvent(Event e)
         {
-            EventMethod?.Invoke(e);
+            m_Game.OnEvent(e);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -81,9 +82,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        public Action<double> TickMethod { get; set; }
-        public Action<Event> EventMethod { get; set; }
-
         private DateTime m_LastTime = DateTime.Now;
 
         private Game m_Game;

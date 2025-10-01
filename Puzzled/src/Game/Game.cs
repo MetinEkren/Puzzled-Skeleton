@@ -22,9 +22,6 @@ namespace Puzzled
             Instance = this;
             Window = window;
 
-            Window.TickMethod = Tick;
-            Window.EventMethod = OnEvent;
-
             ActiveScene = new MainMenu();
         }
         ~Game()
@@ -35,34 +32,24 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
-        private void OnUpdate(float deltaTime)
+        public void OnUpdate(float deltaTime)
         {
             ActiveScene.OnUpdate(deltaTime);
         }
     
-        private void OnRender()
+        public void OnRender()
         {
             ActiveScene.OnRender();
         }
 
-        private void OnUIRender()
+        public void OnUIRender()
         {
             ActiveScene.OnUIRender();
         }
 
-        private void OnEvent(Event e)
+        public void OnEvent(Event e)
         {
             ActiveScene.OnEvent(e);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Hidden
-        ////////////////////////////////////////////////////////////////////////////////////
-        private void Tick(double deltaTime)
-        {
-            OnUpdate((float)deltaTime);
-            OnRender();
-            OnUIRender();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +58,9 @@ namespace Puzzled
         public MainWindow Window;
         public IScene ActiveScene { get { return (IScene)Window.ActiveScene; } set { Window.ActiveScene = value; } }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Static variables
+        ////////////////////////////////////////////////////////////////////////////////////
         public static Game Instance { get; private set; }
     
     }
