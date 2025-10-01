@@ -35,17 +35,16 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
 - [x] 🟨 Rename repository
 
 - [ ] Core Systems
-  - [ ] Renderer
+  - [x] Renderer
     - [x] 🟩 Quad renderer
     - [x] 🟩 Textured quad
     - [x] 🟩 Texture coordinates
     - [x] 🟩 Make pixel space
     - [x] 🟩 Flip Y-axis
-    - [ ] 🟩 US22 Improve efficiency
-    - [ ] 🟩 Test performance
+    - [x] 🟩 US22 Improve efficiency
     - [x] 🟩 Animation system
     - [x] 🟩 Flip sprites
-  - [ ] Audio
+  - [x] Audio
     - [x] 🟩 Play wav sounds
     - [x] 🟧 Stop creating/opening a new file object each time
     - [x] 🟩 Close audio on close window to prevent lag/screen tear
@@ -55,10 +54,11 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟩 Live mouse position readback (GetMousePosition())
   - [ ] UI
     - [x] 🟩 Font caching
-    - [ ] 🟩 Draw text
-  - [x] Scene
-    - [x] Fix UICanvas blocking GameCanvas
-    - [ ] Allow for scene passthrough of control of objects (sounds)
+    - [x] 🟩 Draw text
+    - [ ] 🟩 REMOVE
+  - [ ] Scene
+    - [x] 🟩 Fix UICanvas blocking GameCanvas
+    - [ ] 🟧 Allow for scene passthrough of control of objects (sounds)
 
 - [ ] Core Game
   - [ ] UI
@@ -75,6 +75,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟥 Final win menu (showing achievements)
       - [ ] 🟥 Options menu (sound slider)
   - [ ] Levels
+    - [x] Global
+      - [x] 🟩 Level loading from disk
     - [ ] Design
       - [ ] 🟩 Level 1 (🟩 normal / 🟧extra hard)
       - [ ] 🟨 Level 2 (🟨 normal / 🟧extra hard)
@@ -87,8 +89,8 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟧 Texture for objects
       - [ ] 🟧 Texture for platform blocks
   - [ ] Mechanics
-    - [ ] 🟩 Gravity
-    - [ ] 🟩 Physics (gravity/collision)
+    - [x] 🟩 Gravity
+    - [x] 🟩 Physics (gravity/collision)
     - [ ] 🟩 Movement (WASD/Arrow keys)
     - [ ] Puzzle mechanics
       - [ ] 🟩 Time = score
