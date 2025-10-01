@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Puzzled
 {
@@ -56,16 +57,8 @@ namespace Puzzled
             // Press start
             {
                 // TODO: Make a grid with rows and colums and add it to the xaml with x:Name we can then access it here.
-                m_PressStart = new UI.Text(
-                    "Press Any Key",
-                    32.0f,
-
-                    "Courier New",
-                    new Maths.Vector2(0.0f, 0.0f)
-                );
-
-                Maths.Vector2 center = UI.Utils.GetCenter(UICanvas, m_PressStart.UIElement);
-                m_PressStart.Position = new Maths.Vector2(center.X, center.Y + 200.0f);
+                Maths.Vector2 center = UI.Utils.GetCenter(UICanvas, PressAnyKey);
+                m_PressAnyKeyPosition = new Maths.Vector2(center.X, center.Y + 200.0f);
                 // Note: We don't add it yet since we want it to render later
             }
 
@@ -94,12 +87,12 @@ namespace Puzzled
                 {
                     if (m_PressStartRendered)
                     {
-                        m_PressStart.RemoveFromCanvas(UICanvas);
+                        PressAnyKey.Foreground = Brushes.Transparent;
                         m_PressStartRendered = false;
                     }
                     else
                     {
-                        m_PressStart.AddToCanvas(UICanvas);
+                        PressAnyKey.Foreground = Brushes.White;
                         m_PressStartRendered = true;
                     }
 
@@ -160,9 +153,22 @@ namespace Puzzled
 
         // Animation
         private Maths.Vector2 m_LogoPosition = new Maths.Vector2(0.0f, 0.0f);
+        private Maths.Vector2 m_PressAnyKeyPosition
+        { 
+            get 
+            { 
+                return new Maths.Vector2((float)Canvas.GetLeft(PressAnyKey), (float)Canvas.GetBottom(PressAnyKey)); 
+            } 
+            set 
+            { 
+                Canvas.SetLeft(PressAnyKey, (double)value.X); 
+                Canvas.SetBottom(PressAnyKey, (double)value.Y);
+            } 
+        }
+        
+        
         private float m_DesiredLogoHeight = 100.0f; // Note: This is the size from the top of the window, it get properly calculated in the constructor.
         private float m_LogoCenterX;
-        private UI.Text m_PressStart;
 
         private float m_CurrentFlashTimer = 0.0f;
         private bool m_PressStartRendered = false;

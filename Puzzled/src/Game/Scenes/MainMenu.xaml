@@ -9,6 +9,14 @@
 
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
+            
+            <!-- Press Any Key-->
+            <Label x:Name="PressAnyKey"
+                Content="Press Any Key"
+                
+                Background="Transparent"
+                Foreground="Transparent" Margin="251,536,251,134" FontSize="32" FontFamily="Courier New"
+            />
         </Grid>
     </Grid>
 </UserControl>

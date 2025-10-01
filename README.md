@@ -52,10 +52,10 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
     - [x] 🟩 Live key readback (IsKeyPressed())
     - [x] 🟩 Live mouse readback (IsMouseButtonPressed())
     - [x] 🟩 Live mouse position readback (GetMousePosition())
-  - [ ] UI
+  - [x] UI
     - [x] 🟩 Font caching
     - [x] 🟩 Draw text
-    - [ ] 🟩 REMOVE
+    - [x] 🟩 Remove text class
   - [ ] Scene
     - [x] 🟩 Fix UICanvas blocking GameCanvas
     - [ ] 🟧 Allow for scene passthrough of control of objects (sounds)
