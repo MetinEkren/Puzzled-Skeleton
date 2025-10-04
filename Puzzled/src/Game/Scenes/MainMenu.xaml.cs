@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -21,6 +22,15 @@ namespace Puzzled
 
             if (s_BootUp)
             {
+                // Note: For some reason in SavesMenu the first time loading the Saves takes very long, so instead
+                // we warm up the filesystem here.
+                // Note 2: We do this before playing the sounds to avoid messing up the animation on different systems.
+                // Note 3: I know this is ugly AF - Jorben
+                foreach (var dir in System.IO.Directory.EnumerateDirectories(System.IO.Directory.GetCurrentDirectory()))
+                {
+                    // Note: Nothing...
+                }
+
                 Assets.IntroMusic.Play();
                 s_BootUp = false;
             }

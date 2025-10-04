@@ -21,7 +21,7 @@ namespace Puzzled.UI
         ////////////////////////////////////////////////////////////////////////////////////
         public static Maths.Vector2 GetCenter(Canvas canvas, FrameworkElement uiElement)
         {
-            // First measure the text with "infinite" space so WPF computes its DesiredSize
+            // First measure the text with "infinite" space so WPF computes its DesiredSize, don't ask.
             uiElement.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             
             double x = (canvas.ActualWidth - uiElement.DesiredSize.Width) / 2;
