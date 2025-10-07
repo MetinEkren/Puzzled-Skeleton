@@ -43,10 +43,10 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Physics // TODO: tweak these
         ////////////////////////////////////////////////////////////////////////////////////
-        public const float Gravity = 9.81f * 4 * Scale;
+        public const float Gravity = 200.0f * Scale;
         public const float GroundFriction = Gravity;
         public const float PlayerRunningVelocity = 35.0f * Scale;
-        public const float PlayerJumpingVelocity = 40.0f * Scale;
+        public const float PlayerJumpingVelocity = 90.0f * Scale;
         public const float PlayerTerminalVelocity = PlayerJumpingVelocity; // Note: For downwards, so it doesn't keep accelerating
 
     }
