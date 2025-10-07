@@ -94,7 +94,7 @@ namespace Puzzled
                         // Convert tileID to UV
                         uint uvX = 0, uvY = 0;
                         {
-                            uint id = (uint)(tileId - 1); // Tiled starts at 1
+                            uint id = tileId - 1; // Tiled starts at 1
 
                             uint col = id % tilesX; // Column
                             uint row = id / tilesX; // Row
