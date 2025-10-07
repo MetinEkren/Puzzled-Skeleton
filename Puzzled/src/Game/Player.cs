@@ -49,6 +49,7 @@ namespace Puzzled
             {
                 if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
                 {
+                    // TODO: Jump cooldown, to prevent super fast jumping up blocks
                     m_Velocity.Y = Settings.PlayerJumpingVelocity;
                     m_CanJump = false;
                 }
@@ -138,7 +139,7 @@ namespace Puzzled
                         if (tile == null)
                             continue;
 
-                        CollisionResult result = Collision.AABB(HitboxPosition, HitboxSize, tile.Position, tile.Size);
+                        CollisionResult result = Collision.AABB(HitboxPosition, HitboxSize, tile.HitboxPosition, tile.HitboxSize);
 
                         switch (result.Side)
                         {
