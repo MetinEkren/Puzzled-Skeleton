@@ -145,9 +145,11 @@ namespace Puzzled
                         {
                         case CollisionSide.Left:
                             m_Position = new Maths.Vector2(m_Position.X + result.Overlap, m_Position.Y);
+                            m_Velocity = new Maths.Vector2(0.0f, m_Velocity.Y);
                             break;
                         case CollisionSide.Right:
                             m_Position = new Maths.Vector2(m_Position.X - result.Overlap, m_Position.Y);
+                            m_Velocity = new Maths.Vector2(0.0f, m_Velocity.Y);
                             break;
                         case CollisionSide.Top:
                             m_Position = new Maths.Vector2(m_Position.X, m_Position.Y - result.Overlap);

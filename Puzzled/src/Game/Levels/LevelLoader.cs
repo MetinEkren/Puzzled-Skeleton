@@ -22,12 +22,24 @@ namespace Puzzled
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Custom TileID specifications
+        // Custom TileID specifications // TODO: Support different sheets (tiles, objects)
         ////////////////////////////////////////////////////////////////////////////////////
         public static Maths.Vector2 GetHitboxPosition(uint tileID, Maths.Vector2 position)
         {
-            // Note: No custom hitbox positions yet
-            // TODO: More
+            // Note: We use a number + 1, because Tiled shows the number -1.
+            switch (tileID)
+            {
+            case 28 + 1: // Middle bridge
+            case 37 + 1: // Upsidedown spikes
+                return new Maths.Vector2(position.X, position.Y + (Settings.SpriteSize / 2));
+
+            case 39 + 1: // Right-side spikes
+                return new Maths.Vector2(position.X + (Settings.SpriteSize / 2), position.Y);
+
+            case 46 + 1: // Top chain
+            case 47 + 1: // Bottom chain
+                return new Maths.Vector2(position.X + (Settings.SpriteSize / 4), position.Y);
+            }
 
             return position;
         }
@@ -37,10 +49,16 @@ namespace Puzzled
             // Note: We use a number + 1, because Tiled shows the number -1.
             switch (tileID)
             {
+            case 28 + 1: // Middle bridge
             case 36 + 1: // Regular spikes
+            case 37 + 1: // Upsidedown spikes
                 return new Maths.Vector2(size.X, (Settings.SpriteSize / 2));
 
-            // TODO: More
+            case 38 + 1: // Left-side spikes
+            case 39 + 1: // Right-side spikes
+            case 46 + 1: // Top chain
+            case 47 + 1: // Bottom chain
+                return new Maths.Vector2((Settings.SpriteSize / 2), size.Y);
             }
 
             return size;
