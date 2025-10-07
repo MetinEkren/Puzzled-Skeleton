@@ -27,6 +27,8 @@ namespace Puzzled
         public static Maths.Vector2 GetHitboxPosition(uint tileID, Maths.Vector2 position)
         {
             // Note: No custom hitbox positions yet
+            // TODO: More
+
             return position;
         }
 
@@ -37,6 +39,8 @@ namespace Puzzled
             {
             case 36 + 1: // Regular spikes
                 return new Maths.Vector2(size.X, (Settings.SpriteSize / 2));
+
+            // TODO: More
             }
 
             return size;
@@ -51,14 +55,11 @@ namespace Puzzled
             using (JsonDocument doc = JsonDocument.Parse(json))
             {
                 JsonElement root = doc.RootElement;
-
-                // Access the first layer (currently the only layer)
                 JsonElement layers = root.GetProperty("layers");
-                JsonElement firstLayer = layers[0];
 
                 // Get size
-                uint width = firstLayer.GetProperty("width").GetUInt32();
-                uint height = firstLayer.GetProperty("height").GetUInt32();
+                uint width = root.GetProperty("width").GetUInt32();
+                uint height = root.GetProperty("height").GetUInt32();
                 outWidth = width;
                 outHeight = height;
 
@@ -68,7 +69,8 @@ namespace Puzzled
 
                 // Tile layer
                 {
-                    JsonElement data = firstLayer.GetProperty("data");
+                    // TODO: Make it load the tile layer based on some layer name? or set a fixed format.
+                    JsonElement data = layers[0].GetProperty("data");
                     uint x = 0, y = 0;
                     foreach (JsonElement tile in data.EnumerateArray().Reverse())
                     {

@@ -141,7 +141,7 @@ namespace Puzzled
 
                         CollisionResult result = Collision.AABB(HitboxPosition, HitboxSize, tile.HitboxPosition, tile.HitboxSize);
 
-                        switch (result.Side)
+                        switch (result.Side) // TODO: Fix collision bug with side jumping
                         {
                         case CollisionSide.Left:
                             m_Position = new Maths.Vector2(m_Position.X + result.Overlap, m_Position.Y);
@@ -159,9 +159,13 @@ namespace Puzzled
                             m_Position = new Maths.Vector2(m_Position.X, m_Position.Y + result.Overlap);
 
                             if (m_Velocity.Y < 0.0f)
+                            {
                                 m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
+                                m_CanJump = true;
+                            }
+
+                            // Note: We don't set m_CanJump while the player is still jumping
                             
-                            m_CanJump = true;
                             break;
 
                         default:
