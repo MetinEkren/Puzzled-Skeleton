@@ -71,7 +71,6 @@ namespace Puzzled
 
             Loaded -= OnLoad;
 
-            
         }
 
         public void OnUpdate(float deltaTime)
@@ -126,6 +125,13 @@ namespace Puzzled
             Assets.IntroMusic.CloseAll();
             Assets.MainMenuMusic.Stop();
         }
+
+        void BackButtonPressed(object sender, RoutedEventArgs args)
+        {
+            Game.Instance.ActiveScene = new MainMenu();
+        }
+
+
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Getters
