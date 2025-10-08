@@ -56,6 +56,8 @@ project "Puzzled"
 
 	filter "files:Resources/Icons/**"
 		buildaction "Resource"
+	filter "files:Resources/Textures/**"
+		buildaction "Resource"
 
 	filter "system:windows"
 		systemversion "latest"
