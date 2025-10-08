@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,20 +10,6 @@ using System.Windows.Shapes;
 
 namespace Puzzled
 {
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    // Save
-    ////////////////////////////////////////////////////////////////////////////////////
-    public struct Save
-    {
-        [JsonInclude]
-        public string Name;
-        [JsonInclude]
-        public uint Level;
-
-        [JsonInclude]
-        public List<uint> Scores;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     // SavesMenu
@@ -60,13 +44,13 @@ namespace Puzzled
         {
             m_Renderer = new Renderer(GameCanvas);
 
-            m_Saves[0] = Load(1);
+            m_Saves[0] = Assets.LoadSave(1);
             Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = <NOT IMPLEMENTED> }}");
 
-            m_Saves[1] = Load(2);
+            m_Saves[1] = Assets.LoadSave(2);
             Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = <NOT IMPLEMENTED> }}");
 
-            m_Saves[2] = Load(3);
+            m_Saves[2] = Assets.LoadSave(3);
             Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
 
             Loaded -= OnLoad;
@@ -123,28 +107,6 @@ namespace Puzzled
             
             Assets.IntroMusic.CloseAll();
             Assets.MainMenuMusic.Stop();
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Getters
-        ////////////////////////////////////////////////////////////////////////////////////
-        public static string GetSaveSlotPath(uint slot)
-        {
-            //string directory = Directory.GetCurrentDirectory(); // TODO: Set it to a set directory
-            string directory = Assets.ResourcesDirectory + "Resources/Saves/";
-            string saveSlotFilename = "save-" + slot + ".json";
-            return System.IO.Path.Combine(directory, saveSlotFilename);
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Private methods
-        ////////////////////////////////////////////////////////////////////////////////////
-        private Save Load(uint slot)
-        {
-            Logger.Info($"Save file loading from: {GetSaveSlotPath(slot)}.");
-
-            string json = File.ReadAllText(GetSaveSlotPath(slot));
-            return JsonSerializer.Deserialize<Save>(json);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
