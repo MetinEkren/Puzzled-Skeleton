@@ -59,12 +59,49 @@
                 <Border BorderBrush="Blue" BorderThickness="2" Background="White" CornerRadius="10"/>
                 <StackPanel Margin="14">
                     <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,15"/>
-                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Name:       Score: " />
-                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
-                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
-                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
+
+                    <!-- Koptekst -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Name:" FontSize="25" Grid.Column="0"/>
+                        <TextBlock Text="Score:" FontSize="25" Grid.Column="1" HorizontalAlignment="Right"/>
+                    </Grid>
+
+                    <!-- Rij 1 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName1" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore1" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <!-- Rij 2 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName2" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore2" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <!-- Rij 3 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName3" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore3" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
                 </StackPanel>
             </Grid>
+
         </Grid>
     </Grid>
 </UserControl>
