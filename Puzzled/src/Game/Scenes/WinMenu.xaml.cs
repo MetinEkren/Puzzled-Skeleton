@@ -36,12 +36,14 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
+            m_Renderer = new Renderer(UICanvas);
             Loaded -= OnLoad;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+            m_IdleAnimation.Update(deltaTime);
         }
 
         public void OnRender()
@@ -52,6 +54,9 @@ namespace Puzzled
         public void OnUIRender()
         {
             if (!IsLoaded) return;
+            m_Renderer.Begin();
+            m_Renderer.AddQuad(new Maths.Vector2(570f, 0.0f), new Maths.Vector2(200f, 200f), m_IdleAnimation.GetCurrentTexture());
+            m_Renderer.End();
         }
 
         public void OnEvent(Event e)
@@ -81,10 +86,36 @@ namespace Puzzled
             Game.Instance.ActiveScene = m_Level;
         }
 
+        void BackToMainMenu(object sender, RoutedEventArgs args)
+        {
+            Logger.Info("Going back to main menu.");
+            Game.Instance.ActiveScene = new MainMenu();
+        }
+
+        void RestartGame(object sender, RoutedEventArgs args)
+        {
+            Logger.Info($"Going to next level, {m_Level.ActiveSave.Level}.");
+
+            m_Level.ActiveSave = new Save
+            {
+                Name = m_Level.ActiveSave.Name,
+                Level = m_Level.ActiveSave.Level - 1,
+                Scores = m_Level.ActiveSave.Scores
+            }; // Restart current level
+
+            m_Level.LoadLevel(m_Level.ActiveSave.Level);
+            Game.Instance.ActiveScene = m_Level;
+        }
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
+        private Renderer m_Renderer;
+
         private LevelOverlay m_Level;
+        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
 
     }
 

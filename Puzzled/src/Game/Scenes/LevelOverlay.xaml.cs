@@ -132,7 +132,7 @@ namespace Puzzled
 
         private Level m_Level;
 
-        public Save ActiveSave { get { return m_Save; } }
+        public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
 
