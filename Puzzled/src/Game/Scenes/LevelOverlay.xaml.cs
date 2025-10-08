@@ -116,7 +116,7 @@ namespace Puzzled
         {
             Logger.Info($"Saving to slot {m_SaveSlot}.");
 
-            string path = SavesMenu.GetSaveSlotPath(m_SaveSlot);
+            string path = Assets.GetSaveSlotPath(m_SaveSlot);
             string text = JsonSerializer.Serialize<Save>(m_Save);
 
             File.WriteAllText(path, text);

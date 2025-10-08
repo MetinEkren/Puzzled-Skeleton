@@ -1,13 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Puzzled
 {
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // Structs
+    //////////////////////////////////////////////////////////////////////////////////
+    public struct Save
+    {
+        [JsonInclude]
+        public string Name;
+        [JsonInclude]
+        public uint Level;
+
+        [JsonInclude]
+        public List<uint> Scores;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
     // Assets
@@ -65,8 +82,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume); // Note: This is so it plays softer on Jorben's PC
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume); // Note: This is so it plays softer on Jorben's PC
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
@@ -82,6 +99,24 @@ namespace Puzzled
         public static Texture RunSheet = new Texture(RunSheetPath);
 
         public static Texture TileSheet = new Texture(TileSheetPath);
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Saves
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static string GetSaveSlotPath(uint slot)
+        {
+            string directory = Assets.ResourcesDirectory + "Resources/Saves/";
+            string saveSlotFilename = "save-" + slot + ".json";
+            return System.IO.Path.Combine(directory, saveSlotFilename);
+        }
+
+        public static Save LoadSave(uint slot)
+        {
+            Logger.Info($"Save file loading from: {GetSaveSlotPath(slot)}.");
+
+            string json = File.ReadAllText(GetSaveSlotPath(slot));
+            return JsonSerializer.Deserialize<Save>(json);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Tiles
