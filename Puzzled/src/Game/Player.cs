@@ -235,8 +235,8 @@ namespace Puzzled
         private bool m_Flipped = false;
         private bool m_CanJump = true;
 
-        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
-        private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
+        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
+        private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
         // TODO: More animations
 
         public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }

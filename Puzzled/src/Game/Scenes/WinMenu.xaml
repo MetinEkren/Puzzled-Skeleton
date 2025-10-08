@@ -30,7 +30,7 @@
                 Background="White"
                 Click="NextLevelPressed" Margin="407,295,0,0"/>
 
-            <!-- Back to main menue -->
+            <!-- Back to main menu -->
             <Button  Width="300" Height="50"
                 Content="Save &amp; Exit"
                 HorizontalAlignment="Left"
@@ -40,7 +40,7 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="NextLevelPressed" Margin="407,360,0,0"/>
+                Click="BackToMainMenu" Margin="407,360,0,0"/>
             
             <!-- Restart Game -->
             <Button  Width="300" Height="50"
@@ -52,16 +52,19 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="NextLevelPressed" Margin="407,425,0,0"/>
+                Click="RestartGame" Margin="407,425,0,0"/>
 
-            <!-- Icon -->
-            <Image Width="128" Height="128" Source="/Resources/Icons/window-icon.png" Margin="597,592,43,0"></Image>
-            
             <!-- Score board -->
             <Grid Width="300" Height="300" Margin="64,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border BorderBrush="Blue" BorderThickness="2" Background="White" CornerRadius="10"/>
-                <StackPanel Margin="16">
+                <StackPanel Margin="14">
                     <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                    <TextBlock FontSize="25" Text="Name:       Score: " />
+                    <TextBlock FontSize="25" Text="Player1     1000" />
+                    <TextBlock FontSize="25" Text="Player1     1000" />
+                    <TextBlock FontSize="25" Text="Player1     1000" />
+                    <TextBlock FontSize="25" Text="Player1     1000" />
+                    <TextBlock FontSize="25" Text="Player1     1000" />
                 </StackPanel>
 
             </Grid>
