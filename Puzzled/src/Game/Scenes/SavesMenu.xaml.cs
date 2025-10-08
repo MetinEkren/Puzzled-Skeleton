@@ -70,6 +70,8 @@ namespace Puzzled
             Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
 
             Loaded -= OnLoad;
+
+            
         }
 
         public void OnUpdate(float deltaTime)
