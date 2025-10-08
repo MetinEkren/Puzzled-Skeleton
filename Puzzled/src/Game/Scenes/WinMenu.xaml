@@ -58,15 +58,12 @@
             <Grid Width="300" Height="300" Margin="64,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border BorderBrush="Blue" BorderThickness="2" Background="White" CornerRadius="10"/>
                 <StackPanel Margin="14">
-                    <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,16"/>
-                    <TextBlock FontSize="25" Text="Name:       Score: " />
-                    <TextBlock FontSize="25" Text="Player1     1000" />
-                    <TextBlock FontSize="25" Text="Player1     1000" />
-                    <TextBlock FontSize="25" Text="Player1     1000" />
-                    <TextBlock FontSize="25" Text="Player1     1000" />
-                    <TextBlock FontSize="25" Text="Player1     1000" />
+                    <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Name:       Score: " />
+                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
+                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
+                    <TextBlock Margin="0,0,0,5" FontSize="25" Text="Player1     1000" />
                 </StackPanel>
-
             </Grid>
         </Grid>
     </Grid>

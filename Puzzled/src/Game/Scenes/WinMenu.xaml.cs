@@ -62,18 +62,6 @@ namespace Puzzled
         public void OnEvent(Event e)
         {
             if (!IsLoaded) return;
-
-            if (e is KeyPressedEvent kpe) // TODO: Remove
-            {
-                if (kpe.KeyCode == Key.Escape)
-                {
-                    Game.Instance.ActiveScene = new SavesMenu();
-                }
-                if (kpe.KeyCode == Key.Enter)
-                {
-                    Game.Instance.ActiveScene = m_Level;
-                }
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
