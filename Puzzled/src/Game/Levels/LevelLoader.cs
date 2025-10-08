@@ -22,49 +22,6 @@ namespace Puzzled
     {
 
         ////////////////////////////////////////////////////////////////////////////////////
-        // Custom TileID specifications // TODO: Support different sheets (tiles, objects)
-        ////////////////////////////////////////////////////////////////////////////////////
-        public static Maths.Vector2 GetHitboxPosition(uint tileID, Maths.Vector2 position)
-        {
-            // Note: We use a number + 1, because Tiled shows the number -1.
-            switch (tileID)
-            {
-            case 28 + 1: // Middle bridge
-            case 37 + 1: // Upsidedown spikes
-                return new Maths.Vector2(position.X, position.Y + (Settings.SpriteSize / 2));
-
-            case 39 + 1: // Right-side spikes
-                return new Maths.Vector2(position.X + (Settings.SpriteSize / 2), position.Y);
-
-            case 46 + 1: // Top chain
-            case 47 + 1: // Bottom chain
-                return new Maths.Vector2(position.X + (Settings.SpriteSize / 4), position.Y);
-            }
-
-            return position;
-        }
-
-        public static Maths.Vector2 GetHitboxSize(uint tileID, Maths.Vector2 size)
-        {
-            // Note: We use a number + 1, because Tiled shows the number -1.
-            switch (tileID)
-            {
-            case 28 + 1: // Middle bridge
-            case 36 + 1: // Regular spikes
-            case 37 + 1: // Upsidedown spikes
-                return new Maths.Vector2(size.X, (Settings.SpriteSize / 2));
-
-            case 38 + 1: // Left-side spikes
-            case 39 + 1: // Right-side spikes
-            case 46 + 1: // Top chain
-            case 47 + 1: // Bottom chain
-                return new Maths.Vector2((Settings.SpriteSize / 2), size.Y);
-            }
-
-            return size;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
         public static void Load(string levelPath, ref List<Tile> outTiles, out uint outWidth, out uint outHeight)
@@ -126,10 +83,8 @@ namespace Puzzled
                         // Note: (width - x) because x is flipped because we .Reverse()
                         Maths.Vector2 position = new Maths.Vector2(((width - 1) - x) * (Settings.SpriteSize), y * (Settings.SpriteSize));
                         Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-                        Maths.Vector2 hitboxPosition = GetHitboxPosition(tileId, position);
-                        Maths.Vector2 hitboxSize = GetHitboxSize(tileId, size);
 
-                        outTiles.Add(new Tile(position, size, Assets.GetTexture(Assets.TileSheet, uvX, uvY), hitboxPosition, hitboxSize));
+                        outTiles.Add(new Tile(position, size, Assets.GetTexture(Assets.TileSheet, uvX, uvY), (TileType)tileId));
                         next();
                     }
                 }
