@@ -10,6 +10,17 @@
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
+            <!-- Hover save buttons -->
+            <Image x:Name="SaveButton1Hover" Width="189" Height="96" Margin="66,538,513,86"
+                Source="pack://application:,,,/Resources/Textures/save1_hover.png"
+                Opacity="0"/>
+            <Image x:Name="SaveButton2Hover" Width="189" Height="96" Margin="290,538,290,86"
+                Source="pack://application:,,,/Resources/Textures/save2_hover.png"
+                Opacity="0"/>
+            <Image x:Name="SaveButton3Hover" Width="189" Height="96" Margin="510,538,69,86"
+                Source="pack://application:,,,/Resources/Textures/save3_hover.png"
+                Opacity="0"/>
+
             <!-- UI buttons -->
             <Image x:Name="BackButton" Width="48" Height="48" Margin="0,0,702,656 "
                 Source="pack://application:,,,/Resources/Textures/back_button.png"
@@ -18,8 +29,7 @@
                 Source="pack://application:,,,/Resources/Textures/save1.png"
                 MouseDown="SaveSlot1Pressed"
                 MouseEnter="SaveSlot1StartHover"
-                MouseLeave="SaveSlot1StopHover"
-                Opacity="100"/>
+                MouseLeave="SaveSlot1StopHover"/>
             <Image x:Name="SaveButton2" Width="189" Height="96" Margin="290,538,290,86"
                 Source="pack://application:,,,/Resources/Textures/save2.png"
                 MouseDown="SaveSlot2Pressed"
@@ -30,24 +40,9 @@
                 MouseDown="SaveSlot3Pressed"
                 MouseEnter="SaveSlot3StartHover"
                 MouseLeave="SaveSlot3StopHover"/>
-            
-            <!-- Hover save buttons -->
-            <Image x:Name="SaveButton1Hover" Width="189" Height="96" Margin="0,0,702,656 "
-               Source="pack://application,,,/Resources/Textures/save1_hover.png"
-               Opacity="0"/>
-            <Image x:Name="SaveButton2Hover" Width="189" Height="96" Margin="290,538,290,86"
-               Source="pack://application,,,/Resources/Textures/save2_hover.png"
-               Opacity="0"/>
-            <Image x:Name="SaveButton3Hover" Width="189" Height="96" Margin="510,538,69,86"
-               Source="pack://application,,,/Resources/Textures/save3_hover.png"
-               Opacity="100"/>
-
 
             <Image x:Name="PixelArt" Width="450" Height="330" Margin="152,84,166,306"
                 Source="pack://application:,,,/Resources/Textures/save_pixelart.png"/>
-
-
-
         </Grid>
     </Grid>
 </UserControl>
