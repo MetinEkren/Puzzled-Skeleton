@@ -56,11 +56,11 @@ namespace Puzzled
 
             if (save2.Scores.Count >= (m_Level.ActiveSave.Level - 1))
             {
-                PlayerScore1.Text = save1.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
+                PlayerScore2.Text = save2.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
             }
             if (save3.Scores.Count >= (m_Level.ActiveSave.Level - 1))
             {
-                PlayerScore1.Text = save1.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
+                PlayerScore3.Text = save3.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
             }
 
 
@@ -82,7 +82,7 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
             m_Renderer.Begin();
-            m_Renderer.AddQuad(new Maths.Vector2(570f, 0.0f), new Maths.Vector2(200f, 200f), m_IdleAnimation.GetCurrentTexture());
+            m_Renderer.AddQuad(new Maths.Vector2(570f, 0.0f), new Maths.Vector2(200f, 200f), m_IdleAnimation.GetCurrentTexture(), true);
             m_Renderer.End();
         }
 
