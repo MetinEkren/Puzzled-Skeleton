@@ -59,12 +59,7 @@ namespace Puzzled
 
             m_Renderer.Begin();
             m_Level.OnRender();
-
-            Box box = new Box(new Maths.Vector2(48, 48));
-            box.RenderTo(m_Renderer);
-
             m_Renderer.End();
-
         }
 
         public void OnUIRender()

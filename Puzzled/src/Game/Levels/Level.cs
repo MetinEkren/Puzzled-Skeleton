@@ -44,6 +44,9 @@ namespace Puzzled
         {
             foreach (KeyValuePair<(uint x, uint y), Chunk> chunk in m_Chunks)
                 chunk.Value.RenderTo(m_Renderer, m_Debug);
+
+            foreach (DynamicObject obj in m_DynamicObjects)
+                obj.RenderTo(m_Renderer, m_Debug);
             
             m_Player.RenderTo(m_Renderer, m_Debug);
         }
@@ -85,6 +88,12 @@ namespace Puzzled
                     }
                 }
             }
+
+            // Dynamic objects
+            {
+                Box box = new Box(new Maths.Vector2(48, 48));
+                m_DynamicObjects.Add(box);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -94,8 +103,10 @@ namespace Puzzled
         private bool m_Debug = false;
 
         private Player m_Player;
+
         private List<Tile> m_Tiles; // Note: Contiguous list of all tiles, not used at the moment, but for level loading is useful
         private Dictionary<(uint x, uint y), Chunk> m_Chunks = new Dictionary<(uint x, uint y), Chunk>();
+        private List<DynamicObject> m_DynamicObjects = new List<DynamicObject>();
 
     }
 

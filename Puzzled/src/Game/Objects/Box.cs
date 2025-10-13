@@ -26,7 +26,7 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         // Methods
         //////////////////////////////////////////////////////////////////////////////////
-        public void RenderTo(Renderer renderer, bool debug = false)
+        public override void RenderTo(Renderer renderer, bool debug = false)
         {
             renderer.AddQuad(m_Position, s_Size, s_Texture);
 
