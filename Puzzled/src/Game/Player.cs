@@ -91,7 +91,7 @@ namespace Puzzled
                 }
 
                 Velocity.Y -= Settings.Gravity * deltaTime;
-                Velocity.Y = Math.Min(Velocity.Y, Settings.PlayerTerminalVelocity);
+                Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
 
                 // When falling (or jumping) you are no longer able to jump again
                 if (Velocity.Y != 0.0f)

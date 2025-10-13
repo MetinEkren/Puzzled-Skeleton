@@ -49,7 +49,7 @@ namespace Puzzled
                 }
 
                 Velocity.Y -= Settings.Gravity * deltaTime;
-                Velocity.Y = Math.Min(Velocity.Y, Settings.PlayerTerminalVelocity);
+                Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
             }
         }
 
@@ -57,13 +57,13 @@ namespace Puzzled
         {
             renderer.AddQuad(Position, s_Size, s_Texture);
 
-            //if (debug) // Outline tile hitbox
-            //{
-            //    renderer.AddQuad(m_HitboxPosition, new Maths.Vector2(m_HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
-            //    renderer.AddQuad(m_HitboxPosition, new Maths.Vector2(1 * Settings.Scale, m_HitboxSize.Y), Assets.WhiteTexture);
-            //    renderer.AddQuad(new Maths.Vector2(m_HitboxPosition.X, m_HitboxPosition.Y + m_HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(m_HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
-            //    renderer.AddQuad(new Maths.Vector2(m_HitboxPosition.X + m_HitboxSize.X - (1 * Settings.Scale), m_HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, m_HitboxSize.Y), Assets.WhiteTexture);
-            //}
+            if (debug) // Outline tile hitbox
+            {
+                renderer.AddQuad(HitboxPosition, new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(HitboxPosition, new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(HitboxPosition.X, HitboxPosition.Y + HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
+                renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
+            }
         }
 
 

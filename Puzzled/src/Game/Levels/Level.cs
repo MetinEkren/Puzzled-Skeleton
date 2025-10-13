@@ -39,16 +39,30 @@ namespace Puzzled
         {
             m_Player.Update(deltaTime);
 
+            // Dynamic objects (static collision)
+            {
+                foreach (DynamicObject obj in m_DynamicObjects)
+                {
+                    obj.Update(deltaTime);
+
+                    if (obj is Box box)
+                    {
+                        bool canJump = false;
+                        HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
+                    }
+                }
+            }
+
             // Player collision (static & dynamic)
             {
-                HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
-                
+                // Dynamic
                 foreach(DynamicObject obj in m_DynamicObjects)
                 {
-                    if(obj is Box box)
+                    if (obj is Box box)
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        switch(result.Side)
+
+                        switch (result.Side)
                         {
                             case CollisionSide.Left:
                                 {
@@ -63,6 +77,11 @@ namespace Puzzled
                             case CollisionSide.Top:
                                 {
                                     box.Position.Y -= result.Overlap;
+                                    m_Player.CanJump = true;
+                                    
+                                    if (m_Player.Velocity.Y > 0.0f)
+                                        m_Player.Velocity.Y = 0.0f;
+
                                     break;
                                 }
                             case CollisionSide.Bottom:
@@ -71,22 +90,43 @@ namespace Puzzled
                                     break;
                                 }
                         }
+
+                        if (result.Side != CollisionSide.None)
+                        {
+                            bool canJump = false;
+                            HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
+                        }
+
+                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+
+                        switch (result.Side)
+                        {
+                            case CollisionSide.Left:
+                                {
+                                    m_Player.Position.X -= result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Right:
+                                {
+                                    m_Player.Position.X += result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Top:
+                                {
+                                    m_Player.Position.Y += result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Bottom:
+                                {
+                                    m_Player.Position.Y -= result.Overlap;
+                                    break;
+                                }
+                        }
                     }
                 }
-            }
 
-            // Dynamic objects (static collision)
-            {
-                foreach (DynamicObject obj in m_DynamicObjects)
-                {
-                    obj.Update(deltaTime);
-
-                    if (obj is Box box)
-                    {
-                        bool canJump = false;
-                        HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
-                    }
-                }
+                // Static
+                HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
         }
 
@@ -108,6 +148,29 @@ namespace Puzzled
                 // Note: For testing a debug
                 if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
+
+                if (kpe.KeyCode == Key.R)
+                {
+                    m_DynamicObjects.Clear();
+
+                    Box box = new Box(new Maths.Vector2(300, 700));
+                    m_DynamicObjects.Add(box);
+                }
+                if (kpe.KeyCode == Key.P)
+                {
+                    Logger.Trace("");
+
+                    Logger.Trace($"Player Position {{ .x = {m_Player.Position.X}, .y = {m_Player.Position.Y} }}");
+                    Logger.Trace($"Player Velocity {{ .x = {m_Player.Velocity.X}, .y = {m_Player.Velocity.Y} }}");
+                    
+                    Logger.Trace("");
+
+                    // TODO: Remove
+                    Logger.Trace($"Box Position {{ .x = {((Box)m_DynamicObjects[0]).Position.X}, .y = {((Box)m_DynamicObjects[0]).Position.Y} }}");
+                    Logger.Trace($"Box Velocity {{ .x = {((Box)m_DynamicObjects[0]).Velocity.X}, .y = {((Box)m_DynamicObjects[0]).Velocity.X} }}");
+                    
+                    Logger.Trace("");
+                }
             }
         }
 
@@ -141,8 +204,7 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                Box box = new Box(new Maths.Vector2(100, 300));
-                m_DynamicObjects.Add(box);
+                
             }
         }
 
@@ -205,7 +267,7 @@ namespace Puzzled
                         case CollisionSide.Bottom:
                             position = new Maths.Vector2(position.X, position.Y + result.Overlap);
 
-                            if (velocity.Y < 0.0f)
+                            if (velocity.Y < 0.0f) // TODO: Fix tripping bug    
                             {
                                 velocity = new Maths.Vector2(velocity.X, 0.0f);
                                 canJump = true;
