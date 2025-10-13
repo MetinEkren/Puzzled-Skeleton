@@ -16,6 +16,8 @@ namespace Puzzled
     public class DynamicObject
     {
         public virtual void RenderTo(Renderer renderer, bool debug = false) { }
+
+        public virtual void Update(float deltaTime) { }
     }
 
 

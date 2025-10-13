@@ -39,16 +39,54 @@ namespace Puzzled
         {
             m_Player.Update(deltaTime);
 
-            // Player collision
+            // Player collision (static & dynamic)
             {
-                Maths.Vector2 position = m_Player.Position;
-                Maths.Vector2 velocity = m_Player.Velocity;
-                bool canJump = m_Player.CanJump;
-                HandleStaticCollisions(ref position, ref velocity, ref canJump, m_Player.HitboxPosition, m_Player.HitboxSize);
+                HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
+                
+                foreach(DynamicObject obj in m_DynamicObjects)
+                {
+                    if(obj is Box box)
+                    {
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        switch(result.Side)
+                        {
+                            case CollisionSide.Left:
+                                {
+                                    box.Position.X += result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Right:
+                                {
+                                    box.Position.X -= result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Top:
+                                {
+                                    box.Position.Y -= result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Bottom:
+                                {
+                                    box.Position.Y += result.Overlap;
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
 
-                m_Player.Position = position;
-                m_Player.Velocity = velocity;
-                m_Player.CanJump = canJump;
+            // Dynamic objects (static collision)
+            {
+                foreach (DynamicObject obj in m_DynamicObjects)
+                {
+                    obj.Update(deltaTime);
+
+                    if (obj is Box box)
+                    {
+                        bool canJump = false;
+                        HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
+                    }
+                }
             }
         }
 
@@ -59,7 +97,7 @@ namespace Puzzled
 
             foreach (DynamicObject obj in m_DynamicObjects)
                 obj.RenderTo(m_Renderer, m_Debug);
-            
+
             m_Player.RenderTo(m_Renderer, m_Debug);
         }
 
@@ -84,7 +122,7 @@ namespace Puzzled
 
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
-            
+
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
             // Putting all tiles into chunks 
@@ -103,8 +141,85 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                Box box = new Box(new Maths.Vector2(48, 48));
+                Box box = new Box(new Maths.Vector2(100, 300));
                 m_DynamicObjects.Add(box);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Private methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        public void HandleStaticCollisions(ref Maths.Vector2 position, ref Maths.Vector2 velocity, ref bool canJump, Maths.Vector2 hitboxPosition, Maths.Vector2 hitboxSize)
+        {
+            uint chunkBottomLeftX = (uint)Math.Floor(hitboxPosition.X / (Settings.SpriteSize * Settings.ChunkSize));
+            uint chunkBottomLeftY = (uint)Math.Floor(hitboxPosition.Y / (Settings.SpriteSize * Settings.ChunkSize));
+
+            // Note: Subtract a tiny epsilon (0.01f) to avoid rounding issues when the edge is exactly on a chunk boundary
+            uint chunkTopRightX = (uint)Math.Floor((hitboxPosition.X + hitboxSize.X - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+            uint chunkTopRightY = (uint)Math.Floor((hitboxPosition.Y + hitboxSize.Y - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
+
+            // Fix collisions no longer working when moving out of chunk coordinate space
+            // + Fix chunks out of coordinate space being checked, instead set them to 0,0 (useless check, but easiest solution)
+            {
+                if (chunkBottomLeftX > Settings.MaxChunks) { chunkBottomLeftX = 0; chunkTopRightX = 0; }
+                if (chunkBottomLeftY > Settings.MaxChunks) { chunkBottomLeftY = 0; chunkTopRightY = 0; }
+
+                //if (chunkBottomLeftX > chunkTopRightX) chunkBottomLeftX = chunkTopRightX;
+                //if (chunkBottomLeftY > chunkTopRightY) chunkBottomLeftY = chunkTopRightY;
+            }
+
+            // Check collisions with chunks
+            //Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
+            for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
+            {
+                for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
+                {
+                    if (!m_Chunks.ContainsKey((x, y)))
+                        continue;
+
+                    Chunk chunk = m_Chunks[(x, y)];
+
+                    foreach (Tile tile in chunk.Tiles)
+                    {
+                        if (tile == null)
+                            continue;
+
+                        CollisionResult result = Collision.AABB(hitboxPosition, hitboxSize, tile.HitboxPosition, tile.HitboxSize);
+
+                        switch (result.Side) // TODO: Fix collision bug with side jumping
+                        {
+                        case CollisionSide.Left:
+                            position = new Maths.Vector2(position.X + result.Overlap, position.Y);
+                            velocity = new Maths.Vector2(0.0f, velocity.Y);
+                            break;
+                        case CollisionSide.Right:
+                            position = new Maths.Vector2(position.X - result.Overlap, position.Y);
+                                velocity = new Maths.Vector2(0.0f, velocity.Y);
+                            break;
+                        case CollisionSide.Top:
+                            position = new Maths.Vector2(position.X, position.Y - result.Overlap);
+
+                            if (velocity.Y > 0.0f)
+                                velocity = new Maths.Vector2(velocity.X, 0.0f);
+                            break;
+                        case CollisionSide.Bottom:
+                            position = new Maths.Vector2(position.X, position.Y + result.Overlap);
+
+                            if (velocity.Y < 0.0f)
+                            {
+                                velocity = new Maths.Vector2(velocity.X, 0.0f);
+                                canJump = true;
+                            }
+
+                            // Note: We don't set CanJump while the player is still jumping
+
+                            break;
+
+                        default:
+                            break;
+                        }
+                    }
+                }
             }
         }
 

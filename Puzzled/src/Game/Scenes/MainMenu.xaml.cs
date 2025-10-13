@@ -26,6 +26,7 @@ namespace Puzzled
                 // we warm up the filesystem here.
                 // Note 2: We do this before playing the sounds to avoid messing up the animation on different systems.
                 // Note 3: I know this is ugly AF - Jorben
+                // TODO: Delete
                 {
                     File.WriteAllLines("temp.txt", new string[] { "TEMPORARY" });
                     File.Delete("temp.txt");

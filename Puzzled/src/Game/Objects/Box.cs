@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Collections.Generic;
-using System.Diagnostics;
+using static Puzzled.Player;
 
 namespace Puzzled
 {
@@ -20,15 +22,40 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public Box(Maths.Vector2 position)
         {
-            m_Position = position;
+            Position = position;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
         // Methods
         //////////////////////////////////////////////////////////////////////////////////
+
+        public override void Update(float deltaTime)
+        {
+            // Velocity
+            {
+                Position.X += Velocity.X * deltaTime;
+                Position.Y += Velocity.Y * deltaTime;
+            }
+
+            // Friction & Gravity
+            {
+                if (Velocity.X != 0.0f)
+                {
+                    Velocity.X -= Settings.GroundFriction * Math.Sign(Velocity.X) * deltaTime;
+
+                    // Snap to zero if it overshoots
+                    if (Math.Abs(Velocity.X) < Settings.GroundFriction)
+                        Velocity.X = 0.0f;
+                }
+
+                Velocity.Y -= Settings.Gravity * deltaTime;
+                Velocity.Y = Math.Min(Velocity.Y, Settings.PlayerTerminalVelocity);
+            }
+        }
+
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(m_Position, s_Size, s_Texture);
+            renderer.AddQuad(Position, s_Size, s_Texture);
 
             //if (debug) // Outline tile hitbox
             //{
@@ -43,11 +70,14 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         // Variables
         //////////////////////////////////////////////////////////////////////////////////
-        private Maths.Vector2 m_Position;
-
-        public Maths.Vector2 Position { get { return (m_Position); } set { m_Position = value; } }
+        public Maths.Vector2 Position;
+        public Maths.Vector2 Velocity;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private static readonly CroppedTexture s_Texture = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 0, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+    
+        public Maths.Vector2 HitboxPosition { get { return Position; } }
+        public Maths.Vector2 HitboxSize { get { return s_Size; } }
+
     }
 }
