@@ -243,6 +243,7 @@ namespace Puzzled
         public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
         public Maths.Vector2 Velocity { get { return m_Velocity; } set { m_Velocity = value; } }
 
+        public bool CanJump { get { return m_CanJump; } set { m_CanJump = value; } }
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 

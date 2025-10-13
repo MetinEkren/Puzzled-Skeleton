@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Puzzled.Physics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
 
 namespace Puzzled
 {
@@ -37,7 +38,18 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             m_Player.Update(deltaTime);
-            m_Player.HandleStaticCollisions(m_Chunks);
+
+            // Player collision
+            {
+                Maths.Vector2 position = m_Player.Position;
+                Maths.Vector2 velocity = m_Player.Velocity;
+                bool canJump = m_Player.CanJump;
+                HandleStaticCollisions(ref position, ref velocity, ref canJump, m_Player.HitboxPosition, m_Player.HitboxSize);
+
+                m_Player.Position = position;
+                m_Player.Velocity = velocity;
+                m_Player.CanJump = canJump;
+            }
         }
 
         public void OnRender()
