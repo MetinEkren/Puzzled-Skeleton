@@ -55,27 +55,69 @@ namespace Puzzled
                             continue;
 
                         Box box2 = (Box)obj2;
-                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
-                        switch (result.Side)
-                        {
-                        case CollisionSide.Left:
-                            box2.Position.X -= result.Overlap;
-                            break;
-                        case CollisionSide.Right:
-                            box2.Position.X += result.Overlap;
-                            break;
-                        case CollisionSide.Top:
-                            box2.Position.Y += result.Overlap;
-                            box2.Velocity.Y = 0.0f;
-                            break;
-                        case CollisionSide.Bottom:
-                            box2.Position.Y -= result.Overlap;
-                            box.Velocity.Y = 0.0f;
-                            break;
 
-                            default:
-                                break;
-                        }
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box2.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box2.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                box2.Position.Y += result.Overlap;
+                                box2.Velocity.Y = 0.0f;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box2.Position.Y -= result.Overlap;
+                                box.Velocity.Y = 0.0f;
+                            }
+                        );
+
+                        if (!collision)
+                            continue;
+
+                        // A collision has occurred and been resolved
+                        // Make sure we are not in walls
+                        bool canJump = false;
+                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box2.HitboxPosition, box2.HitboxSize);
+
+                        // After colliding with player, resolving and then colliding with static blocks and resolving
+                        // We need to check if we're now colliding with the player again, if so move the player
+                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                        collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                box.Position.Y += result.Overlap;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box.Position.Y -= result.Overlap;
+                            }
+                        );
+
+                        // Note: We currently don't do anything if we collide again, which is fine I think
                     }
                     else if (obj is Button button)
                     {
@@ -88,7 +130,6 @@ namespace Puzzled
                                 button.Press();
                         }
                     }
-
                 }
             }
 
