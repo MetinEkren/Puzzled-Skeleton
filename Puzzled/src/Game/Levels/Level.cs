@@ -58,18 +58,6 @@ namespace Puzzled
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         switch (result.Side)
                         {
-                            case CollisionSide.Left:
-                                box2.Position.X -= result.Overlap;
-                                break;
-                            case CollisionSide.Right:
-                                box2.Position.X += result.Overlap;
-                                break;
-                            case CollisionSide.Top:
-                                box2.Position.Y += result.Overlap;
-                                break;
-                            case CollisionSide.Bottom:
-                                box2.Position.Y -= result.Overlap;
-                                break;
                         case CollisionSide.Left:
                             box2.Position.X -= result.Overlap;
                             break;
