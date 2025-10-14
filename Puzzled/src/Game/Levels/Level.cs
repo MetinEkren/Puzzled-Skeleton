@@ -46,6 +46,8 @@ namespace Puzzled
             // Dynamic object collision
             foreach (DynamicObject obj in m_DynamicObjects)
             {
+                obj.Update(deltaTime);
+
                 HandleDynamicCollision(obj);
             }
 
@@ -53,8 +55,6 @@ namespace Puzzled
             {
                 foreach (DynamicObject obj in m_DynamicObjects)
                 {
-                    obj.Update(deltaTime);
-
                     if (obj is Box box)
                     {
                         bool canJump = false;
