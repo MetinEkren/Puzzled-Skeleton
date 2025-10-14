@@ -283,12 +283,6 @@ namespace Puzzled
                     Logger.Trace($"Player Velocity {{ .x = {m_Player.Velocity.X}, .y = {m_Player.Velocity.Y} }}");
                     
                     Logger.Trace("");
-
-                    // TODO: Remove
-                    Logger.Trace($"Box Position {{ .x = {((Box)m_DynamicObjects[0]).Position.X}, .y = {((Box)m_DynamicObjects[0]).Position.Y} }}");
-                    Logger.Trace($"Box Velocity {{ .x = {((Box)m_DynamicObjects[0]).Velocity.X}, .y = {((Box)m_DynamicObjects[0]).Velocity.X} }}");
-                    
-                    Logger.Trace("");
                 }
                 if (kpe.KeyCode == Key.L)
                 {
