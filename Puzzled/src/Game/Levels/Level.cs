@@ -77,7 +77,18 @@ namespace Puzzled
                                 break;
                         }
                     }
-                    
+                    else if (obj is Button button)
+                    {
+                        if (obj2 is Box)
+                        {
+                            Box box2 = (Box)obj2;
+
+                            CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                            if (result.Side != CollisionSide.None)
+                                button.Press();
+                        }
+                    }
+
                 }
             }
 
@@ -183,13 +194,7 @@ namespace Puzzled
                     {
                         CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
                         if(result.Side != CollisionSide.None)
-                        {
-                            button.Press(true);
-                        }
-                        else
-                        {
-                            button.Press(false);
-                        }
+                            button.Press();
                     }
                 }
 

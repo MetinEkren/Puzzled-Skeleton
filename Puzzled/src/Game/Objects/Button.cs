@@ -42,14 +42,12 @@ namespace Puzzled
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X, HitboxPosition.Y + HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
             }
+            m_Pressed = false;
         }
 
-        public void Press(bool isPressed)
+        public void Press()
         {
-            if (isPressed)
-                m_Pressed = true;
-            else
-                m_Pressed = false;
+            m_Pressed = true;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
