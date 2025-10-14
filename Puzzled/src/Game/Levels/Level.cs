@@ -43,6 +43,44 @@ namespace Puzzled
 
             m_Player.Update(deltaTime);
 
+            // Dynamic object collision
+            foreach (DynamicObject obj in m_DynamicObjects)
+            {
+                if (obj is Box box)
+                {
+                    foreach (Box box2 in m_DynamicObjects)
+                    {
+                        if (box == box2)
+                            continue;
+
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                        switch (result.Side)
+                        {
+                            case CollisionSide.Left:
+                                {
+                                    box2.Position.X -= result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Right:
+                                {
+                                    box2.Position.X += result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Top:
+                                {
+                                    box2.Position.Y += result.Overlap;
+                                    break;
+                                }
+                            case CollisionSide.Bottom:
+                                {
+                                    box2.Position.Y -= result.Overlap;
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+
             // Dynamic objects (static collision)
             {
                 foreach (DynamicObject obj in m_DynamicObjects)
@@ -80,8 +118,6 @@ namespace Puzzled
                         }
                         case CollisionSide.Top:
                         {
-                            box.Position.Y -= result.Overlap;
-                                    
                             if (m_Player.Velocity.Y <= 0.0f)
                             {
                                 m_Player.Velocity.Y = 0.0f;
@@ -143,6 +179,8 @@ namespace Puzzled
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
+            
+            
         }
 
         public void OnRender()
