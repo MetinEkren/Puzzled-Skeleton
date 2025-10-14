@@ -46,91 +46,7 @@ namespace Puzzled
             // Dynamic object collision
             foreach (DynamicObject obj in m_DynamicObjects)
             {
-                foreach (DynamicObject obj2 in m_DynamicObjects)
-                {
-                    // Collision between boxes
-                    if (obj is Box box)
-                    {
-                        if (box == obj2 || !(obj2 is Box))
-                            continue;
-
-                        Box box2 = (Box)obj2;
-
-                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
-
-                        bool collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                box2.Position.X -= result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                box2.Position.X += result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                box2.Position.Y += result.Overlap;
-                                box2.Velocity.Y = 0.0f;
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                box2.Position.Y -= result.Overlap;
-                                box.Velocity.Y = 0.0f;
-                            }
-                        );
-
-                        if (!collision)
-                            continue;
-
-                        // A collision has occurred and been resolved
-                        // Make sure we are not in walls
-                        bool canJump = false;
-                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box2.HitboxPosition, box2.HitboxSize);
-
-                        // After colliding with player, resolving and then colliding with static blocks and resolving
-                        // We need to check if we're now colliding with the player again, if so move the player
-                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
-                        collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                box.Position.X -= result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                box.Position.X += result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                box.Position.Y += result.Overlap;
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                box.Position.Y -= result.Overlap;
-                            }
-                        );
-
-                        // Note: We currently don't do anything if we collide again, which is fine I think
-                    }
-                    else if (obj is Button button)
-                    {
-                        if (obj2 is Box)
-                        {
-                            Box box2 = (Box)obj2;
-
-                            CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
-                            if (result.Side != CollisionSide.None)
-                                button.Press();
-                        }
-                    }
-                }
+                HandleDynamicCollision(obj);
             }
 
             // Dynamic objects (static collision)
@@ -150,7 +66,7 @@ namespace Puzzled
             // Player collision (static & dynamic)
             {
                 // Dynamic
-                foreach(DynamicObject obj in m_DynamicObjects)
+                foreach (DynamicObject obj in m_DynamicObjects)
                 {
                     if (obj is Box box)
                     {
@@ -368,6 +284,107 @@ namespace Puzzled
 
                 if (!collision)
                     break;
+            }
+
+            return hasCollided;
+        }
+
+        private bool HandleDynamicCollision(DynamicObject obj)
+        {
+            bool hasCollided = false;
+            foreach (DynamicObject obj2 in m_DynamicObjects)
+            {
+                if (obj == obj2)
+                    continue;
+
+                // Collision between boxes
+                if (obj is Box box)
+                {
+                    if (obj2 is Box box2)
+                    {
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box2.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box2.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                box2.Position.Y += result.Overlap;
+                                box.Velocity.Y = 0.0f;
+                                box2.Velocity.Y = 0.0f;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box2.Position.Y -= result.Overlap;
+                                box2.Velocity.Y = 0.0f;
+                                box.Velocity.Y = 0.0f;
+                            }
+                        );
+                        hasCollided |= collision;
+
+                        if (!collision)
+                            continue;
+
+                        // A collision has occurred and been resolved
+                        // Make sure we are not in walls
+                        bool canJump = false;
+                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box2.HitboxPosition, box2.HitboxSize);
+                        hasCollided |= collision;
+
+                        // After colliding with player, resolving and then colliding with static blocks and resolving
+                        // We need to check if we're now colliding with the player again, if so move the player
+                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                        collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                box.Position.Y += result.Overlap;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box.Position.Y -= result.Overlap;
+                            }
+                        );
+                        hasCollided |= collision;
+
+                        // Note: We currently don't do anything if we collide again, which is fine I think
+                    }
+
+                    // Note: We don't need button logic here, since it's below
+                }
+                else if (obj is Button button)
+                {
+                    if (obj2 is Box box2)
+                    {
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            hasCollided = true;
+                            button.Press();
+                        }
+                    }
+                }
             }
 
             return hasCollided;
