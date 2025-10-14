@@ -210,6 +210,9 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
+            // Voeg een DoorKey toe bij het starten van het level
+            m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
+
             // Putting all tiles into chunks 
             {
                 uint chunksX = (uint)Math.Ceiling((double)(tilesX / (float)Settings.ChunkSize));
