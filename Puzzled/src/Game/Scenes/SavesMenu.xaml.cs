@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
@@ -44,14 +45,26 @@ namespace Puzzled
         {
             m_Renderer = new Renderer(GameCanvas);
 
-            m_Saves[0] = Assets.LoadSave(1);
-            Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
+            // Set quote
+            {
+                List<string> quotes = new List<string>(File.ReadAllLines(Assets.SaveQuotesPath));
 
-            m_Saves[1] = Assets.LoadSave(2);
-            Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = {((m_Saves[1].Scores.Count != 0) ? string.Join(", ", m_Saves[1].Scores.ToArray()) : "<NO SCORES>")} }}");
+                Random rnd = new Random();
+                int i = rnd.Next(quotes.Count);
+                QuoteText.Text = quotes[i];
+            }
 
-            m_Saves[2] = Assets.LoadSave(3);
-            Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = {((m_Saves[2].Scores.Count != 0) ? string.Join(", ", m_Saves[2].Scores.ToArray()) : "<NO SCORES>")} }}");
+            // Load saves
+            {
+                m_Saves[0] = Assets.LoadSave(1);
+                Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
+
+                m_Saves[1] = Assets.LoadSave(2);
+                Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = {((m_Saves[1].Scores.Count != 0) ? string.Join(", ", m_Saves[1].Scores.ToArray()) : "<NO SCORES>")} }}");
+
+                m_Saves[2] = Assets.LoadSave(3);
+                Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = {((m_Saves[2].Scores.Count != 0) ? string.Join(", ", m_Saves[2].Scores.ToArray()) : "<NO SCORES>")} }}");
+            }
 
             Loaded -= OnLoad;
 
