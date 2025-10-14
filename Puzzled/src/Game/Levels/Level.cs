@@ -104,45 +104,37 @@ namespace Puzzled
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
 
-                        switch (result.Side)
-                        {
-                        case CollisionSide.Left:
-                        {
-                            box.Position.X += result.Overlap;
-                            break;
-                        }
-                        case CollisionSide.Right:
-                        {
-                            box.Position.X -= result.Overlap;
-                            break;
-                        }
-                        case CollisionSide.Top:
-                        {
-                            box.Position.Y -= result.Overlap;
-                                    
-                            if (m_Player.Velocity.Y <= 0.0f)
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
                             {
-                                m_Player.Velocity.Y = 0.0f;
-                                m_Player.CanJump = true;
-                            }
-
-                            break;
-                        }
-                        case CollisionSide.Bottom:
-                        {
-                            box.Position.Y += result.Overlap;
+                                box.Position.X += result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                if (m_Player.Velocity.Y <= 0.0f)
+                                {
+                                    m_Player.Velocity.Y = 0.0f;
+                                    m_Player.CanJump = true;
+                                }
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box.Position.Y += result.Overlap;
 
                                 if (m_Player.Velocity.Y > 0.0f)
                                 {
-                                    // TODO: Proper logic
                                     box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
                                     box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
                                     //box.Velocity.X = m_Player.Velocity.X;
                                     //box.Velocity.Y = m_Player.Velocity.Y;
-                                }
-                                else
-                                {
-                                    box.Velocity.Y = 0.0f;
                                 }
                             }
                         );
@@ -154,9 +146,6 @@ namespace Puzzled
                         // Make sure we are not in walls
                         bool canJump = false;
                         collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
-
-                        if (!collision)
-                            continue;
 
                         // After colliding with player, resolving and then colliding with static blocks and resolving
                         // We need to check if we're now colliding with the player again, if so move the player
@@ -177,7 +166,7 @@ namespace Puzzled
                             {
                                 m_Player.Position.Y += result.Overlap;
                             },
-                            // Right
+                            // Bottom
                             () =>
                             {
                                 m_Player.Position.Y -= result.Overlap;
