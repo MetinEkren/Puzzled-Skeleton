@@ -116,26 +116,26 @@ namespace Puzzled
 
                         switch (result.Side)
                         {
-                            case CollisionSide.Left:
-                                {
-                                    m_Player.Position.X -= result.Overlap;
-                                    break;
-                                }
-                            case CollisionSide.Right:
-                                {
-                                    m_Player.Position.X += result.Overlap;
-                                    break;
-                                }
-                            case CollisionSide.Top:
-                                {
-                                    m_Player.Position.Y += result.Overlap;
-                                    break;
-                                }
-                            case CollisionSide.Bottom:
-                                {
-                                    m_Player.Position.Y -= result.Overlap;
-                                    break;
-                                }
+                        case CollisionSide.Left:
+                        {
+                            m_Player.Position.X -= result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Right:
+                        {
+                            m_Player.Position.X += result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Top:
+                        {
+                            m_Player.Position.Y += result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Bottom:
+                        {
+                            m_Player.Position.Y -= result.Overlap;
+                            break;
+                        }
                         }
                     }
                 }
@@ -161,7 +161,7 @@ namespace Puzzled
             if (e is MouseButtonPressedEvent mbpe)
             {
                 //for (int i = 0; i < 10000; i++)
-                    m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X + (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
+                    m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
             }
 
             if (e is KeyPressedEvent kpe)
