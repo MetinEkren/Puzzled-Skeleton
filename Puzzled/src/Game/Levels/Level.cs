@@ -287,6 +287,7 @@ namespace Puzzled
             // Dynamic objects
             {
                 m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
+                m_DynamicObjects.Add(new Door(new Maths.Vector2(400, 48)));
             }
         }
 
