@@ -55,7 +55,7 @@ namespace Puzzled
             double deltaTime = (now - m_LastTime).TotalSeconds;
             m_LastTime = now;
 
-            m_Game.OnUpdate((float)Math.Max(deltaTime, 0.1f));
+            m_Game.OnUpdate((float)Math.Min(deltaTime, 0.1f));
             m_Game.OnRender();
             m_Game.OnUIRender();
         }
