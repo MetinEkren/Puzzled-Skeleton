@@ -65,20 +65,6 @@ namespace Puzzled
                 }
             }
             
-            // Velocity
-            {
-                Position.X += Velocity.X * deltaTime;
-                Position.Y += Velocity.Y * deltaTime;
-            }
-
-            // Animation
-            {
-                if (IsMovingHorizontally() && m_State != State.Running)
-                    SetNewState(State.Running);
-                if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
-                    SetNewState(State.Idle);
-            }
-
             // Friction & Gravity
             {
                 if (Velocity.X != 0.0f)
@@ -96,6 +82,20 @@ namespace Puzzled
                 // When falling (or jumping) you are no longer able to jump again
                 if (Velocity.Y != 0.0f)
                     CanJump = false;
+            }
+
+            // Velocity
+            {
+                Position.X += Velocity.X * deltaTime;
+                Position.Y += Velocity.Y * deltaTime;
+            }
+
+            // Animation
+            {
+                if (IsMovingHorizontally() && m_State != State.Running)
+                    SetNewState(State.Running);
+                if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
+                    SetNewState(State.Idle);
             }
 
             GetCurrentAnimation().Update(deltaTime);

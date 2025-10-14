@@ -67,37 +67,42 @@ namespace Puzzled
 
                         switch (result.Side)
                         {
-                            case CollisionSide.Left:
-                                {
-                                    box.Position.X += result.Overlap;
-                                    break;
-                                }
-                            case CollisionSide.Right:
-                                {
-                                    box.Position.X -= result.Overlap;
-                                    break;
-                                }
-                            case CollisionSide.Top:
-                                {
-                                    box.Position.Y -= result.Overlap;
+                        case CollisionSide.Left:
+                        {
+                            box.Position.X += result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Right:
+                        {
+                            box.Position.X -= result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Top:
+                        {
+                            box.Position.Y -= result.Overlap;
                                     
-                                    if (m_Player.Velocity.Y <= 0.0f)
-                                    {
-                                        m_Player.Velocity.Y = 0.0f;
-                                        m_Player.CanJump = true;
-                                    }
+                            if (m_Player.Velocity.Y <= 0.0f)
+                            {
+                                m_Player.Velocity.Y = 0.0f;
+                                m_Player.CanJump = true;
+                            }
 
-                                    break;
-                                }
-                            case CollisionSide.Bottom:
-                                {
-                                    box.Position.Y += result.Overlap;
+                            break;
+                        }
+                        case CollisionSide.Bottom:
+                        {
+                            box.Position.Y += result.Overlap;
 
-                                    if (m_Player.Velocity.Y > 0.0f)
-                                        box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                            if (m_Player.Velocity.Y > 0.0f)
+                            {
+                                box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
+                                box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                                //box.Velocity.X = m_Player.Velocity.X;
+                                //box.Velocity.Y = m_Player.Velocity.Y;
+                            }
 
-                                    break;
-                                }
+                            break;
+                        }
                         }
 
                         if (result.Side != CollisionSide.None)

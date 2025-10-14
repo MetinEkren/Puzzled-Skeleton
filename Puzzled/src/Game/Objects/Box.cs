@@ -31,12 +31,6 @@ namespace Puzzled
 
         public override void Update(float deltaTime)
         {
-            // Velocity
-            {
-                Position.X += Velocity.X * deltaTime;
-                Position.Y += Velocity.Y * deltaTime;
-            }
-
             // Friction & Gravity
             {
                 if (Velocity.X != 0.0f)
@@ -50,6 +44,12 @@ namespace Puzzled
 
                 Velocity.Y -= Settings.Gravity * deltaTime;
                 Velocity.Y = Math.Max(Velocity.Y, Settings.BoxTerminalVelocity);
+            }
+
+            // Velocity
+            {
+                Position.X += Velocity.X * deltaTime;
+                Position.Y += Velocity.Y * deltaTime;
             }
         }
 
