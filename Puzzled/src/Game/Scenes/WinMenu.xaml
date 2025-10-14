@@ -11,7 +11,7 @@
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
             <!-- Win text -->
-            <TextBlock Text="Win Screen"
+            <TextBlock Text="You have won!"
                 FontSize="80"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
@@ -58,7 +58,7 @@
             <Grid Width="300" Height="300" Margin="64,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border BorderBrush="Blue" BorderThickness="2" Background="White" CornerRadius="10"/>
                 <StackPanel Margin="14">
-                    <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,15"/>
+                    <TextBlock Text="Leaderboard" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
                     <!-- Koptekst -->
                     <Grid Margin="0,0,0,10">
@@ -67,7 +67,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Name:" FontSize="25" Grid.Column="0"/>
-                        <TextBlock Text="Score:" FontSize="25" Grid.Column="1" HorizontalAlignment="Right"/>
+                        <TextBlock Text="Times:" FontSize="25" Grid.Column="1" HorizontalAlignment="Right"/>
                     </Grid>
 
                     <!-- Rij 1 -->
