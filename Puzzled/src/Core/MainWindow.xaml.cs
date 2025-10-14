@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -55,7 +56,12 @@ namespace Puzzled
             double deltaTime = (now - m_LastTime).TotalSeconds;
             m_LastTime = now;
 
-            m_Game.OnUpdate((float)deltaTime);
+            //m_Game.OnUpdate((float)Math.Min(deltaTime, 0.1f));
+            if (Settings.LimitDeltaTime)
+                m_Game.OnUpdate((float)Math.Max(deltaTime, Settings.LimitedDeltaTime));
+            else
+                m_Game.OnUpdate((float)Math.Min(deltaTime, Settings.MaxDeltaTime));
+            
             m_Game.OnRender();
             m_Game.OnUIRender();
         }

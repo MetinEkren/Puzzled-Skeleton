@@ -18,8 +18,10 @@ namespace Puzzled
         // Audio
         ////////////////////////////////////////////////////////////////////////////////////
         private static uint s_MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 1u); // % // TODO: This is for Jorben's PC, ignore
-        public static uint MasterVolume { get { return s_MasterVolume; }
-            set 
+        public static uint MasterVolume
+        {
+            get { return s_MasterVolume; }
+            set
             {
                 // Note: Currently all audio files must manually be added... // FUTURE TODO: ...
                 s_MasterVolume = value;
@@ -27,7 +29,7 @@ namespace Puzzled
                 Assets.MainMenuMusic.Volume = value;
             }
         }
-        
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Renderer
         ////////////////////////////////////////////////////////////////////////////////////
@@ -50,11 +52,20 @@ namespace Puzzled
         // Physics // TODO: tweak these
         ////////////////////////////////////////////////////////////////////////////////////
         public const float Gravity = 200.0f * Scale;
-        public const float GroundFriction = Gravity;
+        public const float GroundFriction = 50.0f * Scale;
         public const float PlayerRunningVelocity = 55.0f * Scale;
         public const float PlayerJumpingVelocity = 90.0f * Scale;
-        public const float PlayerTerminalVelocity = PlayerJumpingVelocity; // Note: For downwards, so it doesn't keep accelerating
+        public const float PlayerTerminalVelocity = -PlayerJumpingVelocity; // Note: For downwards, so it doesn't keep accelerating
 
+        public const float BoxHitVelocity = 105.0f * Scale;
+        public const float BoxTerminalVelocity = PlayerTerminalVelocity;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Other
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static bool LimitDeltaTime = false;
+        public const float LimitedDeltaTime = 0.1f;
+        public const float MaxDeltaTime = 0.1f;
     }
 
 }

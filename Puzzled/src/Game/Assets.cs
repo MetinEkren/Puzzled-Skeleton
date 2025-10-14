@@ -48,6 +48,7 @@ namespace Puzzled
         public static string PainSheetPath = ResourcesDirectory + "Resources/Sprites/pain.png";
         public static string PushSheetPath = ResourcesDirectory + "Resources/Sprites/push.png";
         public static string RunSheetPath = ResourcesDirectory + "Resources/Sprites/run.png";
+        public static string ObjectsSheetPath = ResourcesDirectory + "Resources/Sprites/objects.png";
 
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
 
@@ -97,6 +98,7 @@ namespace Puzzled
         public static Texture PainSheet = new Texture(PainSheetPath);
         public static Texture PushSheet = new Texture(PushSheetPath);
         public static Texture RunSheet = new Texture(RunSheetPath);
+        public static Texture ObjectsSheet = new Texture(ObjectsSheetPath);
 
         public static Texture TileSheet = new Texture(TileSheetPath);
 
