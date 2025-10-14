@@ -30,7 +30,10 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(Position, s_Size, s_Texture1);
+            if (m_Pressed)
+                renderer.AddQuad(Position, s_Size, s_TexturePressed);
+            else
+                renderer.AddQuad(Position, s_Size, s_TextureIdle);
 
             if (debug) // Outline tile hitbox
             {
@@ -41,12 +44,12 @@ namespace Puzzled
             }
         }
 
-        public void ChangeTexture(Renderer renderer, bool pressed)
+        public void Press(bool isPressed)
         {
-            if (pressed)
-                renderer.AddQuad(Position, s_Size, s_Texture2);
+            if (isPressed)
+                m_Pressed = true;
             else
-                renderer.AddQuad(Position, s_Size, s_Texture1);
+                m_Pressed = false;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -54,10 +57,11 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
+        private bool m_Pressed = false;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-        private static readonly CroppedTexture s_Texture1 = new CroppedTexture(Assets.ObjectsSheet, new UV(0, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
-        private static readonly CroppedTexture s_Texture2 = new CroppedTexture(Assets.ObjectsSheet, new UV(16, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureIdle = new CroppedTexture(Assets.ObjectsSheet, new UV(0, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TexturePressed = new CroppedTexture(Assets.ObjectsSheet, new UV(16, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
 
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }

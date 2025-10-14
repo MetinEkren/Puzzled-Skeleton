@@ -175,7 +175,15 @@ namespace Puzzled
                     }
                     else if (obj is Button button)
                     {
-                        button.ChangeTexture(m_Renderer, true);
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if(result.Side != CollisionSide.None)
+                        {
+                            button.Press(true);
+                        }
+                        else
+                        {
+                            button.Press(false);
+                        }
                     }
                 }
 
@@ -267,7 +275,7 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                
+                m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
             }
         }
 
