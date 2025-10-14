@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
@@ -43,6 +44,10 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(GameCanvas);
+
+            Random rnd = new Random();
+            int i = rnd.Next(s_Quotes.Count);
+            QuoteText.Text = s_Quotes[i];
 
             m_Saves[0] = Assets.LoadSave(1);
             Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
@@ -129,6 +134,14 @@ namespace Puzzled
         private Save[] m_Saves = new Save[3];
         
         private Renderer m_Renderer;
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Static variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        private List<string> s_Quotes = new List<string> { 
+            "AAAABBBB",
+            "CCCCCDDD"
+        };
 
     }
 
