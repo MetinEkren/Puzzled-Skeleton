@@ -37,6 +37,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void OnUpdate(float deltaTime)
         {
+            Logger.Trace($"Box count: {m_DynamicObjects.Count}");
+            Logger.Trace($"FPS: { 1/ deltaTime }");
+
             m_Player.Update(deltaTime);
 
             // Dynamic objects (static collision)
@@ -77,16 +80,22 @@ namespace Puzzled
                             case CollisionSide.Top:
                                 {
                                     box.Position.Y -= result.Overlap;
-                                    m_Player.CanJump = true;
                                     
-                                    if (m_Player.Velocity.Y > 0.0f)
+                                    if (m_Player.Velocity.Y <= 0.0f)
+                                    {
                                         m_Player.Velocity.Y = 0.0f;
+                                        m_Player.CanJump = true;
+                                    }
 
                                     break;
                                 }
                             case CollisionSide.Bottom:
                                 {
                                     box.Position.Y += result.Overlap;
+
+                                    if (m_Player.Velocity.Y > 0.0f)
+                                        box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+
                                     break;
                                 }
                         }
@@ -143,6 +152,11 @@ namespace Puzzled
 
         public void OnEvent(Event e)
         {
+            if (e is MouseButtonPressedEvent mbpe)
+            {
+                m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X, (Game.Instance.Window.Height - Input.GetMousePosition().Y))));
+            }
+
             if (e is KeyPressedEvent kpe)
             {
                 // Note: For testing a debug
@@ -152,9 +166,6 @@ namespace Puzzled
                 if (kpe.KeyCode == Key.R)
                 {
                     m_DynamicObjects.Clear();
-
-                    Box box = new Box(new Maths.Vector2(300, 700));
-                    m_DynamicObjects.Add(box);
                 }
                 if (kpe.KeyCode == Key.P)
                 {
@@ -267,7 +278,7 @@ namespace Puzzled
                         case CollisionSide.Bottom:
                             position = new Maths.Vector2(position.X, position.Y + result.Overlap);
 
-                            if (velocity.Y < 0.0f) // TODO: Fix tripping bug    
+                            if (velocity.Y <= 0.0f) // TODO: Fix tripping bug    
                             {
                                 velocity = new Maths.Vector2(velocity.X, 0.0f);
                                 canJump = true;

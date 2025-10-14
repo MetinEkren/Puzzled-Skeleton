@@ -49,7 +49,7 @@ namespace Puzzled
                 }
 
                 Velocity.Y -= Settings.Gravity * deltaTime;
-                Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
+                Velocity.Y = Math.Max(Velocity.Y, Settings.BoxTerminalVelocity);
             }
         }
 
