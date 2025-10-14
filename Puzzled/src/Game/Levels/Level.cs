@@ -46,33 +46,36 @@ namespace Puzzled
             // Dynamic object collision
             foreach (DynamicObject obj in m_DynamicObjects)
             {
-                if (obj is Box box)
+                foreach (DynamicObject obj2 in m_DynamicObjects)
                 {
-                    foreach (Box box2 in m_DynamicObjects)
+                    // Collision between boxes
+                    if (obj is Box box)
                     {
-                        if (box == box2)
+                        if (box == obj2 || !(obj2 is Box))
                             continue;
 
+                        Box box2 = (Box)obj2;
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         switch (result.Side)
                         {
-                        case CollisionSide.Left:
-                            box2.Position.X -= result.Overlap;
-                            break;
-                        case CollisionSide.Right:
-                            box2.Position.X += result.Overlap;
-                            break;
-                        case CollisionSide.Top:
-                            box2.Position.Y += result.Overlap;
-                            break;
-                        case CollisionSide.Bottom:
-                            box2.Position.Y -= result.Overlap;
-                            break;
+                            case CollisionSide.Left:
+                                box2.Position.X -= result.Overlap;
+                                break;
+                            case CollisionSide.Right:
+                                box2.Position.X += result.Overlap;
+                                break;
+                            case CollisionSide.Top:
+                                box2.Position.Y += result.Overlap;
+                                break;
+                            case CollisionSide.Bottom:
+                                box2.Position.Y -= result.Overlap;
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
                         }
                     }
+                    
                 }
             }
 
@@ -167,8 +170,12 @@ namespace Puzzled
                                 m_Player.Position.Y -= result.Overlap;
                             }
                         );
-
+                        
                         // Note: We currently don't do anything if we collide again, which is fine I think
+                    }
+                    else if (obj is Button button)
+                    {
+                        button.ChangeTexture(m_Renderer, true);
                     }
                 }
 
