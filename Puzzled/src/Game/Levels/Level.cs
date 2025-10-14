@@ -1,5 +1,4 @@
-﻿using Puzzled.Physics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -9,6 +8,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
+
+using Puzzled.Physics;
 
 namespace Puzzled
 {
