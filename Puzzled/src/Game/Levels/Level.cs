@@ -70,6 +70,20 @@ namespace Puzzled
                             case CollisionSide.Bottom:
                                 box2.Position.Y -= result.Overlap;
                                 break;
+                        case CollisionSide.Left:
+                            box2.Position.X -= result.Overlap;
+                            break;
+                        case CollisionSide.Right:
+                            box2.Position.X += result.Overlap;
+                            break;
+                        case CollisionSide.Top:
+                            box2.Position.Y += result.Overlap;
+                            box2.Velocity.Y = 0.0f;
+                            break;
+                        case CollisionSide.Bottom:
+                            box2.Position.Y -= result.Overlap;
+                            box.Velocity.Y = 0.0f;
+                            break;
 
                             default:
                                 break;
@@ -133,6 +147,10 @@ namespace Puzzled
                                     box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
                                     //box.Velocity.X = m_Player.Velocity.X;
                                     //box.Velocity.Y = m_Player.Velocity.Y;
+                                }
+                                else
+                                {
+                                    box.Velocity.Y = 0.0f;
                                 }
                             }
                         );
