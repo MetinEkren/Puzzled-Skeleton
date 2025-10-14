@@ -159,7 +159,8 @@ namespace Puzzled
         {
             if (e is MouseButtonPressedEvent mbpe)
             {
-                m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X, (Game.Instance.Window.Height - Input.GetMousePosition().Y))));
+                //for (int i = 0; i < 10000; i++)
+                    m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X + (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
             }
 
             if (e is KeyPressedEvent kpe)
@@ -186,6 +187,10 @@ namespace Puzzled
                     Logger.Trace($"Box Velocity {{ .x = {((Box)m_DynamicObjects[0]).Velocity.X}, .y = {((Box)m_DynamicObjects[0]).Velocity.X} }}");
                     
                     Logger.Trace("");
+                }
+                if (kpe.KeyCode == Key.L)
+                {
+                    Settings.LimitDeltaTime = !Settings.LimitDeltaTime;
                 }
             }
         }
@@ -248,57 +253,74 @@ namespace Puzzled
 
             // Check collisions with chunks
             //Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
-            for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
+            while (true)
             {
-                for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
+                bool collision = false;
+                for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
                 {
-                    if (!m_Chunks.ContainsKey((x, y)))
-                        continue;
-
-                    Chunk chunk = m_Chunks[(x, y)];
-
-                    foreach (Tile tile in chunk.Tiles)
+                    for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
                     {
-                        if (tile == null)
+                        if (!m_Chunks.ContainsKey((x, y)))
                             continue;
 
-                        CollisionResult result = Collision.AABB(hitboxPosition, hitboxSize, tile.HitboxPosition, tile.HitboxSize);
-
-                        switch (result.Side) // TODO: Fix collision bug with side jumping
-                        {
-                        case CollisionSide.Left:
-                            position = new Maths.Vector2(position.X + result.Overlap, position.Y);
-                            velocity = new Maths.Vector2(0.0f, velocity.Y);
-                            break;
-                        case CollisionSide.Right:
-                            position = new Maths.Vector2(position.X - result.Overlap, position.Y);
-                                velocity = new Maths.Vector2(0.0f, velocity.Y);
-                            break;
-                        case CollisionSide.Top:
-                            position = new Maths.Vector2(position.X, position.Y - result.Overlap);
-
-                            if (velocity.Y > 0.0f)
-                                velocity = new Maths.Vector2(velocity.X, 0.0f);
-                            break;
-                        case CollisionSide.Bottom:
-                            position = new Maths.Vector2(position.X, position.Y + result.Overlap);
-
-                            if (velocity.Y <= 0.0f) // TODO: Fix tripping bug    
-                            {
-                                velocity = new Maths.Vector2(velocity.X, 0.0f);
-                                canJump = true;
-                            }
-
-                            // Note: We don't set CanJump while the player is still jumping
-
-                            break;
-
-                        default:
-                            break;
-                        }
+                        Chunk chunk = m_Chunks[(x, y)];
+                        collision = HandleChunkStaticCollision(chunk, ref position, ref velocity, ref canJump, ref hitboxPosition, hitboxSize);
                     }
                 }
+
+                if (!collision)
+                    break;
             }
+        }
+
+        private bool HandleChunkStaticCollision(Chunk chunk, ref Maths.Vector2 position, ref Maths.Vector2 velocity, ref bool canJump, ref Maths.Vector2 hitboxPosition, Maths.Vector2 hitboxSize)
+        {
+            foreach (Tile tile in chunk.Tiles)
+            {
+                if (tile == null)
+                    continue;
+
+                CollisionResult result = Collision.AABB(hitboxPosition, hitboxSize, tile.HitboxPosition, tile.HitboxSize);
+
+                switch (result.Side) // TODO: Fix collision bug with side jumping
+                {
+                    case CollisionSide.Left:
+                        position.X += result.Overlap;
+                        hitboxPosition.X += result.Overlap;
+                        velocity = new Maths.Vector2(0.0f, velocity.Y);
+                        return true;
+                    case CollisionSide.Right:
+                        position.X -= result.Overlap;
+                        hitboxPosition.X -= result.Overlap;
+                        velocity = new Maths.Vector2(0.0f, velocity.Y);
+                        return true;
+                    case CollisionSide.Top:
+                        position.Y -= result.Overlap;
+                        hitboxPosition.Y -= result.Overlap;
+
+                        if (velocity.Y > 0.0f)
+                            velocity = new Maths.Vector2(velocity.X, 0.0f);
+                        return true;
+                    case CollisionSide.Bottom:
+                        position.Y += result.Overlap;
+                        hitboxPosition.Y += result.Overlap;
+
+                        if (velocity.Y <= 0.0f) // TODO: Fix tripping bug    
+                        {
+                            velocity = new Maths.Vector2(velocity.X, 0.0f);
+                            canJump = true;
+                        }
+
+                        // Note: We don't set CanJump while the player is still jumping
+
+                        return true;
+
+                    default:
+                        break;
+                }
+            }
+
+            return false;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
