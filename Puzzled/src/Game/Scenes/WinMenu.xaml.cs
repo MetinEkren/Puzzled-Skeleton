@@ -37,6 +37,33 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(UICanvas);
+
+            Save save1 = Assets.LoadSave(1);
+            Save save2 = Assets.LoadSave(2);
+            Save save3 = Assets.LoadSave(3);
+
+            PlayerName1.Text = save1.Name;
+            PlayerName2.Text = save2.Name;
+            PlayerName3.Text = save3.Name;
+
+
+            // TODO: inplement scores sorting + Score display
+
+            if (save1.Scores.Count >= (m_Level.ActiveSave.Level - 1))
+            {
+                PlayerScore1.Text = save1.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
+            }
+
+            if (save2.Scores.Count >= (m_Level.ActiveSave.Level - 1))
+            {
+                PlayerScore2.Text = save2.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
+            }
+            if (save3.Scores.Count >= (m_Level.ActiveSave.Level - 1))
+            {
+                PlayerScore3.Text = save3.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
+            }
+
+
             Loaded -= OnLoad;
         }
 
@@ -55,25 +82,13 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
             m_Renderer.Begin();
-            m_Renderer.AddQuad(new Maths.Vector2(570f, 0.0f), new Maths.Vector2(200f, 200f), m_IdleAnimation.GetCurrentTexture());
+            m_Renderer.AddQuad(new Maths.Vector2(570f, 0.0f), new Maths.Vector2(200f, 200f), m_IdleAnimation.GetCurrentTexture(), true);
             m_Renderer.End();
         }
 
         public void OnEvent(Event e)
         {
             if (!IsLoaded) return;
-
-            if (e is KeyPressedEvent kpe) // TODO: Remove
-            {
-                if (kpe.KeyCode == Key.Escape)
-                {
-                    Game.Instance.ActiveScene = new SavesMenu();
-                }
-                if (kpe.KeyCode == Key.Enter)
-                {
-                    Game.Instance.ActiveScene = m_Level;
-                }
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -106,8 +121,6 @@ namespace Puzzled
             m_Level.LoadLevel(m_Level.ActiveSave.Level);
             Game.Instance.ActiveScene = m_Level;
         }
-
-
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
