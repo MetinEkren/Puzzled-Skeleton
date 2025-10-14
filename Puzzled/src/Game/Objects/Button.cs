@@ -65,7 +65,7 @@ namespace Puzzled
 
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
-        public Maths.Vector2 HitboxSize { get { return s_Size; } }
+        public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(s_Size.X, s_Size.Y / 4); } }
 
     }
 }
