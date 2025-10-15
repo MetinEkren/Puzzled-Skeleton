@@ -105,7 +105,15 @@ namespace Puzzled
 
                 if (kpe.KeyCode == Key.R)
                 {
-                    m_DynamicObjects.Clear();
+                    if (m_DynamicObjects.Count > 0)
+                    {
+                        m_DynamicObjects.Clear();
+                    }
+                    else
+                    {
+                        m_DynamicObjects.Add(new Button(new Maths.Vector2(96, 48)));
+                        m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+                    }
                 }
                 if (kpe.KeyCode == Key.P)
                 {
@@ -153,8 +161,6 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
-                m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
             }
         }
 
