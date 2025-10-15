@@ -204,7 +204,7 @@ namespace Puzzled
             if (e is MouseButtonPressedEvent mbpe)
             {
                 //for (int i = 0; i < 10000; i++)
-                    m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
+                m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
             }
 
             if (e is KeyPressedEvent kpe)
@@ -213,22 +213,36 @@ namespace Puzzled
                 if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
 
-                if (kpe.KeyCode == Key.R)
-                {
-                    m_DynamicObjects.Clear();
-                }
-                if (kpe.KeyCode == Key.P)
-                {
-                    Logger.Trace("");
+                //if (kpe.KeyCode == Key.R)
+                //{
+                //    m_DynamicObjects.Clear();
+                //}
+                //if (kpe.KeyCode == Key.P)
+                //{
+                //    Logger.Trace("");
 
-                    Logger.Trace($"Player Position {{ .x = {m_Player.Position.X}, .y = {m_Player.Position.Y} }}");
-                    Logger.Trace($"Player Velocity {{ .x = {m_Player.Velocity.X}, .y = {m_Player.Velocity.Y} }}");
+                //    Logger.Trace($"Player Position {{ .x = {m_Player.Position.X}, .y = {m_Player.Position.Y} }}");
+                //    Logger.Trace($"Player Velocity {{ .x = {m_Player.Velocity.X}, .y = {m_Player.Velocity.Y} }}");
                     
-                    Logger.Trace("");
-                }
-                if (kpe.KeyCode == Key.L)
+                //    Logger.Trace("");
+                //}
+                //if (kpe.KeyCode == Key.L)
+                //{
+                //    Settings.LimitDeltaTime = !Settings.LimitDeltaTime;
+                //}
+
+                if (kpe.KeyCode == Key.Delete)
                 {
-                    Settings.LimitDeltaTime = !Settings.LimitDeltaTime;
+                    if (m_DynamicObjects.Count > 0)
+                    {
+                        m_DynamicObjects.Clear();
+                    }
+                    else
+                    {
+                        m_DynamicObjects.Add(new Button(new Maths.Vector2(144, 288)));
+                        m_DynamicObjects.Add(new Box(new Maths.Vector2(288, 336)));
+                        m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+                    }
                 }
             }
         }
@@ -263,8 +277,8 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
-                m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+                //m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
+                //m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
             }
         }
 
