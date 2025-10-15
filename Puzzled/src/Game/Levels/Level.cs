@@ -41,17 +41,21 @@ namespace Puzzled
             Logger.Trace($"Box count: {m_DynamicObjects.Count}");
             Logger.Trace($"FPS: { 1/ deltaTime }");
 
+            // TODO: Move a lot of this code to Physics.cs
+            
+            // Player update
             m_Player.Update(deltaTime);
 
-            // Dynamic object collision
+            // Dynamic object update
             foreach (DynamicObject obj in m_DynamicObjects)
-            {
                 obj.Update(deltaTime);
 
+            // Dynamic collisions between objects
+            foreach (DynamicObject obj in m_DynamicObjects)
                 HandleDynamicCollision(obj);
-            }
 
-            // Dynamic objects (static collision)
+            // Dynamic objects collision with static tiles (static collision)
+            // Note: Only includes tiles with gravity, since others are static (in terms of position)
             {
                 foreach (DynamicObject obj in m_DynamicObjects)
                 {
@@ -60,132 +64,18 @@ namespace Puzzled
                         bool canJump = false;
                         HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
                     }
-                    else if (obj is Door door)
-                    {
-                        CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                m_Player.Position.X -= result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                m_Player.Position.X += result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                m_Player.Position.Y += result.Overlap;
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                m_Player.Position.Y -= result.Overlap;
-                            }
-                        );
-                    }
+                    
                 }
             }
 
             // Player collision (static & dynamic)
             {
                 // Dynamic
-                foreach (DynamicObject obj in m_DynamicObjects)
-                {
-                    if (obj is Box box)
-                    {
-                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-
-                        bool collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                box.Position.X += result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                box.Position.X -= result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                if (m_Player.Velocity.Y <= 0.0f)
-                                {
-                                    m_Player.Velocity.Y = 0.0f;
-                                    m_Player.CanJump = true;
-                                }
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                box.Position.Y += result.Overlap;
-
-                                if (m_Player.Velocity.Y > 0.0f)
-                                {
-                                    box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
-                                    box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
-                                    //box.Velocity.X = m_Player.Velocity.X;
-                                    //box.Velocity.Y = m_Player.Velocity.Y;
-                                }
-                                else
-                                {
-                                    box.Velocity.Y = 0.0f;
-                                }
-                            }
-                        );
-
-                        if (!collision)
-                            continue;
-
-                        // A collision has occurred and been resolved
-                        // Make sure we are not in walls
-                        bool canJump = false;
-                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
-
-                        // After colliding with player, resolving and then colliding with static blocks and resolving
-                        // We need to check if we're now colliding with the player again, if so move the player
-                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                m_Player.Position.X -= result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                m_Player.Position.X += result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                m_Player.Position.Y += result.Overlap;
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                m_Player.Position.Y -= result.Overlap;
-                            }
-                        );
-                        
-                        // Note: We currently don't do anything if we collide again, which is fine I think
-                    }
-                    else if (obj is Button button)
-                    {
-                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        if(result.Side != CollisionSide.None)
-                            button.Press();
-                    }
-                }
+                HandleDynamicCollisionPlayer();
 
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
-            
-            
         }
 
         public void OnRender()
@@ -213,24 +103,10 @@ namespace Puzzled
                 if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
 
-                //if (kpe.KeyCode == Key.R)
-                //{
-                //    m_DynamicObjects.Clear();
-                //}
-                //if (kpe.KeyCode == Key.P)
-                //{
-                //    Logger.Trace("");
-
-                //    Logger.Trace($"Player Position {{ .x = {m_Player.Position.X}, .y = {m_Player.Position.Y} }}");
-                //    Logger.Trace($"Player Velocity {{ .x = {m_Player.Velocity.X}, .y = {m_Player.Velocity.Y} }}");
-                    
-                //    Logger.Trace("");
-                //}
-                //if (kpe.KeyCode == Key.L)
-                //{
-                //    Settings.LimitDeltaTime = !Settings.LimitDeltaTime;
-                //}
-
+                if (kpe.KeyCode == Key.R)
+                {
+                    m_DynamicObjects.Clear();
+                }
                 if (kpe.KeyCode == Key.Delete)
                 {
                     if (m_DynamicObjects.Count > 0)
@@ -277,8 +153,7 @@ namespace Puzzled
 
             // Dynamic objects
             {
-                //m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
-                //m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+
             }
         }
 
@@ -431,6 +306,134 @@ namespace Puzzled
             return hasCollided;
         }
 
+        private bool HandleDynamicCollisionPlayer()
+        {
+            bool hasCollided = false;
+
+            // Dynamic
+            foreach (DynamicObject obj in m_DynamicObjects)
+            {
+                if (obj is Box box)
+                {
+                    CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+
+                    bool collision = HandleCollision(result,
+                        // Left
+                        () =>
+                        {
+                            box.Position.X += result.Overlap;
+                        },
+                        // Right
+                        () =>
+                        {
+                            box.Position.X -= result.Overlap;
+                        },
+                        // Top
+                        () =>
+                        {
+                            if (m_Player.Velocity.Y <= 0.0f)
+                            {
+                                m_Player.Velocity.Y = 0.0f;
+                                m_Player.CanJump = true;
+                            }
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            box.Position.Y += result.Overlap;
+
+                            if (m_Player.Velocity.Y > 0.0f)
+                            {
+                                box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
+                                box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                                //box.Velocity.X = m_Player.Velocity.X;
+                                //box.Velocity.Y = m_Player.Velocity.Y;
+                            }
+                            else
+                            {
+                                box.Velocity.Y = 0.0f;
+                            }
+                        }
+                    );
+                    hasCollided |= collision;
+
+                    if (!collision)
+                        continue;
+
+                    // A collision has occurred and been resolved
+                    // Make sure we are not in walls
+                    bool canJump = false;
+                    collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
+                    hasCollided |= collision;
+
+                    // After colliding with player, resolving and then colliding with static blocks and resolving
+                    // We need to check if we're now colliding with the player again, if so move the player
+                    result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    collision = HandleCollision(result,
+                        // Left
+                        () =>
+                        {
+                            m_Player.Position.X -= result.Overlap;
+                        },
+                        // Right
+                        () =>
+                        {
+                            m_Player.Position.X += result.Overlap;
+                        },
+                        // Top
+                        () =>
+                        {
+                            m_Player.Position.Y += result.Overlap;
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            m_Player.Position.Y -= result.Overlap;
+                        }
+                    );
+                    hasCollided |= collision;
+                }
+                else if (obj is Button button)
+                {
+                    CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        button.Press();
+                        hasCollided = true;
+                    }
+                }
+                else if (obj is Door door)
+                {
+                    CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    bool collision = HandleCollision(result,
+                        // Left
+                        () =>
+                        {
+                            m_Player.Position.X -= result.Overlap;
+                        },
+                        // Right
+                        () =>
+                        {
+                            m_Player.Position.X += result.Overlap;
+                        },
+                        // Top
+                        () =>
+                        {
+                            m_Player.Position.Y += result.Overlap;
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            m_Player.Position.Y -= result.Overlap;
+                        }
+                    );
+                    hasCollided |= collision;
+                }
+            }
+
+            return hasCollided;
+        }
+
         private bool HandleChunkStaticCollision(Chunk chunk, ref Maths.Vector2 position, ref Maths.Vector2 velocity, ref bool canJump, ref Maths.Vector2 hitboxPosition, Maths.Vector2 hitboxSize)
         {
             foreach (Tile tile in chunk.Tiles)
@@ -438,10 +441,19 @@ namespace Puzzled
                 if (tile == null)
                     continue;
 
-                CollisionResult result = Collision.AABB(hitboxPosition, hitboxSize, tile.HitboxPosition, tile.HitboxSize);
+                if (HandleColliderStaticCollision(ref position, ref velocity, ref canJump, ref hitboxPosition, hitboxSize, tile.HitboxPosition, tile.HitboxSize))
+                    return true;
+            }
 
-                switch (result.Side) // TODO: Fix collision bug with side jumping
-                {
+            return false;
+        }
+
+        private bool HandleColliderStaticCollision(ref Maths.Vector2 position, ref Maths.Vector2 velocity, ref bool canJump, ref Maths.Vector2 hitboxPosition, Maths.Vector2 hitboxSize, Maths.Vector2 colliderPosition, Maths.Vector2 colliderSize)
+        {
+            CollisionResult result = Collision.AABB(hitboxPosition, hitboxSize, colliderPosition, colliderSize);
+
+            switch (result.Side) // TODO: Fix collision bug with side jumping
+            {
                 case CollisionSide.Left:
                     position.X += result.Overlap;
                     hitboxPosition.X += result.Overlap;
@@ -473,9 +485,8 @@ namespace Puzzled
 
                     return true;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
             }
 
             return false;
