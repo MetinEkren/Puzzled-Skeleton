@@ -60,6 +60,32 @@ namespace Puzzled
                         bool canJump = false;
                         HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
                     }
+                    else if (obj is Door door)
+                    {
+                        CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                m_Player.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                m_Player.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                m_Player.Position.Y += result.Overlap;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                m_Player.Position.Y -= result.Overlap;
+                            }
+                        );
+                    }
                 }
             }
 
@@ -238,7 +264,7 @@ namespace Puzzled
             // Dynamic objects
             {
                 m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
-                m_DynamicObjects.Add(new Door(new Maths.Vector2(400, 48)));
+                m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
             }
         }
 
