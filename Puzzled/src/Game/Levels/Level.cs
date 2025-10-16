@@ -38,9 +38,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void OnUpdate(float deltaTime)
         {
-            Logger.Trace($"Box count: {m_DynamicObjects.Count}");
-            Logger.Trace($"FPS: {1 / deltaTime}");
-
             m_Player.Update(deltaTime);
 
             // Dynamic object collision
@@ -162,6 +159,8 @@ namespace Puzzled
                         {
                             doorkey.Collect();
                             remove = doorkey;
+                            m_Player.HasKey = true;
+                            Logger.Info("Player has collected a key!");
                         }
                     }
 
