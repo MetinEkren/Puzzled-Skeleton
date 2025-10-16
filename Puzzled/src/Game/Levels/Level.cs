@@ -153,13 +153,18 @@ namespace Puzzled
                         if(result.Side != CollisionSide.None)
                             button.Press();
                     }
+                    else if (obj is DoorKey doorkey)
+                    {
+                        CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                            doorkey.Press();
+                    }
+
                 }
 
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
-            
-            
         }
 
         public void OnRender()
@@ -221,6 +226,9 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
+            // adds door key to level for testing
+            m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
+
             // Putting all tiles into chunks 
             {
                 uint chunksX = (uint)Math.Ceiling((double)(tilesX / (float)Settings.ChunkSize));
@@ -234,6 +242,13 @@ namespace Puzzled
                     }
                 }
             }
+
+
+            // Music
+            if (Assets.WinMenuMusic.IsPlaying())
+                Assets.WinMenuMusic.Stop();
+            Assets.LevelMusic.Start();
+
 
             // Dynamic objects
             {

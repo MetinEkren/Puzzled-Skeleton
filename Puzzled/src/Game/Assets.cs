@@ -40,6 +40,10 @@ namespace Puzzled
 
         public static string IntroMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Intro.wav";
         public static string MainMenuMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Loop.wav";
+        public static string LevelMusicPath = ResourcesDirectory + "Resources/Music/Level.wav";
+        public static string WinMenuMusicPath = ResourcesDirectory + "Resources/Music/WinMenu.wav";
+
+        public static string JumpSoundPath = ResourcesDirectory + "Resources/SFX/Jump.wav";
 
         public static string MainMenuLogoPath = ResourcesDirectory + "Resources/Textures/Main-Logo.png";
 
@@ -49,8 +53,8 @@ namespace Puzzled
         public static string PushSheetPath = ResourcesDirectory + "Resources/Sprites/push.png";
         public static string RunSheetPath = ResourcesDirectory + "Resources/Sprites/run.png";
         public static string ObjectsSheetPath = ResourcesDirectory + "Resources/Sprites/objects.png";
-
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
+        public static string DoorKeySheetPath = ResourcesDirectory + "Resources/Sprites/Doorkey.png";
 
         public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
         public static string Level2Path = ResourcesDirectory + "Resources/Levels/level-2.json";
@@ -85,6 +89,10 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume);
         public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume);
+        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MasterVolume);
+        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, Settings.MasterVolume);
+
+        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, Settings.MasterVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
@@ -99,6 +107,7 @@ namespace Puzzled
         public static Texture PushSheet = new Texture(PushSheetPath);
         public static Texture RunSheet = new Texture(RunSheetPath);
         public static Texture ObjectsSheet = new Texture(ObjectsSheetPath);
+        public static Texture DoorKeySheet = new Texture(DoorkeySheetPath);
 
         public static Texture TileSheet = new Texture(TileSheetPath);
 
