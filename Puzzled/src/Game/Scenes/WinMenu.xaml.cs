@@ -122,6 +122,12 @@ namespace Puzzled
             Game.Instance.ActiveScene = m_Level;
         }
 
+        void OptionsMenu(object sender, RoutedEventArgs args)
+        {
+            Logger.Info("Going to option menu");
+            Game.Instance.ActiveScene = new OptionsMenu();
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
