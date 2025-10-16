@@ -51,6 +51,8 @@ namespace Puzzled
                 {
                     // TODO: Jump cooldown, to prevent super fast jumping up blocks
                     Velocity.Y = Settings.PlayerJumpingVelocity;
+                    if (!Assets.JumpSound.IsPlaying())
+                        Assets.JumpSound.Play();
                     CanJump = false;
                 }
                 if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
