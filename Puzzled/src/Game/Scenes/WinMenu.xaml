@@ -11,7 +11,7 @@
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
             <!-- Win text -->
-            <TextBlock Text="Win Screen"
+            <TextBlock Text="You have won!"
                 FontSize="80"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
@@ -30,7 +30,7 @@
                 Background="White"
                 Click="NextLevelPressed" Margin="407,295,0,0"/>
 
-            <!-- Back to main menue -->
+            <!-- Back to main menu -->
             <Button  Width="300" Height="50"
                 Content="Save &amp; Exit"
                 HorizontalAlignment="Left"
@@ -40,7 +40,7 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="NextLevelPressed" Margin="407,360,0,0"/>
+                Click="BackToMainMenu" Margin="407,360,0,0"/>
             
             <!-- Restart Game -->
             <Button  Width="300" Height="50"
@@ -52,19 +52,56 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="NextLevelPressed" Margin="407,425,0,0"/>
+                Click="RestartGame" Margin="407,425,0,0"/>
 
-            <!-- Icon -->
-            <Image Width="128" Height="128" Source="/Resources/Icons/window-icon.png" Margin="597,592,43,0"></Image>
-            
             <!-- Score board -->
             <Grid Width="300" Height="300" Margin="64,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border BorderBrush="Blue" BorderThickness="2" Background="White" CornerRadius="10"/>
-                <StackPanel Margin="16">
-                    <TextBlock Text="Score Board" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,16"/>
-                </StackPanel>
+                <StackPanel Margin="14">
+                    <TextBlock Text="Leaderboard" FontSize="32" Foreground="Black" HorizontalAlignment="Center" Margin="0,0,0,15"/>
 
+                    <!-- Koptekst -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Name:" FontSize="25" Grid.Column="0"/>
+                        <TextBlock Text="Times:" FontSize="25" Grid.Column="1" HorizontalAlignment="Right"/>
+                    </Grid>
+
+                    <!-- Rij 1 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName1" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore1" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <!-- Rij 2 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName2" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore2" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <!-- Rij 3 -->
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PlayerName3" FontSize="25" Grid.Column="0" Text="-" />
+                        <TextBlock x:Name="PlayerScore3" FontSize="25" Grid.Column="1" Text="-" HorizontalAlignment="Right" />
+                    </Grid>
+                </StackPanel>
             </Grid>
+
         </Grid>
     </Grid>
 </UserControl>

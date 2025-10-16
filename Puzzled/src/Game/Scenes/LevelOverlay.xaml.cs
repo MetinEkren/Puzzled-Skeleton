@@ -130,7 +130,7 @@ namespace Puzzled
         {
             Logger.Info($"Saving to slot {m_SaveSlot}.");
 
-            string path = SavesMenu.GetSaveSlotPath(m_SaveSlot);
+            string path = Assets.GetSaveSlotPath(m_SaveSlot);
             string text = JsonSerializer.Serialize<Save>(m_Save);
 
             File.WriteAllText(path, text);
@@ -148,7 +148,7 @@ namespace Puzzled
 
         public bool Paused = false;
 
-        public Save ActiveSave { get { return m_Save; } }
+        public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
 

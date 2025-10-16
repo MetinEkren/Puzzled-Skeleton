@@ -43,32 +43,52 @@ namespace Puzzled
         public void Update(float deltaTime)
         {
             //Logger.Trace($"Position {{ .x = {Position.X}, .y = {Position.Y} }}");
-            //Logger.Trace($"Velocity {{ .x = {m_Velocity.X}, .y = {m_Velocity.Y} }}");
+            //Logger.Trace($"Velocity {{ .x = {Velocity.X}, .y = {Velocity.Y} }}");
 
             // Movement
             {
-                if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && m_CanJump)
+                if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && CanJump)
                 {
                     // TODO: Jump cooldown, to prevent super fast jumping up blocks
-                    m_Velocity.Y = Settings.PlayerJumpingVelocity;
-                    m_CanJump = false;
+                    Velocity.Y = Settings.PlayerJumpingVelocity;
+                    Assets.JumpSound.Play();
+                    CanJump = false;
                 }
                 if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
                 {
-                    m_Velocity.X = -Settings.PlayerRunningVelocity;
+                    Velocity.X = -Settings.PlayerRunningVelocity;
                     m_Flipped = true;
                 }
                 if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
                 {
-                    m_Velocity.X = Settings.PlayerRunningVelocity;
+                    Velocity.X = Settings.PlayerRunningVelocity;
                     m_Flipped = false;
                 }
             }
             
+            // Friction & Gravity
+            {
+                if (Velocity.X != 0.0f)
+                {
+                    Velocity.X -= Settings.GroundFriction * Math.Sign(Velocity.X) * deltaTime;
+
+                    // Snap to zero if it overshoots
+                    if (Math.Abs(Velocity.X) < Settings.GroundFriction)
+                        Velocity.X = 0.0f;
+                }
+
+                Velocity.Y -= Settings.Gravity * deltaTime;
+                Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
+
+                // When falling (or jumping) you are no longer able to jump again
+                if (Velocity.Y != 0.0f)
+                    CanJump = false;
+            }
+
             // Velocity
             {
-                m_Position.X += m_Velocity.X * deltaTime;
-                m_Position.Y += m_Velocity.Y * deltaTime;
+                Position.X += Velocity.X * deltaTime;
+                Position.Y += Velocity.Y * deltaTime;
             }
 
             // Animation
@@ -77,25 +97,6 @@ namespace Puzzled
                     SetNewState(State.Running);
                 if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
                     SetNewState(State.Idle);
-            }
-
-            // Friction & Gravity
-            {
-                if (m_Velocity.X != 0.0f)
-                {
-                    m_Velocity.X -= Settings.GroundFriction * Math.Sign(m_Velocity.X) * deltaTime;
-
-                    // Snap to zero if it overshoots
-                    if (Math.Abs(m_Velocity.X) < Settings.GroundFriction)
-                        m_Velocity.X = 0.0f;
-                }
-
-                m_Velocity.Y -= Settings.Gravity * deltaTime;
-                m_Velocity.Y = Math.Min(m_Velocity.Y, Settings.PlayerTerminalVelocity);
-
-                // When falling (or jumping) you are no longer able to jump again
-                if (m_Velocity.Y != 0.0f)
-                    m_CanJump = false;
             }
 
             GetCurrentAnimation().Update(deltaTime);
@@ -144,29 +145,29 @@ namespace Puzzled
                         switch (result.Side) // TODO: Fix collision bug with side jumping
                         {
                         case CollisionSide.Left:
-                            m_Position = new Maths.Vector2(m_Position.X + result.Overlap, m_Position.Y);
-                            m_Velocity = new Maths.Vector2(0.0f, m_Velocity.Y);
+                            Position = new Maths.Vector2(Position.X + result.Overlap, Position.Y);
+                            Velocity = new Maths.Vector2(0.0f, Velocity.Y);
                             break;
                         case CollisionSide.Right:
-                            m_Position = new Maths.Vector2(m_Position.X - result.Overlap, m_Position.Y);
-                            m_Velocity = new Maths.Vector2(0.0f, m_Velocity.Y);
+                            Position = new Maths.Vector2(Position.X - result.Overlap, Position.Y);
+                            Velocity = new Maths.Vector2(0.0f, Velocity.Y);
                             break;
                         case CollisionSide.Top:
-                            m_Position = new Maths.Vector2(m_Position.X, m_Position.Y - result.Overlap);
+                            Position = new Maths.Vector2(Position.X, Position.Y - result.Overlap);
 
-                            if (m_Velocity.Y > 0.0f)
-                                m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
+                            if (Velocity.Y > 0.0f)
+                                Velocity = new Maths.Vector2(Velocity.X, 0.0f);
                             break;
                         case CollisionSide.Bottom:
-                            m_Position = new Maths.Vector2(m_Position.X, m_Position.Y + result.Overlap);
+                            Position = new Maths.Vector2(Position.X, Position.Y + result.Overlap);
 
-                            if (m_Velocity.Y < 0.0f)
+                            if (Velocity.Y < 0.0f)
                             {
-                                m_Velocity = new Maths.Vector2(m_Velocity.X, 0.0f);
-                                m_CanJump = true;
+                                Velocity = new Maths.Vector2(Velocity.X, 0.0f);
+                                CanJump = true;
                             }
 
-                            // Note: We don't set m_CanJump while the player is still jumping
+                            // Note: We don't set CanJump while the player is still jumping
                             
                             break;
 
@@ -218,32 +219,31 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Private getters // FUTURE TODO: Check if this is the proper way to do this (since yk gravity)
         ////////////////////////////////////////////////////////////////////////////////////
-        public bool IsMovingUp() { return m_Velocity.Y > 0.0f; }
-        public bool IsMovingDown() { return m_Velocity.Y < 0.0f; }
+        public bool IsMovingUp() { return Velocity.Y > 0.0f; }
+        public bool IsMovingDown() { return Velocity.Y < 0.0f; }
         public bool IsMovingVertically() { return IsMovingUp() || IsMovingDown(); }
-        public bool IsTryingToMoveLeft() { return m_Velocity.X < 0.0f; }
-        public bool IsTryingToMoveRight() { return m_Velocity.X > 0.0f; }
+        public bool IsTryingToMoveLeft() { return Velocity.X < 0.0f; }
+        public bool IsTryingToMoveRight() { return Velocity.X > 0.0f; }
         public bool IsMovingHorizontally() { return IsTryingToMoveLeft() || IsTryingToMoveRight(); }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private State m_State = State.Idle;
-        private Maths.Vector2 m_Position = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));
-        private Maths.Vector2 m_Velocity = new Maths.Vector2(0.0f, 0.0f);
+        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));       
         private bool m_Flipped = false;
-        private bool m_CanJump = true;
-
-        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, 16, 0.4f);
-        private Animation m_RunningAnimation = new Animation(Assets.RunSheet, 16, 0.15f);
+        public Maths.Vector2 Position = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+        public Maths.Vector2 Velocity = new Maths.Vector2(0.0f, 0.0f);
+        public bool CanJump = true;
+        public bool HasKey = false;
+ 
+        private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
+        private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
         // TODO: More animations
 
-        public Maths.Vector2 Position { get { return m_Position; } set { m_Position = value; } }
         public Maths.Vector2 Size { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize); } }
-        public Maths.Vector2 Velocity { get { return m_Velocity; } set { m_Velocity = value; } }
 
-        public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(m_Position.X + (2 * Settings.Scale), m_Position.Y); } }
+        public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(Position.X + (2 * Settings.Scale), Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return m_HitboxSize; } }
 
     }
