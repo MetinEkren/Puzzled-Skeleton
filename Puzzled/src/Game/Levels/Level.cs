@@ -235,7 +235,10 @@ namespace Puzzled
 
 
             // Music
-                Assets.LevelMusic.Start();
+            if (Assets.WinMenuMusic.IsPlaying())
+                Assets.WinMenuMusic.Stop();
+            Assets.LevelMusic.Start();
+
 
             // Dynamic objects
             {

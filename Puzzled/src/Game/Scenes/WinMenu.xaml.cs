@@ -66,6 +66,7 @@ namespace Puzzled
             // Music
             if (Assets.LevelMusic.IsPlaying())
                 Assets.LevelMusic.Stop();
+            Assets.WinMenuMusic.Start();
 
             Loaded -= OnLoad;
         }
