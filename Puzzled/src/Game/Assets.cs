@@ -40,6 +40,7 @@ namespace Puzzled
 
         public static string IntroMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Intro.wav";
         public static string MainMenuMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Loop.wav";
+        public static string LevelMusicPath = ResourcesDirectory + "Resources/Music/Level.wav";
 
         public static string MainMenuLogoPath = ResourcesDirectory + "Resources/Textures/Main-Logo.png";
 
@@ -85,6 +86,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume);
         public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume);
+        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MasterVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();

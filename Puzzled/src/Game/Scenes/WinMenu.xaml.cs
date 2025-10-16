@@ -63,6 +63,9 @@ namespace Puzzled
                 PlayerScore3.Text = save3.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
             }
 
+            // Music
+            if (Assets.LevelMusic.IsPlaying())
+                Assets.LevelMusic.Stop();
 
             Loaded -= OnLoad;
         }
