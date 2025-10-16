@@ -30,10 +30,10 @@ namespace Puzzled
             Position = position;
 
             m_IdleAnimation = new Animation(
-                Assets.DoorkeySheet,
+                Assets.DoorKeySheet,
                 (Settings.SpriteSize / Settings.Scale),
                 0.35f
-                );
+            );
 
         }
 
