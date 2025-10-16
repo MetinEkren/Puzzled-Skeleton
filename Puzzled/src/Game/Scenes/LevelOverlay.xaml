@@ -17,5 +17,7 @@
                 VerticalAlignment="Top"
                 Foreground="White" Margin="10,0,0,0" />
         </Grid>
+
+        <ContentControl x:Name="PauseOverlay"/>
     </Grid>
 </UserControl>

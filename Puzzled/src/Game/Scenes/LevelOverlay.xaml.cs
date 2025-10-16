@@ -50,6 +50,7 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+            if (Paused) return;
             m_Level.OnUpdate(deltaTime);
         }
 
@@ -59,6 +60,10 @@ namespace Puzzled
 
             m_Renderer.Begin();
             m_Level.OnRender();
+
+            if (Paused)
+                m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+            
             m_Renderer.End();
         }
 
@@ -75,7 +80,16 @@ namespace Puzzled
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    Game.Instance.ActiveScene = new PauseMenu(this);
+                    if (Paused == false) 
+                    {
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this);
+                        Paused = true;
+                    }
+                    else if (Paused == true)
+                    {
+                        PauseOverlay.Content = null; // This removes the overlay
+                        Paused = false;
+                    }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
                 {
@@ -129,8 +143,10 @@ namespace Puzzled
         
         private Save m_Save;
         private readonly uint m_SaveSlot;
-
+        
         private Level m_Level;
+
+        public bool Paused = false;
 
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
