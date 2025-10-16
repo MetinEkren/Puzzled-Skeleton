@@ -153,6 +153,13 @@ namespace Puzzled
                         if(result.Side != CollisionSide.None)
                             button.Press();
                     }
+                    else if (obj is DoorKey doorkey)
+                    {
+                        CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                            doorkey.Press();
+                    }
+
                 }
 
                 // Static
@@ -221,7 +228,7 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
-            // Voeg een DoorKey toe bij het starten van het level
+            // adds door key to level for testing
             m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
 
             // Putting all tiles into chunks 

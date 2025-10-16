@@ -16,17 +16,40 @@ namespace Puzzled
     //////////////////////////////////////////////////////////////////////////////////
     public class DoorKey : DynamicObject
     {
+        private bool m_Collected = false;
+        private Animation m_IdleAnimation;
+
+        public Maths.Vector2 Position;
+        public Maths.Vector2 Velocity;
+        private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         //////////////////////////////////////////////////////////////////////////////////
         // Constructor
         //////////////////////////////////////////////////////////////////////////////////
         public DoorKey(Maths.Vector2 position)
         {
             Position = position;
+
+            m_IdleAnimation = new Animation(
+                Assets.DoorkeySheet,
+                (Settings.SpriteSize / Settings.Scale),
+                0.35f
+                );
+
         }
 
+        public override void Update(float deltaTime)
+        {
+            if (!m_Collected)
+            {
+                m_IdleAnimation.Update(deltaTime);
+            }
+        }
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(Position, s_Size, s_Texture);
+            if (m_Collected)
+                return;
+
+            renderer.AddQuad(Position, s_Size, m_IdleAnimation.GetCurrentTexture());
 
             if (debug) // Outline tile hitbox
             {
@@ -36,11 +59,11 @@ namespace Puzzled
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
             }
         }
-        public Maths.Vector2 Position;
-        public Maths.Vector2 Velocity;
 
-        private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-        private static readonly CroppedTexture s_Texture = new CroppedTexture(Assets.ObjectsSheet, new UV(0, 0, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        public void Press()
+        {
+            m_Collected = true;
+        }
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
         public Maths.Vector2 HitboxSize { get { return s_Size; } }
