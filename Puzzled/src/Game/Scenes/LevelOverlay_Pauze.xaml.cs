@@ -14,7 +14,14 @@ namespace Puzzled
     public partial class LevelOverlay_Pauze : UserControl
     {
 
-        
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Constructor
+        ////////////////////////////////////////////////////////////////////////////////////
+        public LevelOverlay_Pauze()
+        {
+            InitializeComponent();
+        }
+
     }
 
 }

@@ -4,25 +4,21 @@
              >
     <Grid Width="768" Height="720">
 
-		<!-- UI Canvas for UI elements -->
-		<Canvas x:Name="UICanvas" Background="Transparent"/>
+        <Grid Width="600" Height="600" Margin="0,0,0,0" AutomationProperties.Name="PauzeMenuGrid" >
 
-		<Grid Width="600" Height="600" Margin="0,0,0,0" >
-
-			<Rectangle Height="500" Width="600" Fill="White" Canvas.Left="141" Stroke="White" Canvas.Top="126" RadiusX="26.5" RadiusY="26.5"/>
-			<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Pause" VerticalAlignment="Top" FontSize="36" AutomationProperties.Name="Textblock_pauze" Margin="0,70,0,0"/>
-			<Button Content="X" HorizontalAlignment="Right" Height="50" Width="50" VerticalAlignment="Top" AutomationProperties.Name="button_Resume" FontSize="24" Margin="0,50,0,0" />
+            <Rectangle Height="500" Width="600" Fill="White" Canvas.Left="141" Stroke="White" Canvas.Top="126" RadiusX="26.5" RadiusY="26.5"/>
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Pause" VerticalAlignment="Top" FontSize="36" AutomationProperties.Name="Textblock_pauze" Margin="0,70,0,0"/>
+            <Button Content="X" HorizontalAlignment="Right" Height="50" Width="50" VerticalAlignment="Top" AutomationProperties.Name="button_Resume" FontSize="24" Margin="0,49,0,0" />
 
 
-			<Grid HorizontalAlignment="Center" Height="290" Margin="0,180,0,0" VerticalAlignment="Top">
-				<Button Content="Resume" HorizontalAlignment="Center" Height="50" Width="400" VerticalAlignment="Top" AutomationProperties.Name="button_Resume" FontSize="24" />
-				<Button Content="Options" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,80,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Options" FontSize="24" />
-				<Button Content="Restart" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,160,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Restart" FontSize="24" />
-				<Button Content="Quit" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,240,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Quit" FontSize="24" />
-			</Grid>
-			
-		</Grid>
-		<Button Content="Button" HorizontalAlignment="Left" Margin="1071,385,0,0" VerticalAlignment="Top" Width="0"/>
+            <Grid HorizontalAlignment="Center" Height="290" Margin="0,180,0,0" VerticalAlignment="Top">
+                <Button Content="Resume" HorizontalAlignment="Center" Height="50" Width="400" VerticalAlignment="Top" AutomationProperties.Name="button_Resume" FontSize="24" />
+                <Button Content="Options" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,80,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Options" FontSize="24" />
+                <Button Content="Restart" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,160,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Restart" FontSize="24" />
+                <Button Content="Quit" HorizontalAlignment="Center" Height="50" Width="400" Margin="0,240,0,0" VerticalAlignment="Top" AutomationProperties.Name="button_Quit" FontSize="24" />
+            </Grid>
 
-	</Grid>
+        </Grid>
+
+    </Grid>
 </UserControl>
