@@ -60,6 +60,10 @@ namespace Puzzled
 
             m_Renderer.Begin();
             m_Level.OnRender();
+
+            if (Paused)
+                m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+            
             m_Renderer.End();
         }
 
