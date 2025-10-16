@@ -361,7 +361,10 @@ namespace Puzzled
                         continue;
 
                     // A collision has occurred and been resolved
-                    // Make sure we are not in walls
+                    // Make sure we are not in walls or the box in another dynamic object
+                    collision = HandleDynamicCollision(box);
+                    hasCollided |= collision;
+
                     bool canJump = false;
                     collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
                     hasCollided |= collision;
