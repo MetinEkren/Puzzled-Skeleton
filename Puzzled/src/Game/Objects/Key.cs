@@ -22,6 +22,7 @@ namespace Puzzled
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+
         //////////////////////////////////////////////////////////////////////////////////
         // Constructor
         //////////////////////////////////////////////////////////////////////////////////
@@ -60,9 +61,10 @@ namespace Puzzled
             }
         }
 
-        public void Press()
+        public void Collect()
         {
             m_Collected = true;
+            Assets.KeyPickupSound.Play();
         }
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
