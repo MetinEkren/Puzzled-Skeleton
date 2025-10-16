@@ -75,15 +75,15 @@ namespace Puzzled
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    if (m_Pauze == false) 
+                    if (Pauze == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze();
-                        m_Pauze = true;
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this);
+                        Pauze = true;
                     }
-                    else if (m_Pauze == true)
+                    else if (Pauze == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
-                        m_Pauze = false;
+                        Pauze = false;
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -141,7 +141,7 @@ namespace Puzzled
         
         private Level m_Level;
 
-        public bool m_Pauze = false;
+        public bool Pauze = false;
 
         public Save ActiveSave { get { return m_Save; } }
 
