@@ -60,9 +60,10 @@ namespace Puzzled
             }
         }
 
-        public void Press()
+        public void Collect()
         {
             m_Collected = true;
+            Assets.KeyPickupSound.Play();
         }
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }

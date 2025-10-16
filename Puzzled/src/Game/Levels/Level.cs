@@ -157,7 +157,7 @@ namespace Puzzled
                     {
                         CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
                         if (result.Side != CollisionSide.None)
-                            doorkey.Press();
+                            doorkey.Collect();
                     }
 
                 }
