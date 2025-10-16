@@ -50,6 +50,7 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+            if (Paused) return;
             m_Level.OnUpdate(deltaTime);
         }
 
@@ -75,15 +76,15 @@ namespace Puzzled
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    if (Pauze == false) 
+                    if (Paused == false) 
                     {
                         PauseOverlay.Content = new LevelOverlay_Pauze(this);
-                        Pauze = true;
+                        Paused = true;
                     }
-                    else if (Pauze == true)
+                    else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
-                        Pauze = false;
+                        Paused = false;
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -141,7 +142,7 @@ namespace Puzzled
         
         private Level m_Level;
 
-        public bool Pauze = false;
+        public bool Paused = false;
 
         public Save ActiveSave { get { return m_Save; } }
 
