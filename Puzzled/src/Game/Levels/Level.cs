@@ -165,8 +165,6 @@ namespace Puzzled
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
-            
-            
         }
 
         public void OnRender()
@@ -244,6 +242,13 @@ namespace Puzzled
                     }
                 }
             }
+
+
+            // Music
+            if (Assets.WinMenuMusic.IsPlaying())
+                Assets.WinMenuMusic.Stop();
+            Assets.LevelMusic.Start();
+
 
             // Dynamic objects
             {
