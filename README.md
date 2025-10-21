@@ -70,7 +70,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟨 Pause Menu
       - [ ] 🟥 Level Menu
       - [ ] 🟩 Win Menu + Score + Leaderboard
-      - [ ] 🟩 Save (selection) Menu
+      - [x] 🟩 Save (selection) Menu
       - [ ] 🟨 Level overlay
       - [ ] 🟥 Final win menu (showing achievements)
       - [ ] 🟥 Options menu (sound slider)
@@ -100,13 +100,13 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟧 US23 Spike (respawn bottom level)
   - [ ] Audio
     - [x] 🟨 Main menu/save selection music (Start-up, loop)
-    - [ ] 🟧 Level 1
+    - [x] 🟧 Level 1
     - [ ] 🟧 Level 2
     - [ ] 🟧 Level 3
     - [ ] 🟧 Level 4
     - [ ] 🟧 Level 5
     - [ ] 🟧 Level 6
-    - [ ] 🟧 Win/finish menu
+    - [x] 🟧 Win/finish menu
     - [ ] 🟥 Sound for beating your high score (SFX)
     - [ ] 🟥 Final win menu
     - [ ] 🟨 Jump SFX
