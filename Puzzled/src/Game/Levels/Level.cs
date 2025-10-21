@@ -133,7 +133,7 @@ namespace Puzzled
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
 
-            LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
+            LevelLoader.Load(path, ref m_Tiles, ref m_DynamicObjects, out tilesX, out tilesY);
 
             // Putting all tiles into chunks 
             {

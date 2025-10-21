@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Linq;
 
 namespace Puzzled
 {
@@ -24,7 +25,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public static void Load(string levelPath, ref List<Tile> outTiles, out uint outWidth, out uint outHeight)
+        public static void Load(string levelPath, ref List<Tile> outTiles, ref List<DynamicObject> dynamicObjects, out uint outWidth, out uint outHeight)
         {
             string json = File.ReadAllText(levelPath);
             using (JsonDocument doc = JsonDocument.Parse(json))
@@ -46,6 +47,7 @@ namespace Puzzled
                 {
                     // TODO: Make it load the tile layer based on some layer name? or set a fixed format.
                     JsonElement data = layers[0].GetProperty("data");
+                    
                     uint x = 0, y = 0;
                     foreach (JsonElement tile in data.EnumerateArray().Reverse())
                     {
@@ -76,8 +78,8 @@ namespace Puzzled
                             uint col = id % tilesX; // Column
                             uint row = id / tilesX; // Row
 
-                            uvX = col * (Settings.SpriteSize / Settings.Scale);
-                            uvY = row * (Settings.SpriteSize / Settings.Scale);
+                            uvX = col * tileSize;
+                            uvY = row * tileSize;
                         }
 
                         // Note: (width - x) because x is flipped because we .Reverse()
@@ -91,7 +93,52 @@ namespace Puzzled
 
                 // Object layer
                 {
-                    // TODO: ...
+                    JsonElement data = layers[1].GetProperty("objects");
+
+                    uint x = 0, y = 0;
+
+                    foreach (JsonElement obj in data.EnumerateArray().Reverse())
+                    {
+                        // Get position
+                        x = obj.GetProperty("x").GetUInt32();
+                        y = (height * (Settings.SpriteSize / Settings.Scale)) - obj.GetProperty("y").GetUInt32();
+                        Logger.Trace("Height: " + height.ToString());
+                        Logger.Trace(y.ToString());
+
+                        string objType = obj.GetProperty("type").GetString();
+
+                        // Note: (width - x) because x is flipped because we .Reverse()
+                        Maths.Vector2 position = new Maths.Vector2((x * Settings.Scale), (y * Settings.Scale));
+                        Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+
+                        switch(objType)
+                        {
+                            case "Box":
+                                dynamicObjects.Add(new Box(position));
+
+                                break;
+                            case "Button":
+                                dynamicObjects.Add(new Button(position));
+
+                                break;
+                            case "ButtonDoor":
+                                dynamicObjects.Add(new Door(position, DoorType.ButtonDoor));
+
+                                break;
+                            case "DoorKey":
+                                dynamicObjects.Add(new DoorKey(position));
+                                break;
+                            case "KeyDoor":
+                                dynamicObjects.Add(new Door(position, DoorType.KeyDoor));
+
+                                break;
+
+                            default:
+                                Logger.Error($"INVALID OBJECT KUT - {objType}");
+                                break;
+
+                        }
+                    }
                 }
             }
         }
