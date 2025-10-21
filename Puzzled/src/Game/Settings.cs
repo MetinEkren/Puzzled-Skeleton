@@ -67,7 +67,7 @@ namespace Puzzled
         public const float LimitedDeltaTime = 0.1f;
         public const float MaxDeltaTime = 0.1f;
 
-        public static readonly Maths.Vector2 PlayerSpawnPosition = new Maths.Vector2(16, 48);
+        public static readonly Maths.Vector2 PlayerSpawnPosition = new Maths.Vector2(16 * Scale, 16 * Scale);
         
     }
 

@@ -39,7 +39,7 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             Logger.Trace($"Box count: {m_DynamicObjects.Count}");
-            Logger.Trace($"FPS: { 1/ deltaTime }");
+            Logger.Trace($"FPS: {1 / deltaTime}");
 
             m_Player.Update(deltaTime);
 
@@ -144,13 +144,13 @@ namespace Puzzled
                                 m_Player.Position.Y -= result.Overlap;
                             }
                         );
-                        
+
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
                     else if (obj is Button button)
                     {
                         CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        if(result.Side != CollisionSide.None)
+                        if (result.Side != CollisionSide.None)
                             button.Press();
                     }
                     else if (obj is Spike spike)
@@ -159,16 +159,26 @@ namespace Puzzled
                         if (result.Side != CollisionSide.None)
                         {
                             m_Player.Position = Settings.PlayerSpawnPosition;
-                            m_Player.Velocity = new Maths.Vector2(0, 0); 
+                            m_Player.Velocity = new Maths.Vector2(0, 0);
                         }
                     }
+                    else if (obj is Lava lava)
+                    {
+                        CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            m_Player.Position = Settings.PlayerSpawnPosition;
+                            m_Player.Velocity = new Maths.Vector2(0, 0);
+                        }
+                    }
+
+                    // Static
+                    HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
                 }
 
-                // Static
-                HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
+
             }
-            
-            
+
         }
 
         public void OnRender()
@@ -247,7 +257,8 @@ namespace Puzzled
             // Dynamic objects
             {
                 m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
-                m_DynamicObjects.Add(new Spike(new Maths.Vector2(200, 100)));
+                m_DynamicObjects.Add(new Spike(new Maths.Vector2(0, 48)));
+                m_DynamicObjects.Add(new Lava(new Maths.Vector2(220, 192)));
             }
         }
 
