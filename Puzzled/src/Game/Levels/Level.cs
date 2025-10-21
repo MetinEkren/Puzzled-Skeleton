@@ -314,7 +314,6 @@ namespace Puzzled
         private bool HandleDynamicCollisionPlayer()
         {
             bool hasCollided = false;
-            List<DynamicObject> remove = new List<DynamicObject>();
 
             // Dynamic
             foreach (DynamicObject obj in m_DynamicObjects)
@@ -417,7 +416,6 @@ namespace Puzzled
                     if (result.Side != CollisionSide.None)
                     {
                         doorkey.Collect();
-                        remove.Add(doorkey);
                         m_Player.HasKey = true;
                         Logger.Info("Player has collected a key!");
                     }
@@ -452,14 +450,10 @@ namespace Puzzled
 
                     if (collision && door.Type == DoorType.KeyDoor && m_Player.HasKey)
                     {
-                        remove.Add(door);
+                        door.OpenForever();
                         m_Player.HasKey = false;
                     }
                 }
-            }
-            foreach (DynamicObject obj in remove)
-            {
-                m_DynamicObjects.Remove(obj);
             }
 
             return hasCollided;

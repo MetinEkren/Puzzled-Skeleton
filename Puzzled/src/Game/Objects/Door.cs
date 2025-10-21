@@ -36,12 +36,18 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            if (Type == DoorType.KeyDoor)
+            if (!m_OpenedForever)
+                m_Opened = false;
+            else if (m_Opened)
+            {
+                HitboxSize = new Maths.Vector2(0, 0);
+            }
+
+            if (Type == DoorType.KeyDoor && !m_Opened)
             {
                 renderer.AddQuad(Position, s_Size, s_TextureKey);
-                Logger.Trace("Yer");
             }
-            else if (Type == DoorType.ButtonDoor)
+            else if (Type == DoorType.ButtonDoor && !m_Opened)
             {
                 renderer.AddQuad(Position, s_Size, s_TextureButton);
             }
@@ -55,9 +61,10 @@ namespace Puzzled
             }
         }
 
-        public void Open()
+        public void OpenForever()
         {
             m_Opened = true;
+            m_OpenedForever = true;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -65,14 +72,15 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
+        public Maths.Vector2 HitboxSize = new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y);
         private bool m_Opened;
+        private bool m_OpenedForever;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private static readonly CroppedTexture s_TextureKey = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
         private static readonly CroppedTexture s_TextureButton = new CroppedTexture(Assets.ObjectsSheet, new UV(48, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
 
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(Position.X + (2 * Settings.Scale), Position.Y); } }
-        public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y); } }
         public DoorType Type = DoorType.KeyDoor;
 
     }
