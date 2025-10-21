@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace Puzzled
 {
@@ -46,23 +47,14 @@ namespace Puzzled
             PlayerName2.Text = save2.Name;
             PlayerName3.Text = save3.Name;
 
+            List<Save> saves = new List<Save> { save1, save2, save3 };
+            saves.Sort(new SortSaveScoreHelper(m_Level.ActiveSave.Level));
 
             // TODO: inplement scores sorting + Score display
 
-            if (save1.Scores.Count >= (m_Level.ActiveSave.Level - 1))
-            {
-                PlayerScore1.Text = save1.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
-            }
-
-            if (save2.Scores.Count >= (m_Level.ActiveSave.Level - 1))
-            {
-                PlayerScore2.Text = save2.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
-            }
-            if (save3.Scores.Count >= (m_Level.ActiveSave.Level - 1))
-            {
-                PlayerScore3.Text = save3.Scores[(int)(m_Level.ActiveSave.Level - 1 - 1)].ToString();
-            }
-
+            PlayerScore1.Text = saves[0].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            PlayerScore2.Text = saves[1].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            PlayerScore3.Text = saves[2].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
 
             Loaded -= OnLoad;
         }
