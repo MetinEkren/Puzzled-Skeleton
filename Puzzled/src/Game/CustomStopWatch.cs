@@ -17,9 +17,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public CustomStopWatch()
         {
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(10);
-            _timer.Tick += Timer_Tick;
+            m_Timer = new DispatcherTimer();
+            m_Timer.Interval = TimeSpan.FromMilliseconds(10);
+            m_Timer.Tick += Timer_Tick;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void Timer_Tick(object sender, EventArgs e)
         {
-            TimeSpan elapsed = _stopwatch.Elapsed;
+            TimeSpan elapsed = m_StopWatch.Elapsed;
             StartTimeDisplay = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}.{elapsed.Milliseconds / 10:00}";
 
             if (TimeUpdated != null)
@@ -37,27 +37,27 @@ namespace Puzzled
                 
         }
 
-        public void StopWatchStart()
+        public void Start()
         {
-            if (!_stopwatch.IsRunning)
+            if (!m_StopWatch.IsRunning)
             {
-                _stopwatch.Start();
-                _timer.Start();
+                m_StopWatch.Start();
+                m_Timer.Start();
             }
         }
 
-        public void StopWatchPauze()
+        public void Pauze()
         {
-            if (_stopwatch.IsRunning)
+            if (m_StopWatch.IsRunning)
             {
-                _stopwatch.Stop();
-                _timer.Stop();
+                m_StopWatch.Stop();
+                m_Timer.Stop();
             }
         }
 
-        public void StopWatchReset()
+        public void Reset()
         {
-            _stopwatch.Reset();
+            m_StopWatch.Reset();
             StartTimeDisplay = "00:00.00";
 
             if (TimeUpdated != null)
@@ -69,11 +69,12 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private Stopwatch _stopwatch = new Stopwatch();
-        private DispatcherTimer _timer;
+        private Stopwatch m_StopWatch = new Stopwatch();
+        private DispatcherTimer m_Timer;
 
         public string StartTimeDisplay { get; private set; } = "00:00.00";
 
-        public event Action<string> TimeUpdated;
+        public Action<string> TimeUpdated;
     }
+
 }

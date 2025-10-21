@@ -32,9 +32,9 @@ namespace Puzzled
 
             m_CustomStopWatch = new CustomStopWatch();
             // Connect stopwatch updates to the overlay
-            m_CustomStopWatch.TimeUpdated += UpdateStopwatchDisplay;
+            m_CustomStopWatch.TimeUpdated = UpdateStopwatchDisplay;
             // Start the stopwatch
-            m_CustomStopWatch.StopWatchStart();
+            m_CustomStopWatch.Start();
 
 
             InitializeComponent();
@@ -98,13 +98,13 @@ namespace Puzzled
                     {
                         PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CustomStopWatch);
                         Paused = true;
-                        m_CustomStopWatch.StopWatchPauze();
+                        m_CustomStopWatch.Pauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
-                        m_CustomStopWatch.StopWatchStart();
+                        m_CustomStopWatch.Start();
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition

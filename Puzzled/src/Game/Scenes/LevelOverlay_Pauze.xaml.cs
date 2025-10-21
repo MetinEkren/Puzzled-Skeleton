@@ -36,7 +36,7 @@ namespace Puzzled
         {
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
-            m_CustomStopWatch.StopWatchStart();
+            m_CustomStopWatch.Start();
         }
 
         private void Button_Click_OptionsMenu(object sender, RoutedEventArgs e)
@@ -49,12 +49,12 @@ namespace Puzzled
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
 
-            m_CustomStopWatch.StopWatchPauze();
-            m_CustomStopWatch.StopWatchReset();
+            m_CustomStopWatch.Pauze();
+            m_CustomStopWatch.Reset();
 
             m_Overlay.LoadLevel(m_Overlay.ActiveSave.Level);
 
-            m_CustomStopWatch.StopWatchStart();
+            m_CustomStopWatch.Start();
         }
 
         private void Button_Click_Quit(object sender, RoutedEventArgs e)
@@ -62,8 +62,8 @@ namespace Puzzled
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
 
-            m_CustomStopWatch.StopWatchPauze();
-            m_CustomStopWatch.StopWatchReset();
+            m_CustomStopWatch.Pauze();
+            m_CustomStopWatch.Reset();
 
             Game.Instance.ActiveScene = new MainMenu();
         }
