@@ -11,6 +11,11 @@ using static Puzzled.Player;
 
 namespace Puzzled
 {
+    public enum DoorType
+    {
+        KeyDoor = 0,
+        ButtonDoor = 1
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
     // Door
@@ -40,11 +45,17 @@ namespace Puzzled
             }
         }
 
+        public void Open()
+        {
+            m_Opened = true;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////
         // Variables
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
+        private bool m_Opened;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private static readonly CroppedTexture s_TextureButton = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
@@ -52,6 +63,7 @@ namespace Puzzled
 
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(Position.X + (2 * Settings.Scale), Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y); } }
+        public DoorType Type = DoorType.KeyDoor;
 
     }
 }

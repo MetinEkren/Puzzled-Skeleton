@@ -67,120 +67,11 @@ namespace Puzzled
                     
                 }
             }
+    
+            HandleDynamicCollisionPlayer();
 
-            // Player collision (static & dynamic)
-            {
-                DynamicObject remove = null;
-
-                // Dynamic
-                foreach (DynamicObject obj in m_DynamicObjects)
-                {
-                    if (obj is Box box)
-                    {
-                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-
-                        bool collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                box.Position.X += result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                box.Position.X -= result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                if (m_Player.Velocity.Y <= 0.0f)
-                                {
-                                    m_Player.Velocity.Y = 0.0f;
-                                    m_Player.CanJump = true;
-                                }
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                box.Position.Y += result.Overlap;
-
-                                if (m_Player.Velocity.Y > 0.0f)
-                                {
-                                    box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
-                                    box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
-                                    //box.Velocity.X = m_Player.Velocity.X;
-                                    //box.Velocity.Y = m_Player.Velocity.Y;
-                                }
-                                else
-                                {
-                                    box.Velocity.Y = 0.0f;
-                                }
-                            }
-                        );
-
-                        if (!collision)
-                            continue;
-
-                        // A collision has occurred and been resolved
-                        // Make sure we are not in walls
-                        bool canJump = false;
-                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
-
-                        // After colliding with player, resolving and then colliding with static blocks and resolving
-                        // We need to check if we're now colliding with the player again, if so move the player
-                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        collision = HandleCollision(result,
-                            // Left
-                            () =>
-                            {
-                                m_Player.Position.X -= result.Overlap;
-                            },
-                            // Right
-                            () =>
-                            {
-                                m_Player.Position.X += result.Overlap;
-                            },
-                            // Top
-                            () =>
-                            {
-                                m_Player.Position.Y += result.Overlap;
-                            },
-                            // Bottom
-                            () =>
-                            {
-                                m_Player.Position.Y -= result.Overlap;
-                            }
-                        );
-
-                        // Note: We currently don't do anything if we collide again, which is fine I think
-                    }
-                    else if (obj is Button button)
-                    {
-                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        if (result.Side != CollisionSide.None)
-                            button.Press();
-                    }
-                    else if (obj is DoorKey doorkey)
-                    {
-                        CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        if (result.Side != CollisionSide.None)
-                        {
-                            doorkey.Collect();
-                            remove = doorkey;
-                            m_Player.HasKey = true;
-                            Logger.Info("Player has collected a key!");
-                        }
-                    }
-
-                }
-                HandleDynamicCollisionPlayer();
-
-                if (remove != null)
-                    m_DynamicObjects.Remove(remove);
-
-                // Static
-                HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
-            }
+            // Static
+            HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
         }
 
         public void OnRender()
@@ -223,6 +114,7 @@ namespace Puzzled
                         m_DynamicObjects.Add(new Button(new Maths.Vector2(144, 288)));
                         m_DynamicObjects.Add(new Box(new Maths.Vector2(288, 336)));
                         m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+                        m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(480, 144)));
                     }
                 }
             }
@@ -241,9 +133,6 @@ namespace Puzzled
             m_Tiles = new List<Tile>();
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
-
-            // adds door key to level for testing
-            m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
 
             // Putting all tiles into chunks 
             {
@@ -424,6 +313,7 @@ namespace Puzzled
         private bool HandleDynamicCollisionPlayer()
         {
             bool hasCollided = false;
+            List<DynamicObject> remove = new List<DynamicObject>();
 
             // Dynamic
             foreach (DynamicObject obj in m_DynamicObjects)
@@ -520,8 +410,20 @@ namespace Puzzled
                         hasCollided = true;
                     }
                 }
+                else if (obj is DoorKey doorkey)
+                {
+                    CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        doorkey.Collect();
+                        remove.Add(doorkey);
+                        m_Player.HasKey = true;
+                        Logger.Info("Player has collected a key!");
+                    }
+                }
                 else if (obj is Door door)
                 {
+
                     CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
                     bool collision = HandleCollision(result,
                         // Left
@@ -546,7 +448,17 @@ namespace Puzzled
                         }
                     );
                     hasCollided |= collision;
+
+                    if (collision && door.Type == DoorType.KeyDoor && m_Player.HasKey)
+                    {
+                        remove.Add(door);
+                        m_Player.HasKey = false;
+                    }
                 }
+            }
+            foreach (DynamicObject obj in remove)
+            {
+                m_DynamicObjects.Remove(obj);
             }
 
             return hasCollided;
