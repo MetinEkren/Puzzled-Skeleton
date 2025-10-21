@@ -113,7 +113,8 @@ namespace Puzzled
                     {
                         m_DynamicObjects.Add(new Button(new Maths.Vector2(144, 288)));
                         m_DynamicObjects.Add(new Box(new Maths.Vector2(288, 336)));
-                        m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624)));
+                        m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624), DoorType.KeyDoor));
+                        m_DynamicObjects.Add(new Door(new Maths.Vector2(288, 624), DoorType.ButtonDoor));
                         m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(480, 144)));
                     }
                 }

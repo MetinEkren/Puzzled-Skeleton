@@ -25,9 +25,10 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         // Constructor
         //////////////////////////////////////////////////////////////////////////////////
-        public Door(Maths.Vector2 position)
+        public Door(Maths.Vector2 position, DoorType type)
         {
             Position = position;
+            Type = type;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +36,16 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(Position, s_Size, s_TextureButton);
+            if (Type == DoorType.KeyDoor)
+            {
+                renderer.AddQuad(Position, s_Size, s_TextureKey);
+                Logger.Trace("Yer");
+            }
+            else if (Type == DoorType.ButtonDoor)
+            {
+                renderer.AddQuad(Position, s_Size, s_TextureButton);
+            }
+
             if (debug) // Outline tile hitbox
             {
                 renderer.AddQuad(HitboxPosition, new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
@@ -58,8 +68,8 @@ namespace Puzzled
         private bool m_Opened;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-        private static readonly CroppedTexture s_TextureButton = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
-        private static readonly CroppedTexture s_TextureKey = new CroppedTexture(Assets.ObjectsSheet, new UV(48, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureKey = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureButton = new CroppedTexture(Assets.ObjectsSheet, new UV(48, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
 
         public Maths.Vector2 HitboxPosition { get { return new Maths.Vector2(Position.X + (2 * Settings.Scale), Position.Y); } }
         public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y); } }
