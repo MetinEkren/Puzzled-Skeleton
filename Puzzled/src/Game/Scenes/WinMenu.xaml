@@ -28,20 +28,20 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="NextLevelPressed" Margin="407,295,0,0"/>
+                Click="NextLevelPressed" Margin="407,260,0,0"/>
 
             <!-- Back to main menu -->
             <Button  Width="300" Height="50"
                 Content="Save &amp; Exit"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
+                VerticalAlignment="Center"
                 FontSize="24"
                 Foreground="Black"
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="BackToMainMenu" Margin="407,360,0,0"/>
-            
+                Click="BackToMainMenu" Margin="407,0,0,0"/>
+
             <!-- Restart Game -->
             <Button  Width="300" Height="50"
                 Content="Restart Level"
@@ -52,7 +52,19 @@
                 BorderBrush="Blue"
                 BorderThickness="2"
                 Background="White"
-                Click="RestartGame" Margin="407,425,0,0"/>
+                Click="RestartGame" Margin="407,412,0,0"/>
+
+            <!-- opens option menu -->
+            <Button  Width="300" Height="50"
+                Content="Options menu"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="24"
+                Foreground="Black"
+                BorderBrush="Blue"
+                BorderThickness="2"
+                Background="White"
+                Click="OptionsMenu" Margin="407,489,0,0"/>
 
             <!-- Score board -->
             <Grid Width="300" Height="300" Margin="64,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">

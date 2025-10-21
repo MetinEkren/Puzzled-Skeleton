@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Puzzled
 {
@@ -24,6 +25,34 @@ namespace Puzzled
 
         [JsonInclude]
         public List<uint> Scores;
+    }
+
+    public class SortSaveScoreHelper : IComparer<Save>
+    {
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Constructor
+        //////////////////////////////////////////////////////////////////////////////////
+        public SortSaveScoreHelper(uint level)
+        {
+            m_Level = level;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        //////////////////////////////////////////////////////////////////////////////////
+        public int Compare(Save x, Save y)
+        {
+            if (x.Scores[(int)m_Level - 1] > y.Scores[(int)m_Level - 1]) return 1;
+            if (x.Scores[(int)m_Level - 1] < y.Scores[(int)m_Level - 1]) return -1;
+            return 0;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        //////////////////////////////////////////////////////////////////////////////////
+        private uint m_Level;
+
     }
 
     //////////////////////////////////////////////////////////////////////////////////
