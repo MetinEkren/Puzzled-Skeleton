@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Text.Json;
 
 namespace Puzzled
@@ -23,10 +24,18 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+        
         public LevelOverlay(Save save, uint slot)
         {
             m_Save = save;
             m_SaveSlot = slot;
+
+            m_CustomStopWatch = new CustomStopWatch();
+            // Connect stopwatch updates to the overlay
+            m_CustomStopWatch.TimeUpdated = UpdateStopwatchDisplay;
+            // Start the stopwatch
+            m_CustomStopWatch.Start();
+
 
             InitializeComponent();
             Loaded += OnLoad;
@@ -52,6 +61,11 @@ namespace Puzzled
             if (!IsLoaded) return;
             if (Paused) return;
             m_Level.OnUpdate(deltaTime);
+        }
+
+        public void UpdateStopwatchDisplay(string time)
+        {
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
         }
 
         public void OnRender()
@@ -82,13 +96,15 @@ namespace Puzzled
                 {
                     if (Paused == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze(this);
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CustomStopWatch);
                         Paused = true;
+                        m_CustomStopWatch.Pauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
+                        m_CustomStopWatch.Start();
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -148,6 +164,7 @@ namespace Puzzled
 
         public bool Paused = false;
 
+        private Puzzled.CustomStopWatch m_CustomStopWatch;
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
