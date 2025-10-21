@@ -36,13 +36,6 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            if (!m_OpenedForever)
-                m_Opened = false;
-            else if (m_Opened)
-            {
-                HitboxSize = new Maths.Vector2(0, 0);
-            }
-
             if (Type == DoorType.KeyDoor && !m_Opened)
             {
                 renderer.AddQuad(Position, s_Size, s_TextureKey);
@@ -59,6 +52,22 @@ namespace Puzzled
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X, HitboxPosition.Y + HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
             }
+        }
+
+        public override void Update(float deltaTime)
+        {
+            if (!m_OpenedForever)
+                m_Opened = false;
+            else if (m_Opened)
+            {
+                HitboxSize = new Maths.Vector2(0, 0); // Remove hitbox
+            }
+        }
+
+        public void Open()
+        {
+            m_Opened = true;
+            Logger.Trace(m_Opened.ToString());
         }
 
         public void OpenForever()

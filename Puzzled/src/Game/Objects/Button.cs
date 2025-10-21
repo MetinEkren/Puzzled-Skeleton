@@ -20,9 +20,10 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         // Constructor
         //////////////////////////////////////////////////////////////////////////////////
-        public Button(Maths.Vector2 position)
+        public Button(Maths.Vector2 position, uint ConnectionID)
         {
             Position = position;
+            m_ConnectionID = ConnectionID;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +49,14 @@ namespace Puzzled
         public void Press()
         {
             m_Pressed = true;
+
+            if(m_Connection == null)
+                m_Connection = ((LevelOverlay)Game.Instance.ActiveScene).Level.DynamicObjects[m_ConnectionID];
+
+            if (m_Connection is Door door) 
+            {
+                door.Open();
+            }
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -56,6 +65,8 @@ namespace Puzzled
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
         private bool m_Pressed = false;
+        private uint m_ConnectionID;
+        private DynamicObject m_Connection = null;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private static readonly CroppedTexture s_TextureIdle = new CroppedTexture(Assets.ObjectsSheet, new UV(0, 16, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));

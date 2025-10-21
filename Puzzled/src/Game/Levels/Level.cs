@@ -38,28 +38,25 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void OnUpdate(float deltaTime)
         {
-            Logger.Trace($"Box count: {m_DynamicObjects.Count}");
-            Logger.Trace($"FPS: { 1/ deltaTime }");
-
             // TODO: Move a lot of this code to Physics.cs
             
             // Player update
             m_Player.Update(deltaTime);
 
             // Dynamic object update
-            foreach (DynamicObject obj in m_DynamicObjects)
-                obj.Update(deltaTime);
+            foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
+                obj.Value.Update(deltaTime);
 
             // Dynamic collisions between objects
-            foreach (DynamicObject obj in m_DynamicObjects)
-                HandleDynamicCollision(obj);
+            foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
+                HandleDynamicCollision(obj.Value);
 
             // Dynamic objects collision with static tiles (static collision)
             // Note: Only includes tiles with gravity, since others are static (in terms of position)
             {
-                foreach (DynamicObject obj in m_DynamicObjects)
+                foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
                 {
-                    if (obj is Box box)
+                    if (obj.Value is Box box)
                     {
                         bool canJump = false;
                         HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
@@ -79,8 +76,8 @@ namespace Puzzled
             foreach (KeyValuePair<(uint x, uint y), Chunk> chunk in m_Chunks)
                 chunk.Value.RenderTo(m_Renderer, m_Debug);
 
-            foreach (DynamicObject obj in m_DynamicObjects)
-                obj.RenderTo(m_Renderer, m_Debug);
+            foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
+                obj.Value.RenderTo(m_Renderer, m_Debug);
 
             m_Player.RenderTo(m_Renderer, m_Debug);
         }
@@ -90,7 +87,7 @@ namespace Puzzled
             if (e is MouseButtonPressedEvent mbpe)
             {
                 //for (int i = 0; i < 10000; i++)
-                m_DynamicObjects.Add(new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2)))));
+                DynamicObjects.Add(100000, (new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2))))));
             }
 
             if (e is KeyPressedEvent kpe)
@@ -101,22 +98,7 @@ namespace Puzzled
 
                 if (kpe.KeyCode == Key.R)
                 {
-                    m_DynamicObjects.Clear();
-                }
-                if (kpe.KeyCode == Key.Delete)
-                {
-                    if (m_DynamicObjects.Count > 0)
-                    {
-                        m_DynamicObjects.Clear();
-                    }
-                    else
-                    {
-                        m_DynamicObjects.Add(new Button(new Maths.Vector2(144, 288)));
-                        m_DynamicObjects.Add(new Box(new Maths.Vector2(288, 336)));
-                        m_DynamicObjects.Add(new Door(new Maths.Vector2(384, 624), DoorType.KeyDoor));
-                        m_DynamicObjects.Add(new Door(new Maths.Vector2(288, 624), DoorType.ButtonDoor));
-                        m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(480, 144)));
-                    }
+                    DynamicObjects.Clear();
                 }
             }
         }
@@ -133,7 +115,7 @@ namespace Puzzled
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
 
-            LevelLoader.Load(path, ref m_Tiles, ref m_DynamicObjects, out tilesX, out tilesY);
+            LevelLoader.Load(path, ref m_Tiles, ref DynamicObjects, out tilesX, out tilesY);
 
             // Putting all tiles into chunks 
             {
@@ -213,15 +195,15 @@ namespace Puzzled
         private bool HandleDynamicCollision(DynamicObject obj)
         {
             bool hasCollided = false;
-            foreach (DynamicObject obj2 in m_DynamicObjects)
+            foreach (KeyValuePair<uint, DynamicObject> obj2 in DynamicObjects)
             {
-                if (obj == obj2)
+                if (obj == obj2.Value)
                     continue;
 
                 // Collision between boxes
                 if (obj is Box box)
                 {
-                    if (obj2 is Box box2)
+                    if (obj2.Value is Box box2)
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
 
@@ -296,7 +278,7 @@ namespace Puzzled
                 }
                 else if (obj is Button button)
                 {
-                    if (obj2 is Box box2)
+                    if (obj2.Value is Box box2)
                     {
                         CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         if (result.Side != CollisionSide.None)
@@ -316,9 +298,9 @@ namespace Puzzled
             bool hasCollided = false;
 
             // Dynamic
-            foreach (DynamicObject obj in m_DynamicObjects)
+            foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
             {
-                if (obj is Box box)
+                if (obj.Value is Box box)
                 {
                     CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
 
@@ -401,7 +383,7 @@ namespace Puzzled
                     );
                     hasCollided |= collision;
                 }
-                else if (obj is Button button)
+                else if (obj.Value is Button button)
                 {
                     CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
@@ -410,17 +392,16 @@ namespace Puzzled
                         hasCollided = true;
                     }
                 }
-                else if (obj is DoorKey doorkey)
+                else if (obj.Value is DoorKey doorkey)
                 {
                     CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
                         doorkey.Collect();
                         m_Player.HasKey = true;
-                        Logger.Info("Player has collected a key!");
                     }
                 }
-                else if (obj is Door door)
+                else if (obj.Value is Door door)
                 {
 
                     CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
@@ -551,7 +532,7 @@ namespace Puzzled
 
         private List<Tile> m_Tiles; // Note: Contiguous list of all tiles, not used at the moment, but for level loading is useful
         private Dictionary<(uint x, uint y), Chunk> m_Chunks = new Dictionary<(uint x, uint y), Chunk>();
-        private List<DynamicObject> m_DynamicObjects = new List<DynamicObject>();
+        public Dictionary<uint, DynamicObject> DynamicObjects = new Dictionary<uint, DynamicObject>();
 
     }
 

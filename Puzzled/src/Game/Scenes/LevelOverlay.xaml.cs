@@ -50,7 +50,7 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
-            m_Level.OnUpdate(deltaTime);
+            Level.OnUpdate(deltaTime);
         }
 
         public void OnRender()
@@ -58,7 +58,7 @@ namespace Puzzled
             if (!IsLoaded) return;
 
             m_Renderer.Begin();
-            m_Level.OnRender();
+            Level.OnRender();
             m_Renderer.End();
         }
 
@@ -93,7 +93,7 @@ namespace Puzzled
                 }
             }
 
-            m_Level.OnEvent(e);
+            Level.OnEvent(e);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace Puzzled
             // Note: +1 for final level
             Debug.Assert(((level <= Assets.LevelCount + 1) && (level != 0)), "Invalid level passed in.");
             
-            m_Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
+            Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
             m_Save.Level = level;
         }
@@ -130,7 +130,7 @@ namespace Puzzled
         private Save m_Save;
         private readonly uint m_SaveSlot;
 
-        private Level m_Level;
+        public Level Level;
 
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 

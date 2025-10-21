@@ -18,6 +18,7 @@
     "openFiles": [
     ],
     "project": "PuzzledSkeleton.tiled-project",
+    "property.type": "object",
     "recentFiles": [
     ],
     "tileset.lastUsedFormat": "tsx",

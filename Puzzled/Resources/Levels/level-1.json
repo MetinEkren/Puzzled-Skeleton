@@ -89,6 +89,12 @@
                  "height":16,
                  "id":4,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"Connection",
+                         "type":"object",
+                         "value":27
+                        }],
                  "rotation":0,
                  "type":"Button",
                  "visible":true,
@@ -151,7 +157,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":28,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

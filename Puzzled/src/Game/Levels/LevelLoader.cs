@@ -25,7 +25,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public static void Load(string levelPath, ref List<Tile> outTiles, ref List<DynamicObject> dynamicObjects, out uint outWidth, out uint outHeight)
+        public static void Load(string levelPath, ref List<Tile> outTiles, ref Dictionary<uint, DynamicObject> dynamicObjects, out uint outWidth, out uint outHeight)
         {
             string json = File.ReadAllText(levelPath);
             using (JsonDocument doc = JsonDocument.Parse(json))
@@ -111,30 +111,38 @@ namespace Puzzled
                         Maths.Vector2 position = new Maths.Vector2((x * Settings.Scale), (y * Settings.Scale));
                         Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
 
+                        uint m_ID;
+                        uint m_ConnectionID;
                         switch(objType)
                         {
                             case "Box":
-                                dynamicObjects.Add(new Box(position));
-
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Box(position));
                                 break;
+
                             case "Button":
-                                dynamicObjects.Add(new Button(position));
-
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                m_ConnectionID = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Button(position, m_ConnectionID));
                                 break;
+
                             case "ButtonDoor":
-                                dynamicObjects.Add(new Door(position, DoorType.ButtonDoor));
-
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Door(position, DoorType.ButtonDoor));
                                 break;
+
                             case "DoorKey":
-                                dynamicObjects.Add(new DoorKey(position));
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new DoorKey(position));
                                 break;
-                            case "KeyDoor":
-                                dynamicObjects.Add(new Door(position, DoorType.KeyDoor));
 
+                            case "KeyDoor":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Door(position, DoorType.KeyDoor));
                                 break;
 
                             default:
-                                Logger.Error($"INVALID OBJECT KUT - {objType}");
+                                Logger.Error($"INVALID OBJECT - {objType}");
                                 break;
 
                         }
