@@ -11,7 +11,7 @@
             <Canvas x:Name="UICanvas" Background="Transparent"/>
             
             <!-- Score text -->
-            <Label x:Name="StopwatchLabel" Content="00:00.00" Foreground="White" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="38" Height="65" Width="210"/>
+            <Label x:Name="StopwatchLabel" Content="00:00.00" Foreground="White" HorizontalAlignment="Left" Margin="60,0,0,0" VerticalAlignment="Top" FontSize="38" Height="65" Width="210"/>
 
             <!--<TextBlock x:Name="Score" Text="Score: NULL"
                 FontSize="38"
