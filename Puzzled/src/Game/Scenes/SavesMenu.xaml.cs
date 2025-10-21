@@ -45,15 +45,16 @@ namespace Puzzled
             m_Renderer = new Renderer(GameCanvas);
 
             m_Saves[0] = Assets.LoadSave(1);
-            Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = <NOT IMPLEMENTED> }}");
+            Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
 
             m_Saves[1] = Assets.LoadSave(2);
-            Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = <NOT IMPLEMENTED> }}");
+            Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = {((m_Saves[1].Scores.Count != 0) ? string.Join(", ", m_Saves[1].Scores.ToArray()) : "<NO SCORES>")} }}");
 
             m_Saves[2] = Assets.LoadSave(3);
-            Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
+            Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = {((m_Saves[2].Scores.Count != 0) ? string.Join(", ", m_Saves[2].Scores.ToArray()) : "<NO SCORES>")} }}");
 
             Loaded -= OnLoad;
+
         }
 
         public void OnUpdate(float deltaTime)
@@ -107,6 +108,18 @@ namespace Puzzled
             
             Assets.IntroMusic.CloseAll();
             Assets.MainMenuMusic.Stop();
+        }
+
+        void SaveSlot1StartHover(object sender, RoutedEventArgs args) { SaveButton1.Opacity = 0; SaveButton1Hover.Opacity = 1; }
+        void SaveSlot2StartHover(object sender, RoutedEventArgs args) { SaveButton2.Opacity = 0; SaveButton2Hover.Opacity = 1; }
+        void SaveSlot3StartHover(object sender, RoutedEventArgs args) { SaveButton3.Opacity = 0; SaveButton3Hover.Opacity = 1; }
+        void SaveSlot1StopHover(object sender, RoutedEventArgs args) { SaveButton1.Opacity = 1; SaveButton1Hover.Opacity = 0; }
+        void SaveSlot2StopHover(object sender, RoutedEventArgs args) { SaveButton2.Opacity = 1; SaveButton2Hover.Opacity = 0; }
+        void SaveSlot3StopHover(object sender, RoutedEventArgs args) { SaveButton3.Opacity = 1; SaveButton3Hover.Opacity = 0; }
+
+        void BackButtonPressed(object sender, RoutedEventArgs args)
+        {
+            Game.Instance.ActiveScene = new MainMenu();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

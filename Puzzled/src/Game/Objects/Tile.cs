@@ -110,7 +110,7 @@ namespace Puzzled
 
             case TileType.ChainTop:
             case TileType.ChainBottom:
-                return new Maths.Vector2(position.X + (Settings.SpriteSize / 4), position.Y);
+                return new Maths.Vector2(0, 0);
 
             default:
                 break;
@@ -130,9 +130,11 @@ namespace Puzzled
 
             case TileType.SpikeLeft: // Left-side spikes
             case TileType.SpikeRight: // Right-side spikes
+                return new Maths.Vector2((Settings.SpriteSize / 2), size.Y);
+
             case TileType.ChainTop: // Top chain
             case TileType.ChainBottom: // Bottom chain
-                return new Maths.Vector2((Settings.SpriteSize / 2), size.Y);
+                return new Maths.Vector2(0, 0);
 
             default:
                 break;
