@@ -65,7 +65,6 @@ namespace Puzzled
 
         public void UpdateStopwatchDisplay(string time)
         {
-            //StopwatchLabel.Content = time;
             Dispatcher.Invoke(() => StopwatchLabel.Content = time);
         }
 
