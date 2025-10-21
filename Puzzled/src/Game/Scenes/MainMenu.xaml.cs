@@ -19,22 +19,6 @@ namespace Puzzled
         {
             InitializeComponent();
             Loaded += OnLoad;
-
-            if (s_BootUp)
-            {
-                // Note: For some reason in SavesMenu the first time loading the Saves takes very long, so instead
-                // we warm up the filesystem here.
-                // Note 2: We do this before playing the sounds to avoid messing up the animation on different systems.
-                // Note 3: I know this is ugly AF - Jorben
-                // TODO: Delete
-                {
-                    File.WriteAllLines("temp.txt", new string[] { "TEMPORARY" });
-                    File.Delete("temp.txt");
-                }
-
-                Assets.IntroMusic.Play();
-                s_BootUp = false;
-            }
         }
         ~MainMenu()
         {
@@ -46,6 +30,12 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
+            if (s_BootUp)
+            {
+                Assets.IntroMusic.Play();
+                s_BootUp = false;
+            }
+
             m_UIRenderer = new Renderer(UICanvas);
             
             m_DesiredLogoHeight = Game.Instance.Window.Height - c_LogoSize.Y - m_DesiredLogoHeight;

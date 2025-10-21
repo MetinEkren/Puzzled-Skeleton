@@ -38,9 +38,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public void OnUpdate(float deltaTime)
         {
-            Logger.Trace($"Box count: {m_DynamicObjects.Count}");
-            Logger.Trace($"FPS: { 1/ deltaTime }");
-
             m_Player.Update(deltaTime);
 
             // Dynamic object collision
@@ -65,6 +62,8 @@ namespace Puzzled
 
             // Player collision (static & dynamic)
             {
+                DynamicObject remove = null;
+
                 // Dynamic
                 foreach (DynamicObject obj in m_DynamicObjects)
                 {
@@ -144,22 +143,35 @@ namespace Puzzled
                                 m_Player.Position.Y -= result.Overlap;
                             }
                         );
-                        
+
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
                     else if (obj is Button button)
                     {
                         CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
-                        if(result.Side != CollisionSide.None)
+                        if (result.Side != CollisionSide.None)
                             button.Press();
                     }
+                    else if (obj is DoorKey doorkey)
+                    {
+                        CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            doorkey.Collect();
+                            remove = doorkey;
+                            m_Player.HasKey = true;
+                            Logger.Info("Player has collected a key!");
+                        }
+                    }
+
                 }
+
+                if (remove != null)
+                    m_DynamicObjects.Remove(remove);
 
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
             }
-            
-            
         }
 
         public void OnRender()
@@ -221,7 +233,7 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
-            // Voeg een DoorKey toe bij het starten van het level
+            // adds door key to level for testing
             m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
 
             // Putting all tiles into chunks 
@@ -237,6 +249,13 @@ namespace Puzzled
                     }
                 }
             }
+
+
+            // Music
+            if (Assets.WinMenuMusic.IsPlaying())
+                Assets.WinMenuMusic.Stop();
+            Assets.LevelMusic.Start();
+
 
             // Dynamic objects
             {
