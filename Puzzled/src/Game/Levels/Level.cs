@@ -70,8 +70,113 @@ namespace Puzzled
 
             // Player collision (static & dynamic)
             {
+                DynamicObject remove = null;
+
                 // Dynamic
+                foreach (DynamicObject obj in m_DynamicObjects)
+                {
+                    if (obj is Box box)
+                    {
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box.Position.X += result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                if (m_Player.Velocity.Y <= 0.0f)
+                                {
+                                    m_Player.Velocity.Y = 0.0f;
+                                    m_Player.CanJump = true;
+                                }
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                box.Position.Y += result.Overlap;
+
+                                if (m_Player.Velocity.Y > 0.0f)
+                                {
+                                    box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
+                                    box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                                    //box.Velocity.X = m_Player.Velocity.X;
+                                    //box.Velocity.Y = m_Player.Velocity.Y;
+                                }
+                                else
+                                {
+                                    box.Velocity.Y = 0.0f;
+                                }
+                            }
+                        );
+
+                        if (!collision)
+                            continue;
+
+                        // A collision has occurred and been resolved
+                        // Make sure we are not in walls
+                        bool canJump = false;
+                        collision = HandleStaticCollisions(ref box.Position, ref box.Velocity, ref canJump, box.HitboxPosition, box.HitboxSize);
+
+                        // After colliding with player, resolving and then colliding with static blocks and resolving
+                        // We need to check if we're now colliding with the player again, if so move the player
+                        result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                m_Player.Position.X -= result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                m_Player.Position.X += result.Overlap;
+                            },
+                            // Top
+                            () =>
+                            {
+                                m_Player.Position.Y += result.Overlap;
+                            },
+                            // Bottom
+                            () =>
+                            {
+                                m_Player.Position.Y -= result.Overlap;
+                            }
+                        );
+
+                        // Note: We currently don't do anything if we collide again, which is fine I think
+                    }
+                    else if (obj is Button button)
+                    {
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                            button.Press();
+                    }
+                    else if (obj is DoorKey doorkey)
+                    {
+                        CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            doorkey.Collect();
+                            remove = doorkey;
+                            m_Player.HasKey = true;
+                            Logger.Info("Player has collected a key!");
+                        }
+                    }
+
+                }
                 HandleDynamicCollisionPlayer();
+
+                if (remove != null)
+                    m_DynamicObjects.Remove(remove);
 
                 // Static
                 HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
@@ -137,6 +242,9 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, out tilesX, out tilesY);
 
+            // adds door key to level for testing
+            m_DynamicObjects.Add(new DoorKey(new Maths.Vector2(200, 300))); // X = 200, Y = 300
+
             // Putting all tiles into chunks 
             {
                 uint chunksX = (uint)Math.Ceiling((double)(tilesX / (float)Settings.ChunkSize));
@@ -150,6 +258,13 @@ namespace Puzzled
                     }
                 }
             }
+
+
+            // Music
+            if (Assets.WinMenuMusic.IsPlaying())
+                Assets.WinMenuMusic.Stop();
+            Assets.LevelMusic.Start();
+
 
             // Dynamic objects
             {
