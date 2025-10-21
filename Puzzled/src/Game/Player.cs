@@ -30,8 +30,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public Player()
+        public Player(Maths.Vector2 position)
         {
+            Position = position;
         }
         ~Player()
         {
@@ -64,7 +65,7 @@ namespace Puzzled
                     m_Flipped = false;
                 }
             }
-            
+
             // Friction & Gravity
             {
                 if (Velocity.X != 0.0f)
@@ -115,7 +116,7 @@ namespace Puzzled
             {
                 if (chunkBottomLeftX > Settings.MaxChunks) { chunkBottomLeftX = 0; chunkTopRightX = 0; }
                 if (chunkBottomLeftY > Settings.MaxChunks) { chunkBottomLeftY = 0; chunkTopRightY = 0; }
-                
+
                 //if (chunkBottomLeftX > chunkTopRightX) chunkBottomLeftX = chunkTopRightX;
                 //if (chunkBottomLeftY > chunkTopRightY) chunkBottomLeftY = chunkTopRightY;
             }
@@ -128,7 +129,7 @@ namespace Puzzled
                 {
                     if (!chunks.ContainsKey((x, y)))
                     {
-                        Logger.Warn($"Trying to check for chunk ({x}, {y}), it doesn't exist. Position = {{ .x = { Position.X }, .y = {Position.Y} }}");
+                        Logger.Warn($"Trying to check for chunk ({x}, {y}), it doesn't exist. Position = {{ .x = {Position.X}, .y = {Position.Y} }}");
                         continue;
                     }
 
@@ -143,35 +144,35 @@ namespace Puzzled
 
                         switch (result.Side) // TODO: Fix collision bug with side jumping
                         {
-                        case CollisionSide.Left:
-                            Position = new Maths.Vector2(Position.X + result.Overlap, Position.Y);
-                            Velocity = new Maths.Vector2(0.0f, Velocity.Y);
-                            break;
-                        case CollisionSide.Right:
-                            Position = new Maths.Vector2(Position.X - result.Overlap, Position.Y);
-                            Velocity = new Maths.Vector2(0.0f, Velocity.Y);
-                            break;
-                        case CollisionSide.Top:
-                            Position = new Maths.Vector2(Position.X, Position.Y - result.Overlap);
+                            case CollisionSide.Left:
+                                Position = new Maths.Vector2(Position.X + result.Overlap, Position.Y);
+                                Velocity = new Maths.Vector2(0.0f, Velocity.Y);
+                                break;
+                            case CollisionSide.Right:
+                                Position = new Maths.Vector2(Position.X - result.Overlap, Position.Y);
+                                Velocity = new Maths.Vector2(0.0f, Velocity.Y);
+                                break;
+                            case CollisionSide.Top:
+                                Position = new Maths.Vector2(Position.X, Position.Y - result.Overlap);
 
-                            if (Velocity.Y > 0.0f)
-                                Velocity = new Maths.Vector2(Velocity.X, 0.0f);
-                            break;
-                        case CollisionSide.Bottom:
-                            Position = new Maths.Vector2(Position.X, Position.Y + result.Overlap);
+                                if (Velocity.Y > 0.0f)
+                                    Velocity = new Maths.Vector2(Velocity.X, 0.0f);
+                                break;
+                            case CollisionSide.Bottom:
+                                Position = new Maths.Vector2(Position.X, Position.Y + result.Overlap);
 
-                            if (Velocity.Y < 0.0f)
-                            {
-                                Velocity = new Maths.Vector2(Velocity.X, 0.0f);
-                                CanJump = true;
-                            }
+                                if (Velocity.Y < 0.0f)
+                                {
+                                    Velocity = new Maths.Vector2(Velocity.X, 0.0f);
+                                    CanJump = true;
+                                }
 
-                            // Note: We don't set CanJump while the player is still jumping
-                            
-                            break;
+                                // Note: We don't set CanJump while the player is still jumping
 
-                        default:
-                            break;
+                                break;
+
+                            default:
+                                break;
                         }
                     }
                 }
@@ -182,7 +183,7 @@ namespace Puzzled
         public void RenderTo(Renderer renderer, bool debug = false)
         {
             renderer.AddQuad(Position, Size, GetCurrentAnimation().GetCurrentTexture(), m_Flipped);
-            
+
             if (debug) // Outline hitbox
             {
                 renderer.AddQuad(HitboxPosition, new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
@@ -200,16 +201,16 @@ namespace Puzzled
             m_State = state;
             GetCurrentAnimation().Reset();
         }
-        
+
         public Animation GetCurrentAnimation()
         {
             switch (m_State)
             {
-            case State.Idle:            return m_IdleAnimation;
-            case State.Running:         return m_RunningAnimation;
-            
-            default:
-                break;
+                case State.Idle: return m_IdleAnimation;
+                case State.Running: return m_RunningAnimation;
+
+                default:
+                    break;
             }
 
             return m_IdleAnimation;
@@ -229,9 +230,9 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private State m_State = State.Idle;
-        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));       
+        private Maths.Vector2 m_HitboxSize = new Maths.Vector2(Settings.SpriteSize - (2 * Settings.Scale) - (2 * Settings.Scale), Settings.SpriteSize - (3 * Settings.Scale));
         private bool m_Flipped = false;
-        public Maths.Vector2 Position = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+        public Maths.Vector2 Position;
         public Maths.Vector2 Velocity = new Maths.Vector2(0.0f, 0.0f);
         public bool CanJump = true;
 
@@ -246,4 +247,4 @@ namespace Puzzled
 
     }
 
-}
+    }

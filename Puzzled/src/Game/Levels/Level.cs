@@ -153,6 +153,15 @@ namespace Puzzled
                         if(result.Side != CollisionSide.None)
                             button.Press();
                     }
+                    else if (obj is Spike spike)
+                    {
+                        CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            m_Player.Position = Settings.PlayerSpawnPosition;
+                            m_Player.Velocity = new Maths.Vector2(0, 0); 
+                        }
+                    }
                 }
 
                 // Static
@@ -214,7 +223,7 @@ namespace Puzzled
         {
             Logger.Info($"Loading level from: {path}");
 
-            m_Player = new Player();
+            m_Player = new Player(Settings.PlayerSpawnPosition);
 
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
@@ -238,6 +247,7 @@ namespace Puzzled
             // Dynamic objects
             {
                 m_DynamicObjects.Add(new Button(new Maths.Vector2(100, 100)));
+                m_DynamicObjects.Add(new Spike(new Maths.Vector2(200, 100)));
             }
         }
 
