@@ -30,11 +30,11 @@ namespace Puzzled
             m_Save = save;
             m_SaveSlot = slot;
 
-            m_CostumStopWatch = new CostumStopWatch();
+            m_CustomStopWatch = new CustomStopWatch();
             // Connect stopwatch updates to the overlay
-            m_CostumStopWatch.TimeUpdated += UpdateStopwatchDisplay;
+            m_CustomStopWatch.TimeUpdated += UpdateStopwatchDisplay;
             // Start the stopwatch
-            m_CostumStopWatch.StopWatchStart();
+            m_CustomStopWatch.StopWatchStart();
 
 
             InitializeComponent();
@@ -96,15 +96,15 @@ namespace Puzzled
                 {
                     if (Paused == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CostumStopWatch);
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CustomStopWatch);
                         Paused = true;
-                        m_CostumStopWatch.StopWatchPauze();
+                        m_CustomStopWatch.StopWatchPauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
-                        m_CostumStopWatch.StopWatchStart();
+                        m_CustomStopWatch.StopWatchStart();
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -164,7 +164,7 @@ namespace Puzzled
 
         public bool Paused = false;
 
-        private Puzzled.CostumStopWatch m_CostumStopWatch;
+        private Puzzled.CustomStopWatch m_CustomStopWatch;
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }

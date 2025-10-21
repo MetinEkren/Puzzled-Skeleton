@@ -9,24 +9,22 @@ using System.Windows.Threading;
 
 namespace Puzzled
 {
-    public class CostumStopWatch
+    public class CustomStopWatch
     {
 
-        private Stopwatch _stopwatch = new Stopwatch();
-        private DispatcherTimer _timer;
-
-
-        public string StartTimeDisplay { get; private set; } = "00:00.00";
-
-        public event Action<string> TimeUpdated;
-
-        public CostumStopWatch()
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Constructor & Destructor
+        ////////////////////////////////////////////////////////////////////////////////////
+        public CustomStopWatch()
         {
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(10);
             _timer.Tick += Timer_Tick;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        ////////////////////////////////////////////////////////////////////////////////////
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeSpan elapsed = _stopwatch.Elapsed;
@@ -68,5 +66,14 @@ namespace Puzzled
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        private Stopwatch _stopwatch = new Stopwatch();
+        private DispatcherTimer _timer;
+
+        public string StartTimeDisplay { get; private set; } = "00:00.00";
+
+        public event Action<string> TimeUpdated;
     }
 }
