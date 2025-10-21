@@ -61,7 +61,11 @@ namespace Puzzled
         {
             _stopwatch.Reset();
             StartTimeDisplay = "00:00.00";
-            TimeUpdated?.Invoke(StartTimeDisplay);
+
+            if (TimeUpdated != null)
+            {
+                TimeUpdated.Invoke(StartTimeDisplay);
+            }
         }
 
     }
