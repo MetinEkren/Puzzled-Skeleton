@@ -38,23 +38,43 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             m_Renderer = new Renderer(UICanvas);
-
+            
             Save save1 = Assets.LoadSave(1);
             Save save2 = Assets.LoadSave(2);
             Save save3 = Assets.LoadSave(3);
 
-            PlayerName1.Text = save1.Name;
-            PlayerName2.Text = save2.Name;
-            PlayerName3.Text = save3.Name;
+            List<Save> saves = new List<Save>();
 
-            List<Save> saves = new List<Save> { save1, save2, save3 };
-            saves.Sort(new SortSaveScoreHelper(m_Level.ActiveSave.Level));
+            if (save1.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            {
+                saves.Add(save1);
+            }
+            if (save2.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            {
+                saves.Add(save2);
+            }
+            if (save3.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            {
+                saves.Add(save3);
+            }
 
-            // TODO: inplement scores sorting + Score display
+            saves.Sort(new SortSaveScoreHelper(m_Level.ActiveSave.Level - 1));
 
-            PlayerScore1.Text = saves[0].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
-            PlayerScore2.Text = saves[1].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
-            PlayerScore3.Text = saves[2].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            if (saves.Count >= 1)
+            {
+                PlayerName1.Text = saves[0].Name;
+                PlayerScore1.Text = saves[0].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            }
+            if (saves.Count >= 2)
+            {
+                PlayerName2.Text = saves[1].Name;
+                PlayerScore2.Text = saves[1].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            }
+            if (saves.Count == 3)
+            {
+                PlayerName3.Text = saves[2].Name;
+                PlayerScore3.Text = saves[2].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+            }
 
             Loaded -= OnLoad;
         }
