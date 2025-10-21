@@ -22,10 +22,11 @@ namespace Puzzled
             InitializeComponent();
         }
 
-        public LevelOverlay_Pauze(LevelOverlay levelOverlay)
+        public LevelOverlay_Pauze(LevelOverlay levelOverlay, Puzzled.CostumStopWatch stopWatch)
         {
             InitializeComponent();
             m_Overlay = levelOverlay;
+            m_StopWatch = stopWatch;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -35,6 +36,7 @@ namespace Puzzled
         {
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
+            m_StopWatch.StopWatchStart();
         }
 
         private void Button_Click_OptionsMenu(object sender, RoutedEventArgs e)
@@ -47,13 +49,21 @@ namespace Puzzled
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
 
+            m_StopWatch.StopWatchPauze();
+            m_StopWatch.StopWatchReset();
+
             m_Overlay.LoadLevel(m_Overlay.ActiveSave.Level);
+
+            m_StopWatch.StopWatchStart();
         }
 
         private void Button_Click_Quit(object sender, RoutedEventArgs e)
         {
             m_Overlay.PauseOverlay.Content = null; // This removes the overlay
             m_Overlay.Paused = false;
+
+            m_StopWatch.StopWatchPauze();
+            m_StopWatch.StopWatchReset();
 
             Game.Instance.ActiveScene = new MainMenu();
         }
@@ -62,7 +72,7 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private LevelOverlay m_Overlay;
-
+        private Puzzled.CostumStopWatch m_StopWatch;
     }
 
 }

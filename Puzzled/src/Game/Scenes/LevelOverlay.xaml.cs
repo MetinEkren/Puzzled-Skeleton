@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Text.Json;
 
 namespace Puzzled
@@ -23,10 +24,18 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+        
         public LevelOverlay(Save save, uint slot)
         {
             m_Save = save;
             m_SaveSlot = slot;
+
+            m_CostumStopWatch = new CostumStopWatch();
+            // Connect stopwatch updates to the overlay
+            m_CostumStopWatch.TimeUpdated += UpdateStopwatchDisplay;
+            // Start the stopwatch
+            m_CostumStopWatch.StopWatchStart();
+
 
             InitializeComponent();
             Loaded += OnLoad;
@@ -52,6 +61,12 @@ namespace Puzzled
             if (!IsLoaded) return;
             if (Paused) return;
             m_Level.OnUpdate(deltaTime);
+        }
+
+        public void UpdateStopwatchDisplay(string time)
+        {
+            //StopwatchLabel.Content = time;
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
         }
 
         public void OnRender()
@@ -82,13 +97,15 @@ namespace Puzzled
                 {
                     if (Paused == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze(this);
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CostumStopWatch);
                         Paused = true;
+                        m_CostumStopWatch.StopWatchPauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
+                        m_CostumStopWatch.StopWatchStart();
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -148,6 +165,7 @@ namespace Puzzled
 
         public bool Paused = false;
 
+        private Puzzled.CostumStopWatch m_CostumStopWatch;
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
