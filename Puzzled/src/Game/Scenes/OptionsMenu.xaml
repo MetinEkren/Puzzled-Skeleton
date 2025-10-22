@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              >
     <Grid Width="768" Height="720">
-        <Grid>
+        <Grid RenderTransformOrigin="0.504,0.516">
             <!-- Base Canvas for rendering/drawing -->
             <Canvas x:Name="GameCanvas" Background="Black"/>
 
@@ -17,6 +17,92 @@
                 VerticalAlignment="Top"
                 Foreground="White"
                 Margin="0,64,0,0" />
+
+
+
+
+            <Slider x:Name="MusicSlider"
+                Minimum="0"
+                Maximum="100"
+                Value="50"
+                TickFrequency="10"
+                IsSnapToTickEnabled="True"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="200"
+                ValueChanged="MusicSlider_ValueChanged"
+                />
+
+
+            <TextBlock x:Name="MusicValueText"
+                Text="50"
+                FontSize="18"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Margin="489,0,0,0"
+                Foreground="White" RenderTransformOrigin="0.716,-0.089"
+                 />
+
+
+            <Slider x:Name="SFXSlider"
+                Minimum="0"
+                Maximum="100"
+                Value="50"
+                TickFrequency="10"
+                IsSnapToTickEnabled="True"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Width="200"
+                Margin="0,422,0,0"
+                ValueChanged="SFXSlider_ValueChanged"/>
+
+
+            <TextBlock x:Name="SFXValueText"
+                Text="50"
+                FontSize="18"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Foreground="White" RenderTransformOrigin="0.572,3.566" Height="28" Margin="489,417,0,0"/>
+
+
+
+
+            <TextBlock Name="MusicText"
+            Text="Music"
+            FontSize="16"
+            HorizontalAlignment="Left"             
+            VerticalAlignment="Top"
+            Margin="288,330,0,0"
+            Foreground="White"/>
+
+            <TextBlock Name="SFXText"
+            Text="SFX"
+            FontSize="16"
+            HorizontalAlignment="Left"             
+            VerticalAlignment="Top"
+            Margin="288,400,0,0"
+            Foreground="White"/>
+
+
+            <Image x:Name="BackButton" Width="48" Height="48" Margin="0,0,702,656 "
+     Source="pack://application:,,,/Resources/Textures/back_button.png"
+     MouseDown="BackButtonPressed"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </Grid>
     </Grid>
 </UserControl>
