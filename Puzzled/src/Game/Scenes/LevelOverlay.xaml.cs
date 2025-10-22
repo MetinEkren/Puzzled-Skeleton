@@ -78,7 +78,7 @@ namespace Puzzled
             if (Paused)
                 m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
             
-            m_Renderer.End();
+            m_Renderer.End(new Camera(100.0f, 0.0f));
         }
 
         public void OnUIRender()

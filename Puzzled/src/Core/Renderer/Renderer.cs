@@ -81,6 +81,11 @@ namespace Puzzled
 
         public void End()
         {
+            End(new Camera(0.0f, 0.0f));
+        }
+
+        public void End(Camera camera)
+        {
             using (DrawingContext dc = m_Visual.RenderOpen())
             {
                 foreach (Quad quad in m_Quads)
@@ -93,7 +98,7 @@ namespace Puzzled
                         dc.PushTransform(new ScaleTransform(-1.0f, 1.0f, centerX, centerY));
                     }
 
-                    dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X , quad.Position.Y + CameraOffset, quad.Size.X, quad.Size.Y));
+                    dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X + (camera.XOffset * (quad.FlipTexture ? -1.0f : 1.0f)), quad.Position.Y + camera.YOffset, quad.Size.X, quad.Size.Y));
 
                     dc.PushOpacity(quad.Opacity / 100.0);
                     //dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
