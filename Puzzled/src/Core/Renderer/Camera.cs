@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,20 +28,24 @@ namespace Puzzled
             //InitializeComponent();
         }
 
-        //public Camera()
-        //{
-
-        //}
+        public Camera(Player player)
+        {
+            m_player = player;
+            
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
 
-
+        public void TestDiddy()
+        {
+            
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-
+        public Player m_player;
     }
 }
