@@ -81,7 +81,7 @@ namespace Puzzled
             Level.OnRender();
 
             if (Paused)
-                m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+                m_Renderer.AddQuad(new Maths.Vector2(-m_VerticalCamera.XOffset, -m_VerticalCamera.YOffset), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
             
             m_Renderer.End(m_VerticalCamera);
         }
