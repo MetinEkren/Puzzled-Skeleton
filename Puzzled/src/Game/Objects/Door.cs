@@ -67,7 +67,6 @@ namespace Puzzled
         public void Open()
         {
             m_Opened = true;
-            Logger.Trace(m_Opened.ToString());
         }
 
         public void OpenForever()
