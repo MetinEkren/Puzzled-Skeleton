@@ -104,8 +104,6 @@ namespace Puzzled
                         // Get position
                         x = obj.GetProperty("x").GetUInt32();
                         y = (height * (Settings.SpriteSize / Settings.Scale)) - obj.GetProperty("y").GetUInt32();
-                        Logger.Trace("Height: " + height.ToString());
-                        Logger.Trace(y.ToString());
 
                         string objType = obj.GetProperty("type").GetString();
 
