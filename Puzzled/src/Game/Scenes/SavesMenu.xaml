@@ -43,6 +43,8 @@
 
             <Image x:Name="PixelArt" Width="450" Height="330" Margin="152,84,166,306"
                 Source="pack://application:,,,/Resources/Textures/save_pixelart.png"/>
+
+            <TextBlock x:Name="QuoteText" Foreground="White" Margin="0,428,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontFamily="Courier New" TextAlignment="Center" Width="724" Height="83" Text="Placeholder for Quote" LineStackingStrategy="BlockLineHeight" TextWrapping="WrapWithOverflow"/>
         </Grid>
     </Grid>
 </UserControl>

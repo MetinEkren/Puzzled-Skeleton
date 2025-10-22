@@ -52,6 +52,7 @@ namespace Puzzled
                 {
                     // TODO: Jump cooldown, to prevent super fast jumping up blocks
                     Velocity.Y = Settings.PlayerJumpingVelocity;
+                    Assets.JumpSound.Play();
                     CanJump = false;
                 }
                 if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
@@ -235,7 +236,8 @@ namespace Puzzled
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity = new Maths.Vector2(0.0f, 0.0f);
         public bool CanJump = true;
-
+        public bool HasKey = false;
+ 
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
         // TODO: More animations
