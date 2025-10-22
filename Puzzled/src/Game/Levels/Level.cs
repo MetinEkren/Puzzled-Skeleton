@@ -298,6 +298,14 @@ namespace Puzzled
                         m_Player.Velocity = new Maths.Vector2(0, 0);
                     }
                 }
+                else if (obj is Ladder ladder)
+                {
+                    CollisionResult result = Collision.AABB(ladder.HitboxPosition, ladder.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        m_Player.IsClimbing = true;
+                    }
+                }
             }
 
             return hasCollided;
@@ -537,6 +545,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
         private bool m_Debug = false;
+
 
         private Player m_Player;
 
