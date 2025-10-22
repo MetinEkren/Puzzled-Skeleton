@@ -300,10 +300,10 @@ namespace Puzzled
                 }
                 else if (obj is Ladder ladder)
                 {
-                    CollisionResult result = Collision.AABB(ladder.HitboxPosition, ladder.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(ladder.HitboxPosition, ladder.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
-                        m_Player.IsClimbing = true;
+                        Player.IsClimbing = true;
                     }
                 }
             }
