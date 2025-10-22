@@ -29,6 +29,7 @@ namespace Puzzled
         public DoorKey(Maths.Vector2 position)
         {
             Position = position;
+            HitboxPosition = Position;
 
             m_IdleAnimation = new Animation(
                 Assets.DoorKeySheet,
@@ -65,10 +66,11 @@ namespace Puzzled
         {
             m_Collected = true;
             HitboxSize = new Maths.Vector2(0, 0); // Remove hitbox
+            HitboxPosition = new Maths.Vector2(0, 0); // Change position (fixes bug)
             Assets.KeyPickupSound.Play();
         }
 
-        public Maths.Vector2 HitboxPosition { get { return Position; } }
+        public Maths.Vector2 HitboxPosition; 
         public Maths.Vector2 HitboxSize = s_Size;
 
     }
