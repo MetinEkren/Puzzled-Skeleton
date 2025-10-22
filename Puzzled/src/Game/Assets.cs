@@ -84,7 +84,7 @@ namespace Puzzled
         public static string RunSheetPath = ResourcesDirectory + "Resources/Sprites/run.png";
         public static string ObjectsSheetPath = ResourcesDirectory + "Resources/Sprites/objects.png";
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
-        public static string DoorKeySheetPath = ResourcesDirectory + "Resources/Sprites/Doorkey.png";
+        public static string DoorKeySheetPath = ResourcesDirectory + "Resources/Sprites/doorkey.png";
 
         public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
         public static string Level2Path = ResourcesDirectory + "Resources/Levels/level-2.json";
