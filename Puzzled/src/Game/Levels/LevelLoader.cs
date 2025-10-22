@@ -97,7 +97,7 @@ namespace Puzzled
                 {
                     // Note: We require a tile layer, but an object layer is currently not always present
                     // this is to prevent a crash
-                    if (!(layers.GetPropertyCount() > 1))
+                    if (!(layers.GetArrayLength() > 1))
                         return;
 
                     JsonElement data = layers[1].GetProperty("objects");
