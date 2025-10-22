@@ -142,7 +142,7 @@ namespace Puzzled
         void OptionsMenu(object sender, RoutedEventArgs args)
         {
             Logger.Info("Going to option menu");
-            Game.Instance.ActiveScene = new OptionsMenu();
+            Game.Instance.ActiveScene = new OptionsMenu(this);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
