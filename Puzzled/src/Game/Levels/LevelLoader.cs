@@ -143,6 +143,21 @@ namespace Puzzled
                                 dynamicObjects.Add(m_ID, new Door(position, DoorType.KeyDoor));
                                 break;
 
+                            case "Ladder":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Ladder(position));
+                                break;
+
+                            case "Lava":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Lava(position));
+                                break;
+
+                            case "Spike":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Spike(position));
+                                break;
+
                             default:
                                 Logger.Error($"INVALID OBJECT - {objType}");
                                 break;
