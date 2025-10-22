@@ -48,22 +48,46 @@ namespace Puzzled
 
             // Movement
             {
-                if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && CanJump)
+                // Climbing
+                if (IsClimbing)
                 {
-                    // TODO: Jump cooldown, to prevent super fast jumping up blocks
-                    Velocity.Y = Settings.PlayerJumpingVelocity;
-                    Assets.JumpSound.Play();
-                    CanJump = false;
+                    Velocity.Y = 0;
+                    if (Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space))
+                        Velocity.Y = Settings.PlayerJumpingVelocity;
+                    else if (Input.IsKeyPressed(Key.S) || Input.IsKeyPressed(Key.Down))
+                        Velocity.Y = 0 - Settings.PlayerJumpingVelocity;
+                    if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
+                    {
+                        Velocity.X = -Settings.PlayerRunningVelocity;
+                        m_Flipped = true;
+                    }
+                    if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
+                    {
+                        Velocity.X = Settings.PlayerRunningVelocity;
+                        m_Flipped = false;
+                    }
                 }
-                if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
+
+                // Walking
+                else
                 {
-                    Velocity.X = -Settings.PlayerRunningVelocity;
-                    m_Flipped = true;
-                }
-                if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
-                {
-                    Velocity.X = Settings.PlayerRunningVelocity;
-                    m_Flipped = false;
+                    if ((Input.IsKeyPressed(Key.W) || Input.IsKeyPressed(Key.Up) || Input.IsKeyPressed(Key.Space)) && CanJump)
+                    {
+                        // TODO: Jump cooldown, to prevent super fast jumping up blocks
+                        Velocity.Y = Settings.PlayerJumpingVelocity;
+                        Assets.JumpSound.Play();
+                        CanJump = false;
+                    }
+                    if (Input.IsKeyPressed(Key.A) || Input.IsKeyPressed(Key.Left))
+                    {
+                        Velocity.X = -Settings.PlayerRunningVelocity;
+                        m_Flipped = true;
+                    }
+                    if (Input.IsKeyPressed(Key.D) || Input.IsKeyPressed(Key.Right))
+                    {
+                        Velocity.X = Settings.PlayerRunningVelocity;
+                        m_Flipped = false;
+                    }
                 }
             }
 
@@ -78,8 +102,11 @@ namespace Puzzled
                         Velocity.X = 0.0f;
                 }
 
-                Velocity.Y -= Settings.Gravity * deltaTime;
-                Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
+                if(!IsClimbing)
+                {
+                    Velocity.Y -= Settings.Gravity * deltaTime;
+                    Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
+                }
 
                 // When falling (or jumping) you are no longer able to jump again
                 if (Velocity.Y != 0.0f)
@@ -99,86 +126,8 @@ namespace Puzzled
                 if (!IsMovingHorizontally() && m_State != State.Idle) // TODO: Something with !IsMovingVertically()
                     SetNewState(State.Idle);
             }
-
+            IsClimbing = false;
             GetCurrentAnimation().Update(deltaTime);
-        }
-
-        public void HandleStaticCollisions(Dictionary<(uint x, uint y), Chunk> chunks)
-        {
-            uint chunkBottomLeftX = (uint)Math.Floor(HitboxPosition.X / (Settings.SpriteSize * Settings.ChunkSize));
-            uint chunkBottomLeftY = (uint)Math.Floor(HitboxPosition.Y / (Settings.SpriteSize * Settings.ChunkSize));
-
-            // Note: Subtract a tiny epsilon (0.01f) to avoid rounding issues when the edge is exactly on a chunk boundary
-            uint chunkTopRightX = (uint)Math.Floor((HitboxPosition.X + HitboxSize.X - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
-            uint chunkTopRightY = (uint)Math.Floor((HitboxPosition.Y + HitboxSize.Y - 0.01f) / (Settings.SpriteSize * Settings.ChunkSize));
-
-            // Fix collisions no longer working when moving out of chunk coordinate space
-            // + Fix chunks out of coordinate space being checked, instead set them to 0,0 (useless check, but easiest solution)
-            {
-                if (chunkBottomLeftX > Settings.MaxChunks) { chunkBottomLeftX = 0; chunkTopRightX = 0; }
-                if (chunkBottomLeftY > Settings.MaxChunks) { chunkBottomLeftY = 0; chunkTopRightY = 0; }
-
-                //if (chunkBottomLeftX > chunkTopRightX) chunkBottomLeftX = chunkTopRightX;
-                //if (chunkBottomLeftY > chunkTopRightY) chunkBottomLeftY = chunkTopRightY;
-            }
-
-            // Check collisions with chunks
-            //Logger.Trace($"Starting chunk checks, chunkBottomLeftX = {chunkBottomLeftX}, chunkBottomLeftY = {chunkBottomLeftY}, chunkTopRightX = {chunkTopRightX}, chunkTopRightY = {chunkTopRightY}");
-            for (uint x = chunkBottomLeftX; x <= chunkTopRightX; x++)
-            {
-                for (uint y = chunkBottomLeftY; y <= chunkTopRightY; y++)
-                {
-                    if (!chunks.ContainsKey((x, y)))
-                    {
-                        Logger.Warn($"Trying to check for chunk ({x}, {y}), it doesn't exist. Position = {{ .x = {Position.X}, .y = {Position.Y} }}");
-                        continue;
-                    }
-
-                    Chunk chunk = chunks[(x, y)];
-
-                    foreach (Tile tile in chunk.Tiles)
-                    {
-                        if (tile == null)
-                            continue;
-
-                        CollisionResult result = Collision.AABB(HitboxPosition, HitboxSize, tile.HitboxPosition, tile.HitboxSize);
-
-                        switch (result.Side) // TODO: Fix collision bug with side jumping
-                        {
-                            case CollisionSide.Left:
-                                Position = new Maths.Vector2(Position.X + result.Overlap, Position.Y);
-                                Velocity = new Maths.Vector2(0.0f, Velocity.Y);
-                                break;
-                            case CollisionSide.Right:
-                                Position = new Maths.Vector2(Position.X - result.Overlap, Position.Y);
-                                Velocity = new Maths.Vector2(0.0f, Velocity.Y);
-                                break;
-                            case CollisionSide.Top:
-                                Position = new Maths.Vector2(Position.X, Position.Y - result.Overlap);
-
-                                if (Velocity.Y > 0.0f)
-                                    Velocity = new Maths.Vector2(Velocity.X, 0.0f);
-                                break;
-                            case CollisionSide.Bottom:
-                                Position = new Maths.Vector2(Position.X, Position.Y + result.Overlap);
-
-                                if (Velocity.Y < 0.0f)
-                                {
-                                    Velocity = new Maths.Vector2(Velocity.X, 0.0f);
-                                    CanJump = true;
-                                }
-
-                                // Note: We don't set CanJump while the player is still jumping
-
-                                break;
-
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-            //Logger.Trace("Ending chunk checks");
         }
 
         public void RenderTo(Renderer renderer, bool debug = false)
@@ -237,6 +186,7 @@ namespace Puzzled
         public Maths.Vector2 Velocity = new Maths.Vector2(0.0f, 0.0f);
         public bool CanJump = true;
         public bool HasKey = false;
+        public bool IsClimbing = false;
  
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
