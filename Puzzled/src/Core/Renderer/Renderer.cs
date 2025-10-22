@@ -93,7 +93,7 @@ namespace Puzzled
                         dc.PushTransform(new ScaleTransform(-1.0f, 1.0f, centerX, centerY));
                     }
 
-                    dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X + 50, quad.Position.Y + 50, quad.Size.X, quad.Size.Y));
+                    dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X , quad.Position.Y + CameraOffset, quad.Size.X, quad.Size.Y));
 
                     dc.PushOpacity(quad.Opacity / 100.0);
                     //dc.DrawImage(quad.TextureReference.GetImageSource(), new Rect(quad.Position.X, quad.Position.Y, quad.Size.X, quad.Size.Y));
