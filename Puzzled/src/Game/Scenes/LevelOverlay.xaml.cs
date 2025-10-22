@@ -55,7 +55,7 @@ namespace Puzzled
 
             LoadLevel(m_Save.Level);
 
-            m_Camera = new VerticalCamera(Level.Player);
+            Camera = new VerticalCamera(Level.Player);
 
             Loaded -= OnLoad;
         }
@@ -66,7 +66,7 @@ namespace Puzzled
             if (Paused) return;
 
             Level.OnUpdate(deltaTime);
-            m_Camera.Update();
+            Camera.Update();
         }
 
         public void UpdateStopwatchDisplay(string time)
@@ -83,9 +83,9 @@ namespace Puzzled
 
             // Note: Darkens de the background on pause
             if (Paused) // Note: We use the camera offset to make sure it's fully in screen
-                m_Renderer.AddQuad(new Maths.Vector2(-m_Camera.XOffset, -m_Camera.YOffset), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+                m_Renderer.AddQuad(new Maths.Vector2(-Camera.XOffset, -Camera.YOffset), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
             
-            m_Renderer.End(m_Camera);
+            m_Renderer.End(Camera);
         }
 
         public void OnUIRender()
@@ -163,12 +163,12 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
-        private VerticalCamera m_Camera;
         
         private Save m_Save;
         private readonly uint m_SaveSlot;
 
         public Level Level;
+        public VerticalCamera Camera;
 
         public bool Paused = false;
 

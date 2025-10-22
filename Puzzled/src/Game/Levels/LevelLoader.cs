@@ -88,8 +88,6 @@ namespace Puzzled
 
                         outTiles.Add(new Tile(position, size, Assets.GetTexture(Assets.TileSheet, uvX, uvY), (TileType)tileId));
                         next();
-                      
-                        
                     }
                 }
 

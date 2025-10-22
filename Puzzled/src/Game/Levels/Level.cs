@@ -173,7 +173,7 @@ namespace Puzzled
             return hasCollided;
         }
 
-        private bool HandleDynamicCollision(DynamicObject obj)
+        private bool HandleDynamicCollision(DynamicObject obj) // Collisions between dynamicobjects themself
         {
             bool hasCollided = false;
             foreach (KeyValuePair<uint, DynamicObject> obj2 in DynamicObjects)
@@ -181,9 +181,9 @@ namespace Puzzled
                 if (obj == obj2.Value)
                     continue;
 
-                // Collision between boxes
                 if (obj is Box box)
                 {
+                    // Collision between boxes
                     if (obj2.Value is Box box2)
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
@@ -254,45 +254,15 @@ namespace Puzzled
 
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
-
-                    // Note: We don't need button logic here, since it's below
-                }
-                else if (obj is Button button)
-                {
-                    if (obj2.Value is Box box2)
+                    // Collision between box and button
+                    else if (obj2.Value is Button button)
                     {
-                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box.HitboxPosition, box.HitboxSize);
                         if (result.Side != CollisionSide.None)
                         {
-                            hasCollided = true;
                             button.Press();
+                            hasCollided = true;
                         }
-                    }
-                }
-                else if (obj is Spike spike)
-                {
-                    CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
-                    if (result.Side != CollisionSide.None)
-                    {
-                        Player.Position = Settings.PlayerSpawnPosition;
-                        Player.Velocity = new Maths.Vector2(0, 0);
-                    }
-                }
-                else if (obj is Lava lava)
-                {
-                    CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
-                    if (result.Side != CollisionSide.None)
-                    {
-                        Player.Position = Settings.PlayerSpawnPosition;
-                        Player.Velocity = new Maths.Vector2(0, 0);
-                    }
-                }
-                else if (obj is Ladder ladder)
-                {
-                    CollisionResult result = Collision.AABB(ladder.HitboxPosition, ladder.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
-                    if (result.Side != CollisionSide.None)
-                    {
-                        Player.IsClimbing = true;
                     }
                 }
             }
@@ -300,7 +270,7 @@ namespace Puzzled
             return hasCollided;
         }
 
-        private bool HandleDynamicCollisionPlayer()
+        private bool HandleDynamicCollisionPlayer() // Collisions between player and dynamic objects
         {
             bool hasCollided = false;
 
@@ -440,6 +410,30 @@ namespace Puzzled
                     {
                         door.OpenForever();
                         Player.HasKey = false;
+                    }
+                }
+                else if (obj.Value is Spike spike)
+                {
+                    CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        Player.Kill();
+                    }
+                }
+                else if (obj.Value is Lava lava)
+                {
+                    CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        Player.Kill();
+                    }
+                }
+                else if (obj.Value is Ladder ladder)
+                {
+                    CollisionResult result = Collision.AABB(ladder.HitboxPosition, ladder.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        Player.IsClimbing = true;
                     }
                 }
             }
