@@ -29,6 +29,7 @@ namespace Puzzled
         {
             Position = position;
             Type = type;
+            HitboxSize = HitboxSizeSet;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -56,12 +57,13 @@ namespace Puzzled
 
         public override void Update(float deltaTime)
         {
-            if (!m_OpenedForever)
-                m_Opened = false;
-            else if (m_Opened)
+            HitboxSize = HitboxSizeSet; // Set hitbox
+            if (m_Opened)
             {
                 HitboxSize = new Maths.Vector2(0, 0); // Remove hitbox
             }
+            if (!m_OpenedForever)
+                m_Opened = false;
         }
 
         public void Open()
@@ -80,7 +82,8 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
-        public Maths.Vector2 HitboxSize = new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y);
+        public Maths.Vector2 HitboxSizeSet = new Maths.Vector2(s_Size.X * 0.75f, s_Size.Y);
+        public Maths.Vector2 HitboxSize; 
         private bool m_Opened;
         private bool m_OpenedForever;
 
