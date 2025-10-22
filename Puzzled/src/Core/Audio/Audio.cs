@@ -144,6 +144,7 @@ namespace Puzzled
         public void Stop()
         {
             m_MediaPlayer.Stop();
+            m_MediaPlayer.Close();
             m_IsPlaying = false;
         }
 

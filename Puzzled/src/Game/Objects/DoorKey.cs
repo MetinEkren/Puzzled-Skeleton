@@ -64,11 +64,12 @@ namespace Puzzled
         public void Collect()
         {
             m_Collected = true;
+            HitboxSize = new Maths.Vector2(0, 0); // Remove hitbox
             Assets.KeyPickupSound.Play();
         }
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
-        public Maths.Vector2 HitboxSize { get { return s_Size; } }
+        public Maths.Vector2 HitboxSize = s_Size;
 
     }
 }

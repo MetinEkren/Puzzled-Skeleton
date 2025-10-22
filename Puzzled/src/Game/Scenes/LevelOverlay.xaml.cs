@@ -123,7 +123,7 @@ namespace Puzzled
                 }
             }
 
-            m_Level.OnEvent(e);
+            Level.OnEvent(e);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ namespace Puzzled
             // Note: +1 for final level
             Debug.Assert(((level <= Assets.LevelCount + 1) && (level != 0)), "Invalid level passed in.");
             
-            m_Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
+            Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
             m_Save.Level = level;
         }
@@ -159,8 +159,8 @@ namespace Puzzled
         
         private Save m_Save;
         private readonly uint m_SaveSlot;
-        
-        private Level m_Level;
+
+        public Level Level;
 
         public bool Paused = false;
 

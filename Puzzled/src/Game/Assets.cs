@@ -95,6 +95,8 @@ namespace Puzzled
         public static string Level7Path = ResourcesDirectory + "Resources/Levels/level-7.json";
         public const uint LevelCount = 7;
 
+        public static string SaveQuotesPath = ResourcesDirectory + "Resources/Saves/Quotes.txt";
+
         public static string LevelToPath(uint level)
         {
             switch (level)
