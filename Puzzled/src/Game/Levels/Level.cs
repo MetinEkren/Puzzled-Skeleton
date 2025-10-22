@@ -266,6 +266,31 @@ namespace Puzzled
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
 
+                    if (obj2.Value is Door door)
+                    {
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, door.HitboxPosition, door.HitboxSize);
+
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box.Position.X += result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Top (Can never happen, always a tile above a door)
+                            () => { },
+                            // Bottom (Can never happen, always a tile below a door)
+                            () => { }
+                        );
+                        hasCollided |= collision;
+
+                        if (!collision)
+                            continue;
+                    }
                     // Note: We don't need button logic here, since it's below
                 }
                 else if (obj is Button button)

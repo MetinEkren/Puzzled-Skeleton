@@ -115,11 +115,18 @@ namespace Puzzled
 
                         uint m_ID;
                         uint m_ConnectionID;
+                        uint m_BridgeSide;
                         switch(objType)
                         {
                             case "Box":
                                 m_ID = obj.GetProperty("id").GetUInt32();
                                 dynamicObjects.Add(m_ID, new Box(position));
+                                break;
+
+                            case "Bridge":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                m_BridgeSide = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Bridge(position, (BridgeSide)m_BridgeSide));
                                 break;
 
                             case "Button":

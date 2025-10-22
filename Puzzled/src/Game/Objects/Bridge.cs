@@ -12,17 +12,26 @@ using static Puzzled.Player;
 
 namespace Puzzled
 {
+    public enum BridgeSide
+    {
+        Left = 1,
+        Middle = 2,
+        Right = 3
+    }
+
     //////////////////////////////////////////////////////////////////////////////////
-    // Lava
+    // Bridge
     //////////////////////////////////////////////////////////////////////////////////
-    public class Lava : DynamicObject
+    public class Bridge : DynamicObject
     {
         //////////////////////////////////////////////////////////////////////////////////
         // Constructor
         //////////////////////////////////////////////////////////////////////////////////
-        public Lava(Maths.Vector2 position)
+        public Bridge(Maths.Vector2 position, BridgeSide side)
         {
             Position = position;
+            m_Side = side;
+            
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +39,18 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(Position, s_Size, s_Texture);
+            switch (m_Side)
+            {
+                case BridgeSide.Left:
+                    renderer.AddQuad(Position, s_Size, s_TextureLeft);
+                    break;
+                case BridgeSide.Middle:
+                    renderer.AddQuad(Position, s_Size, s_TextureMiddle);
+                    break;
+                case BridgeSide.Right:
+                    renderer.AddQuad(Position, s_Size, s_TextureRight);
+                    break;
+            } 
 
             if (debug)
             {
@@ -46,12 +66,15 @@ namespace Puzzled
         // Variables
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
+        private BridgeSide m_Side;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
-        private static readonly CroppedTexture s_Texture = new CroppedTexture(Assets.ObjectsSheet, new UV(16, 0, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureLeft = new CroppedTexture(Assets.ObjectsSheet, new UV(0, 48, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureMiddle = new CroppedTexture(Assets.ObjectsSheet, new UV(16, 48, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private static readonly CroppedTexture s_TextureRight = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 48, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
-        public Maths.Vector2 HitboxSize { get { return s_Size; } }
+        public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(s_Size.X, (Settings.SpriteSize / 2)); } }
     }
 
 }
