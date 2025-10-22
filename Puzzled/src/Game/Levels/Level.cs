@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Puzzled.Physics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-
-using Puzzled.Physics;
 
 namespace Puzzled
 {
@@ -39,8 +39,7 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             // TODO: Move a lot of this code to Physics.cs
-            
-            // Player update
+
             m_Player.Update(deltaTime);
 
             // Dynamic object update
@@ -110,7 +109,7 @@ namespace Puzzled
         {
             Logger.Info($"Loading level from: {path}");
 
-            m_Player = new Player();
+            m_Player = new Player(Settings.PlayerSpawnPosition);
 
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
@@ -131,17 +130,10 @@ namespace Puzzled
                 }
             }
 
-
             // Music
             if (Assets.WinMenuMusic.IsPlaying())
                 Assets.WinMenuMusic.Stop();
             Assets.LevelMusic.Start();
-
-
-            // Dynamic objects
-            {
-
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -286,6 +278,24 @@ namespace Puzzled
                             hasCollided = true;
                             button.Press();
                         }
+                    }
+                }
+                else if (obj is Spike spike)
+                {
+                    CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        m_Player.Position = Settings.PlayerSpawnPosition;
+                        m_Player.Velocity = new Maths.Vector2(0, 0);
+                    }
+                }
+                else if (obj is Lava lava)
+                {
+                    CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        m_Player.Position = Settings.PlayerSpawnPosition;
+                        m_Player.Velocity = new Maths.Vector2(0, 0);
                     }
                 }
             }
