@@ -2,30 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
 
 namespace Puzzled
 {
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    // Save
-    ////////////////////////////////////////////////////////////////////////////////////
-    public struct Save
-    {
-        [JsonInclude]
-        public string Name;
-        [JsonInclude]
-        public uint Level;
-
-        [JsonInclude]
-        public List<uint> Scores;
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////
     // SavesMenu
@@ -60,16 +45,29 @@ namespace Puzzled
         {
             m_Renderer = new Renderer(GameCanvas);
 
-            m_Saves[0] = Load(1);
-            Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = <NOT IMPLEMENTED> }}");
+            // Set quote
+            {
+                List<string> quotes = new List<string>(File.ReadAllLines(Assets.SaveQuotesPath));
 
-            m_Saves[1] = Load(2);
-            Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = <NOT IMPLEMENTED> }}");
+                Random rnd = new Random();
+                int i = rnd.Next(quotes.Count);
+                QuoteText.Text = quotes[i];
+            }
 
-            m_Saves[2] = Load(3);
-            Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = <NOT IMPLEMENTED> }}");
+            // Load saves
+            {
+                m_Saves[0] = Assets.LoadSave(1);
+                Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
+
+                m_Saves[1] = Assets.LoadSave(2);
+                Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = {((m_Saves[1].Scores.Count != 0) ? string.Join(", ", m_Saves[1].Scores.ToArray()) : "<NO SCORES>")} }}");
+
+                m_Saves[2] = Assets.LoadSave(3);
+                Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = {((m_Saves[2].Scores.Count != 0) ? string.Join(", ", m_Saves[2].Scores.ToArray()) : "<NO SCORES>")} }}");
+            }
 
             Loaded -= OnLoad;
+
         }
 
         public void OnUpdate(float deltaTime)
@@ -125,26 +123,16 @@ namespace Puzzled
             Assets.MainMenuMusic.Stop();
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Getters
-        ////////////////////////////////////////////////////////////////////////////////////
-        public static string GetSaveSlotPath(uint slot)
-        {
-            //string directory = Directory.GetCurrentDirectory(); // TODO: Set it to a set directory
-            string directory = Assets.ResourcesDirectory + "Resources/Saves/";
-            string saveSlotFilename = "save-" + slot + ".json";
-            return System.IO.Path.Combine(directory, saveSlotFilename);
-        }
+        void SaveSlot1StartHover(object sender, RoutedEventArgs args) { SaveButton1.Opacity = 0; SaveButton1Hover.Opacity = 1; }
+        void SaveSlot2StartHover(object sender, RoutedEventArgs args) { SaveButton2.Opacity = 0; SaveButton2Hover.Opacity = 1; }
+        void SaveSlot3StartHover(object sender, RoutedEventArgs args) { SaveButton3.Opacity = 0; SaveButton3Hover.Opacity = 1; }
+        void SaveSlot1StopHover(object sender, RoutedEventArgs args) { SaveButton1.Opacity = 1; SaveButton1Hover.Opacity = 0; }
+        void SaveSlot2StopHover(object sender, RoutedEventArgs args) { SaveButton2.Opacity = 1; SaveButton2Hover.Opacity = 0; }
+        void SaveSlot3StopHover(object sender, RoutedEventArgs args) { SaveButton3.Opacity = 1; SaveButton3Hover.Opacity = 0; }
 
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Private methods
-        ////////////////////////////////////////////////////////////////////////////////////
-        private Save Load(uint slot)
+        void BackButtonPressed(object sender, RoutedEventArgs args)
         {
-            Logger.Info($"Save file loading from: {GetSaveSlotPath(slot)}.");
-
-            string json = File.ReadAllText(GetSaveSlotPath(slot));
-            return JsonSerializer.Deserialize<Save>(json);
+            Game.Instance.ActiveScene = new MainMenu();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -8,6 +12,48 @@ using System.Windows.Shapes;
 
 namespace Puzzled
 {
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // Structs
+    //////////////////////////////////////////////////////////////////////////////////
+    public struct Save
+    {
+        [JsonInclude]
+        public string Name;
+        [JsonInclude]
+        public uint Level;
+
+        [JsonInclude]
+        public List<uint> Scores;
+    }
+
+    public class SortSaveScoreHelper : IComparer<Save>
+    {
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Constructor
+        //////////////////////////////////////////////////////////////////////////////////
+        public SortSaveScoreHelper(uint level)
+        {
+            m_Level = level;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        //////////////////////////////////////////////////////////////////////////////////
+        public int Compare(Save x, Save y)
+        {
+            if (x.Scores[(int)m_Level - 1] > y.Scores[(int)m_Level - 1]) return 1;
+            if (x.Scores[(int)m_Level - 1] < y.Scores[(int)m_Level - 1]) return -1;
+            return 0;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        //////////////////////////////////////////////////////////////////////////////////
+        private uint m_Level;
+
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
     // Assets
@@ -23,6 +69,11 @@ namespace Puzzled
 
         public static string IntroMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Intro.wav";
         public static string MainMenuMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Loop.wav";
+        public static string LevelMusicPath = ResourcesDirectory + "Resources/Music/Level.wav";
+        public static string WinMenuMusicPath = ResourcesDirectory + "Resources/Music/WinMenu.wav";
+
+        public static string JumpSoundPath = ResourcesDirectory + "Resources/SFX/Jump.wav";
+        public static string KeyPickupSoundPath = ResourcesDirectory + "Resources/SFX/Key_Pickup.wav";
 
         public static string MainMenuLogoPath = ResourcesDirectory + "Resources/Textures/Main-Logo.png";
 
@@ -31,8 +82,9 @@ namespace Puzzled
         public static string PainSheetPath = ResourcesDirectory + "Resources/Sprites/pain.png";
         public static string PushSheetPath = ResourcesDirectory + "Resources/Sprites/push.png";
         public static string RunSheetPath = ResourcesDirectory + "Resources/Sprites/run.png";
-
+        public static string ObjectsSheetPath = ResourcesDirectory + "Resources/Sprites/objects.png";
         public static string TileSheetPath = ResourcesDirectory + "Resources/Sprites/tiles.png";
+        public static string DoorKeySheetPath = ResourcesDirectory + "Resources/Sprites/doorkey.png";
 
         public static string Level1Path = ResourcesDirectory + "Resources/Levels/level-1.json";
         public static string Level2Path = ResourcesDirectory + "Resources/Levels/level-2.json";
@@ -42,6 +94,8 @@ namespace Puzzled
         public static string Level6Path = ResourcesDirectory + "Resources/Levels/level-6.json";
         public static string Level7Path = ResourcesDirectory + "Resources/Levels/level-7.json";
         public const uint LevelCount = 7;
+
+        public static string SaveQuotesPath = ResourcesDirectory + "Resources/Saves/Quotes.txt";
 
         public static string LevelToPath(uint level)
         {
@@ -65,8 +119,13 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume); // Note: This is so it plays softer on Jorben's PC
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume); // Note: This is so it plays softer on Jorben's PC
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume);
+        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MasterVolume);
+        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, Settings.MasterVolume);
+
+        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, Settings.MasterVolume);
+        public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, Settings.MasterVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
@@ -80,8 +139,28 @@ namespace Puzzled
         public static Texture PainSheet = new Texture(PainSheetPath);
         public static Texture PushSheet = new Texture(PushSheetPath);
         public static Texture RunSheet = new Texture(RunSheetPath);
+        public static Texture ObjectsSheet = new Texture(ObjectsSheetPath);
+        public static Texture DoorKeySheet = new Texture(DoorKeySheetPath);
 
         public static Texture TileSheet = new Texture(TileSheetPath);
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Saves
+        ////////////////////////////////////////////////////////////////////////////////////
+        public static string GetSaveSlotPath(uint slot)
+        {
+            string directory = Assets.ResourcesDirectory + "Resources/Saves/";
+            string saveSlotFilename = "save-" + slot + ".json";
+            return System.IO.Path.Combine(directory, saveSlotFilename);
+        }
+
+        public static Save LoadSave(uint slot)
+        {
+            Logger.Info($"Save file loading from: {GetSaveSlotPath(slot)}.");
+
+            string json = File.ReadAllText(GetSaveSlotPath(slot));
+            return JsonSerializer.Deserialize<Save>(json);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Tiles

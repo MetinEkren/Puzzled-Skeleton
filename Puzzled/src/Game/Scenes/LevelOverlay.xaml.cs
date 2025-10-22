@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Text.Json;
 
 namespace Puzzled
@@ -23,10 +24,18 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+        
         public LevelOverlay(Save save, uint slot)
         {
             m_Save = save;
             m_SaveSlot = slot;
+
+            m_CustomStopWatch = new CustomStopWatch();
+            // Connect stopwatch updates to the overlay
+            m_CustomStopWatch.TimeUpdated = UpdateStopwatchDisplay;
+            // Start the stopwatch
+            m_CustomStopWatch.Start();
+
 
             InitializeComponent();
             Loaded += OnLoad;
@@ -50,7 +59,13 @@ namespace Puzzled
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
-            m_Level.OnUpdate(deltaTime);
+            if (Paused) return;
+            Level.OnUpdate(deltaTime);
+        }
+
+        public void UpdateStopwatchDisplay(string time)
+        {
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
         }
 
         public void OnRender()
@@ -58,7 +73,11 @@ namespace Puzzled
             if (!IsLoaded) return;
 
             m_Renderer.Begin();
-            m_Level.OnRender();
+            Level.OnRender();
+
+            if (Paused)
+                m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+            
             m_Renderer.End();
         }
 
@@ -75,7 +94,18 @@ namespace Puzzled
             {
                 if (kpe.KeyCode == Key.Escape)
                 {
-                    Game.Instance.ActiveScene = new PauseMenu(this);
+                    if (Paused == false) 
+                    {
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CustomStopWatch);
+                        Paused = true;
+                        m_CustomStopWatch.Pauze();
+                    }
+                    else if (Paused == true)
+                    {
+                        PauseOverlay.Content = null; // This removes the overlay
+                        Paused = false;
+                        m_CustomStopWatch.Start();
+                    }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
                 {
@@ -93,7 +123,7 @@ namespace Puzzled
                 }
             }
 
-            m_Level.OnEvent(e);
+            Level.OnEvent(e);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +134,7 @@ namespace Puzzled
             // Note: +1 for final level
             Debug.Assert(((level <= Assets.LevelCount + 1) && (level != 0)), "Invalid level passed in.");
             
-            m_Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
+            Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
             m_Save.Level = level;
         }
@@ -116,7 +146,7 @@ namespace Puzzled
         {
             Logger.Info($"Saving to slot {m_SaveSlot}.");
 
-            string path = SavesMenu.GetSaveSlotPath(m_SaveSlot);
+            string path = Assets.GetSaveSlotPath(m_SaveSlot);
             string text = JsonSerializer.Serialize<Save>(m_Save);
 
             File.WriteAllText(path, text);
@@ -130,9 +160,12 @@ namespace Puzzled
         private Save m_Save;
         private readonly uint m_SaveSlot;
 
-        private Level m_Level;
+        public Level Level;
 
-        public Save ActiveSave { get { return m_Save; } }
+        public bool Paused = false;
+
+        private Puzzled.CustomStopWatch m_CustomStopWatch;
+        public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
 
