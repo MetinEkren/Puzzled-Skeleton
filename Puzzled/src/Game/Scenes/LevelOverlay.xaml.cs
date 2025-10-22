@@ -53,6 +53,9 @@ namespace Puzzled
             m_Renderer = new Renderer(GameCanvas);
 
             LoadLevel(m_Save.Level);
+
+            m_VerticalCamera = new VerticalCamera(Level.Player);
+
             Loaded -= OnLoad;
         }
 
@@ -60,7 +63,9 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
             if (Paused) return;
+
             Level.OnUpdate(deltaTime);
+            m_VerticalCamera.Update();
         }
 
         public void UpdateStopwatchDisplay(string time)
@@ -78,7 +83,7 @@ namespace Puzzled
             if (Paused)
                 m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
             
-            m_Renderer.End();
+            m_Renderer.End(m_VerticalCamera);
         }
 
         public void OnUIRender()
@@ -156,6 +161,7 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
+        private VerticalCamera m_VerticalCamera;
         
         private Save m_Save;
         private readonly uint m_SaveSlot;
