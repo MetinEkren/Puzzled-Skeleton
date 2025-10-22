@@ -1,8 +1,15 @@
-﻿using System;
+﻿using Puzzled.Physics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Globalization;
+using System.Security.Policy;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Shapes;
 
 namespace Puzzled
 {
@@ -10,12 +17,21 @@ namespace Puzzled
     //////////////////////////////////////////////////////////////////////////////////
     // HorizontalCamera
     //////////////////////////////////////////////////////////////////////////////////
-    public class HorizontalCamera
+    public class HorizontalCamera : Camera
     {
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public HorizontalCamera()
+        public HorizontalCamera(Player player)
+            : base(0.0f, 0.0f)
+        {
+            m_Player = player;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        public void Update()
         {
 
         }
@@ -23,6 +39,6 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-
+        private Player m_Player;
     }
 }

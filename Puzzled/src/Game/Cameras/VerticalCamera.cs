@@ -1,8 +1,15 @@
-﻿using System;
+﻿using Puzzled.Physics;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Globalization;
+using System.Security.Policy;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Shapes;
 
 namespace Puzzled
 {
@@ -10,19 +17,36 @@ namespace Puzzled
     //////////////////////////////////////////////////////////////////////////////////
     // VerticalCamera
     //////////////////////////////////////////////////////////////////////////////////
-    public class VerticalCamera
+    public class VerticalCamera : Camera
     {
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor
         ////////////////////////////////////////////////////////////////////////////////////
-        public VerticalCamera()
+        public VerticalCamera(Player player)
+            : base(0.0f, 0.0f)
         {
-           
+            m_Player = player;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        public void Update()
+        {
+            if (m_Player.Position.Y < (7 * 48))
+            {
+                return;
+            }
+            else
+            {
+                YOffset = m_Player.Position.Y - (7 * 48);
+            }
+                
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-       
+        private Player m_Player;
     }
 }

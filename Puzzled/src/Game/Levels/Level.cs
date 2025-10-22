@@ -40,7 +40,7 @@ namespace Puzzled
         {
             // TODO: Move a lot of this code to Physics.cs
 
-            m_Player.Update(deltaTime);
+            Player.Update(deltaTime);
 
             // Dynamic object update
             foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
@@ -67,7 +67,7 @@ namespace Puzzled
             HandleDynamicCollisionPlayer();
 
             // Static
-            HandleStaticCollisions(ref m_Player.Position, ref m_Player.Velocity, ref m_Player.CanJump, m_Player.HitboxPosition, m_Player.HitboxSize);
+            HandleStaticCollisions(ref Player.Position, ref Player.Velocity, ref Player.CanJump, Player.HitboxPosition, Player.HitboxSize);
         }
 
         public void OnRender()
@@ -78,7 +78,7 @@ namespace Puzzled
             foreach (KeyValuePair<uint, DynamicObject> obj in DynamicObjects)
                 obj.Value.RenderTo(m_Renderer, m_Debug);
 
-            m_Player.RenderTo(m_Renderer, m_Debug);
+            Player.RenderTo(m_Renderer, m_Debug);
         }
 
         public void OnEvent(Event e)
@@ -109,7 +109,7 @@ namespace Puzzled
         {
             Logger.Info($"Loading level from: {path}");
 
-            m_Player = new Player(Settings.PlayerSpawnPosition);
+            Player = new Player(Settings.PlayerSpawnPosition);
 
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
@@ -282,20 +282,20 @@ namespace Puzzled
                 }
                 else if (obj is Spike spike)
                 {
-                    CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
-                        m_Player.Position = Settings.PlayerSpawnPosition;
-                        m_Player.Velocity = new Maths.Vector2(0, 0);
+                        Player.Position = Settings.PlayerSpawnPosition;
+                        Player.Velocity = new Maths.Vector2(0, 0);
                     }
                 }
                 else if (obj is Lava lava)
                 {
-                    CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
-                        m_Player.Position = Settings.PlayerSpawnPosition;
-                        m_Player.Velocity = new Maths.Vector2(0, 0);
+                        Player.Position = Settings.PlayerSpawnPosition;
+                        Player.Velocity = new Maths.Vector2(0, 0);
                     }
                 }
             }
@@ -312,7 +312,7 @@ namespace Puzzled
             {
                 if (obj.Value is Box box)
                 {
-                    CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
 
                     bool collision = HandleCollision(result,
                         // Left
@@ -328,10 +328,10 @@ namespace Puzzled
                         // Top
                         () =>
                         {
-                            if (m_Player.Velocity.Y <= 0.0f)
+                            if (Player.Velocity.Y <= 0.0f)
                             {
-                                m_Player.Velocity.Y = 0.0f;
-                                m_Player.CanJump = true;
+                                Player.Velocity.Y = 0.0f;
+                                Player.CanJump = true;
                             }
                         },
                         // Bottom
@@ -339,12 +339,12 @@ namespace Puzzled
                         {
                             box.Position.Y += result.Overlap;
 
-                            if (m_Player.Velocity.Y > 0.0f)
+                            if (Player.Velocity.Y > 0.0f)
                             {
-                                box.Velocity.X = (m_Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
-                                box.Velocity.Y = (m_Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
-                                //box.Velocity.X = m_Player.Velocity.X;
-                                //box.Velocity.Y = m_Player.Velocity.Y;
+                                box.Velocity.X = (Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
+                                box.Velocity.Y = (Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                                //box.Velocity.X = Player.Velocity.X;
+                                //box.Velocity.Y = Player.Velocity.Y;
                             }
                             else
                             {
@@ -368,34 +368,34 @@ namespace Puzzled
 
                     // After colliding with player, resolving and then colliding with static blocks and resolving
                     // We need to check if we're now colliding with the player again, if so move the player
-                    result = Collision.AABB(box.HitboxPosition, box.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    result = Collision.AABB(box.HitboxPosition, box.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     collision = HandleCollision(result,
                         // Left
                         () =>
                         {
-                            m_Player.Position.X -= result.Overlap;
+                            Player.Position.X -= result.Overlap;
                         },
                         // Right
                         () =>
                         {
-                            m_Player.Position.X += result.Overlap;
+                            Player.Position.X += result.Overlap;
                         },
                         // Top
                         () =>
                         {
-                            m_Player.Position.Y += result.Overlap;
+                            Player.Position.Y += result.Overlap;
                         },
                         // Bottom
                         () =>
                         {
-                            m_Player.Position.Y -= result.Overlap;
+                            Player.Position.Y -= result.Overlap;
                         }
                     );
                     hasCollided |= collision;
                 }
                 else if (obj.Value is Button button)
                 {
-                    CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
                         button.Press();
@@ -404,45 +404,45 @@ namespace Puzzled
                 }
                 else if (obj.Value is DoorKey doorkey)
                 {
-                    CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(doorkey.HitboxPosition, doorkey.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     if (result.Side != CollisionSide.None)
                     {
                         doorkey.Collect();
-                        m_Player.HasKey = true;
+                        Player.HasKey = true;
                     }
                 }
                 else if (obj.Value is Door door)
                 {
 
-                    CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, m_Player.HitboxPosition, m_Player.HitboxSize);
+                    CollisionResult result = Collision.AABB(door.HitboxPosition, door.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
                     bool collision = HandleCollision(result,
                         // Left
                         () =>
                         {
-                            m_Player.Position.X -= result.Overlap;
+                            Player.Position.X -= result.Overlap;
                         },
                         // Right
                         () =>
                         {
-                            m_Player.Position.X += result.Overlap;
+                            Player.Position.X += result.Overlap;
                         },
                         // Top
                         () =>
                         {
-                            m_Player.Position.Y += result.Overlap;
+                            Player.Position.Y += result.Overlap;
                         },
                         // Bottom
                         () =>
                         {
-                            m_Player.Position.Y -= result.Overlap;
+                            Player.Position.Y -= result.Overlap;
                         }
                     );
                     hasCollided |= collision;
 
-                    if (collision && door.Type == DoorType.KeyDoor && m_Player.HasKey)
+                    if (collision && door.Type == DoorType.KeyDoor && Player.HasKey)
                     {
                         door.OpenForever();
-                        m_Player.HasKey = false;
+                        Player.HasKey = false;
                     }
                 }
             }
@@ -538,7 +538,7 @@ namespace Puzzled
         private Renderer m_Renderer;
         private bool m_Debug = false;
 
-        private Player m_Player;
+        public Player Player;
 
         private List<Tile> m_Tiles; // Note: Contiguous list of all tiles, not used at the moment, but for level loading is useful
         private Dictionary<(uint x, uint y), Chunk> m_Chunks = new Dictionary<(uint x, uint y), Chunk>();
