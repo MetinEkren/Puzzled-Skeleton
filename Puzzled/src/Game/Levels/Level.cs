@@ -83,12 +83,6 @@ namespace Puzzled
 
         public void OnEvent(Event e)
         {
-            if (e is MouseButtonPressedEvent mbpe)
-            {
-                //for (int i = 0; i < 10000; i++)
-                DynamicObjects.Add(100000, (new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2))))));
-            }
-
             if (e is KeyPressedEvent kpe)
             {
                 // Note: For testing a debug
@@ -104,7 +98,7 @@ namespace Puzzled
         {
             Logger.Info($"Loading level from: {path}");
 
-            Player = new Player(Settings.PlayerSpawnPosition);
+            Player = new Player();
 
             uint tilesX, tilesY;
             m_Tiles = new List<Tile>();
