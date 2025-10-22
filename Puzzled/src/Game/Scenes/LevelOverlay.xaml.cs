@@ -60,7 +60,7 @@ namespace Puzzled
         {
             if (!IsLoaded) return;
             if (Paused) return;
-            m_Level.OnUpdate(deltaTime);
+            Level.OnUpdate(deltaTime);
         }
 
         public void UpdateStopwatchDisplay(string time)
@@ -73,7 +73,7 @@ namespace Puzzled
             if (!IsLoaded) return;
 
             m_Renderer.Begin();
-            m_Level.OnRender();
+            Level.OnRender();
 
             if (Paused)
                 m_Renderer.AddQuad(new Maths.Vector2(0, 0), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
