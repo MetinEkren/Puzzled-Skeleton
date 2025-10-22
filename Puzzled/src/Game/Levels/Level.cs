@@ -94,11 +94,6 @@ namespace Puzzled
                 // Note: For testing a debug
                 if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
-
-                if (kpe.KeyCode == Key.R)
-                {
-                    DynamicObjects.Clear();
-                }
             }
         }
 
