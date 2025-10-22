@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,6 +15,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
+
+
         public OptionsMenu()
         {
             InitializeComponent();
@@ -26,6 +29,7 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+
         ~OptionsMenu()
         {
             // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
@@ -37,11 +41,17 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             Loaded -= OnLoad;
+
+            MusicSlider.Value = Settings.MusicVolume;
+            SFXSlider.Value = Settings.SFXVolume;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+
+            MusicValueText.Text = Settings.MusicVolume.ToString() + "%";
+            SFXValueText.Text =  Settings.SFXVolume.ToString() + "%";
         }
 
         public void OnRender()
@@ -68,10 +78,30 @@ namespace Puzzled
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
+        /// Callbacks
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        void BackButtonPressed(object sender, RoutedEventArgs args)
+        {
+            Game.Instance.ActiveScene = m_PreviousScene;
+        }
+
+        private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Settings.MusicVolume = (uint)MusicSlider.Value;
+        }
+
+        private void SFXSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Settings.SFXVolume = (uint)SFXSlider.Value;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private IScene m_PreviousScene;
 
-    }
+
+    }        
 
 }

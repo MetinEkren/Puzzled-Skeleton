@@ -17,16 +17,30 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Audio
         ////////////////////////////////////////////////////////////////////////////////////
-        private static uint s_MasterVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 1u); // % // TODO: This is for Jorben's PC, ignore
-        public static uint MasterVolume
+        private static uint s_SFXVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 1u); // % // TODO: This is for Jorben's PC, ignore
+        private static uint s_MusicVolume = ((Environment.GetEnvironmentVariable("VULKAN_SDK") == null) ? 50u : 1u); // % // TODO: This is for Jorben's PC, ignore
+        public static uint SFXVolume
         {
-            get { return s_MasterVolume; }
+            get { return s_SFXVolume; }
             set
             {
                 // Note: Currently all audio files must manually be added... // FUTURE TODO: ...
-                s_MasterVolume = value;
+                s_SFXVolume = value;
+                Assets.JumpSound.Volume = value;
+                Assets.KeyPickupSound.Volume = value;
+            }
+        }
+        public static uint MusicVolume
+        {
+            get { return s_MusicVolume; }
+            set
+            {
+                // Note: Currently all audio files must manually be added... // FUTURE TODO: ...
+                s_MusicVolume = value;
                 Assets.IntroMusic.Volume = value;
                 Assets.MainMenuMusic.Volume = value;
+                Assets.LevelMusic.Volume = value;
+                Assets.WinMenuMusic.Volume = value;
             }
         }
 
