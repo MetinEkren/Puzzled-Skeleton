@@ -119,13 +119,13 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MasterVolume);
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MasterVolume);
-        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MasterVolume);
-        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, Settings.MasterVolume);
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MusicVolume);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MusicVolume);
+        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MusicVolume);
+        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, Settings.MusicVolume);
 
-        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, Settings.MasterVolume);
-        public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, Settings.MasterVolume);
+        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, Settings.SFXVolume);
+        public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, Settings.SFXVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
