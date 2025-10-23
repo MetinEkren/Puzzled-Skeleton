@@ -31,13 +31,6 @@ namespace Puzzled
             m_Save = save;
             m_SaveSlot = slot;
 
-            m_StopWatch = new CustomStopWatch();
-
-            // Connect stopwatch updates to the overlay & start
-            m_StopWatch.TimeUpdated = UpdateStopwatchDisplay;
-            m_StopWatch.Start();
-
-
             InitializeComponent();
             Loaded += OnLoad;
         }
@@ -56,6 +49,12 @@ namespace Puzzled
             LoadLevel(m_Save.Level);
 
             Camera = new VerticalCamera(Level.Player);
+
+            m_StopWatch = new CustomStopWatch();
+
+            // Connect stopwatch updates to the overlay & start
+            m_StopWatch.TimeUpdated = UpdateStopwatchDisplay;
+            m_StopWatch.Start();
 
             Loaded -= OnLoad;
         }
