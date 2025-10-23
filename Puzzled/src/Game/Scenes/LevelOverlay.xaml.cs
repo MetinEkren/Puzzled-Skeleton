@@ -68,11 +68,6 @@ namespace Puzzled
             Camera.Update();
         }
 
-        public void UpdateStopwatchDisplay(string time)
-        {
-            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
-        }
-
         public void OnRender()
         {
             if (!IsLoaded) return;
@@ -156,6 +151,11 @@ namespace Puzzled
             string text = JsonSerializer.Serialize<Save>(m_Save);
 
             File.WriteAllText(path, text);
+        }
+
+        private void UpdateStopwatchDisplay(string time)
+        {
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
