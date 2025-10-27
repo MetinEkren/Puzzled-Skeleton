@@ -256,9 +256,19 @@ namespace Puzzled
                                 box.Position.Y -= result.Overlap;
                             }
                         );
+
                         hasCollided |= collision;
 
                         // Note: We currently don't do anything if we collide again, which is fine I think
+                    }
+                    if (obj2.Value is Lava lava)
+                    {
+                        CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, box.HitboxPosition, box.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            box.Destroy();
+                            hasCollided = true;
+                        }
                     }
                     if (obj2.Value is Door door)
                     {
@@ -298,15 +308,7 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
-                    else if (obj2.Value is Lava lava)
-                    {
-                        CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, box.HitboxPosition, box.HitboxSize);
-                        if (result.Side != CollisionSide.None)
-                        {
-                            box.Destroy();
-                            hasCollided = true;
-                        }
-                    }
+                    
                 }
                 else if (obj is Bridge bridge)
                 {
