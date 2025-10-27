@@ -123,6 +123,12 @@ namespace Puzzled
                                 dynamicObjects.Add(ID, new Box(position));
                                 break;
 
+                            case "Bridge":
+                                m_ID = obj.GetProperty("id").GetUInt32();
+                                m_BridgeSide = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(m_ID, new Bridge(position, (BridgeSide)m_BridgeSide));
+                                break;
+
                             case "Button":
                                 ID = obj.GetProperty("id").GetUInt32();
                                 connectionID = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
