@@ -43,8 +43,8 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public int Compare(Save x, Save y)
         {
-            if (x.Scores[(int)m_Level - 1] > y.Scores[(int)m_Level - 1]) return 1;
-            if (x.Scores[(int)m_Level - 1] < y.Scores[(int)m_Level - 1]) return -1;
+            if (x.Scores[(int)m_Level] > y.Scores[(int)m_Level]) return 1;
+            if (x.Scores[(int)m_Level] < y.Scores[(int)m_Level]) return -1;
             return 0;
         }
 

@@ -88,6 +88,13 @@ namespace Puzzled
                 // Note: For testing a debug
                 if (kpe.KeyCode == Key.H)
                     m_Debug = !m_Debug;
+                if (kpe.KeyCode == Key.R)
+                    DynamicObjects.Clear();
+            }
+
+            if (e is MouseButtonPressedEvent)
+            {
+                DynamicObjects.Add((uint)new Random().Next(), (new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2))))));
             }
         }
 
@@ -211,7 +218,6 @@ namespace Puzzled
                             {
                                 box2.Position.Y -= result.Overlap;
                                 box2.Velocity.Y = 0.0f;
-                                box.Velocity.Y = 0.0f;
                             }
                         );
                         hasCollided |= collision;
@@ -254,10 +260,38 @@ namespace Puzzled
 
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
-                    // Collision between box and button
-                    else if (obj2.Value is Button button)
+                    if (obj2.Value is Door door)
                     {
-                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box.HitboxPosition, box.HitboxSize);
+                        CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, door.HitboxPosition, door.HitboxSize);
+
+                        bool collision = HandleCollision(result,
+                            // Left
+                            () =>
+                            {
+                                box.Position.X += result.Overlap;
+                            },
+                            // Right
+                            () =>
+                            {
+                                box.Position.X -= result.Overlap;
+                            },
+                            // Top (Can never happen, always a tile above a door)
+                            () => { },
+                            // Bottom (Can never happen, always a tile below a door)
+                            () => { }
+                        );
+                        hasCollided |= collision;
+
+                        if (!collision)
+                            continue;
+                    }
+                    // Note: We don't need button logic here, since it's below
+                }
+                else if (obj is Button button)
+                {
+                    if (obj2.Value is Box box2)
+                    {
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         if (result.Side != CollisionSide.None)
                         {
                             button.Press();
@@ -272,6 +306,32 @@ namespace Puzzled
                             box.Destroy();
                             hasCollided = true;
                         }
+                    }
+                }
+                else if (obj is Bridge bridge)
+                {
+                    if (obj2.Value is Box box2)
+                    {
+                        CollisionResult result = Collision.AABB(box2.HitboxPosition, box2.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
+                        bool collision = HandleCollision(result,
+                        // Left
+                        () => { },
+                        // Right
+                        () => { },
+                        // Top
+                        () =>
+                        {
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            if (box2.Velocity.Y < 0.0f)
+                            {
+                                box2.Position.Y += result.Overlap;
+                                box2.Velocity.Y = 0.0f;
+                            }
+                        }
+                        );
                     }
                 }
             }
@@ -423,6 +483,32 @@ namespace Puzzled
                         door.OpenForever();
                         Player.HasKey = false;
                     }
+                }
+                else if (obj.Value is Bridge bridge)
+                {
+
+                    CollisionResult result = Collision.AABB(Player.HitboxPosition, Player.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
+                    bool collision = HandleCollision(result,
+                        // Left
+                        () => { },
+                        // Right
+                        () => { },
+                        // Top
+                        () =>
+                        {
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            if (Player.Velocity.Y < 0.0f)
+                            {
+                                Player.Position.Y += result.Overlap;
+                                Player.Velocity.Y = 0.0f;
+                                Player.CanJump = true;
+                            }
+                        }
+                    );
+                    hasCollided |= collision;
                 }
                 else if (obj.Value is Spike spike)
                 {

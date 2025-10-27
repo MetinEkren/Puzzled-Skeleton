@@ -53,6 +53,7 @@ namespace Puzzled
             m_CustomStopWatch.Reset();
 
             m_Overlay.LoadLevel(m_Overlay.ActiveSave.Level);
+            m_Overlay.Camera.Player = m_Overlay.Level.Player;
 
             m_CustomStopWatch.Start();
         }
@@ -64,6 +65,7 @@ namespace Puzzled
 
             m_CustomStopWatch.Pauze();
             m_CustomStopWatch.Reset();
+            Assets.LevelMusic.Stop();
 
             Game.Instance.ActiveScene = new MainMenu();
         }
