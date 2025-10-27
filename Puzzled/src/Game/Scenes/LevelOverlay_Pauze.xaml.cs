@@ -65,6 +65,7 @@ namespace Puzzled
 
             m_CustomStopWatch.Pauze();
             m_CustomStopWatch.Reset();
+            Assets.LevelMusic.Stop();
 
             Game.Instance.ActiveScene = new MainMenu();
         }
