@@ -134,10 +134,15 @@ namespace Puzzled
             }
             else // Win a level
             {
+                // Save score
                 m_StopWatch.Pauze();
-                // TODO: Save score
+                m_Save.Scores[(int)m_Save.Level - 1] = Convert.ToUInt32(m_StopWatch.Elapsed());
+                m_StopWatch.Reset();
 
+                // Advance level
                 ++m_Save.Level;
+
+                // Save to disk
                 Save();
 
                 Game.Instance.ActiveScene = new WinMenu(this);
