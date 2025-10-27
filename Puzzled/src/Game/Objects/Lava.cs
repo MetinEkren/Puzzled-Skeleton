@@ -51,7 +51,7 @@ namespace Puzzled
         private static readonly CroppedTexture s_Texture = new CroppedTexture(Assets.ObjectsSheet, new UV(16, 0, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
 
         public Maths.Vector2 HitboxPosition { get { return Position; } }
-        public Maths.Vector2 HitboxSize { get { return s_Size; } }
+        public Maths.Vector2 HitboxSize { get { return new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize - 6); } }
     }
 
 }
