@@ -17,42 +17,30 @@ namespace Puzzled
     //////////////////////////////////////////////////////////////////////////////////
     // VerticalCamera
     //////////////////////////////////////////////////////////////////////////////////
-    public class VerticalCamera : Camera
+    public class VerticalCamera : LevelCamera
     {
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor
         ////////////////////////////////////////////////////////////////////////////////////
         public VerticalCamera(Player player)
-            : base(0.0f, 0.0f)
+            : base(player)
         {
-            m_Player = player;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public void Update()
+        public override void Update()
         {
-            if (m_Player.Position.Y < (7 * 48))
+            if (Player.Position.Y < (7 * 48))
             {
                 return;
             }
             else
             {
-                YOffset = m_Player.Position.Y - (7 * 48);
+                YOffset = Player.Position.Y - (7 * 48);
             }
-                
         }
 
-        public void Reset()
-        {
-            XOffset = 0.0f;
-            YOffset = 0.0f;
-        }
-
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Variables
-        ////////////////////////////////////////////////////////////////////////////////////
-        private Player m_Player;
     }
 }
