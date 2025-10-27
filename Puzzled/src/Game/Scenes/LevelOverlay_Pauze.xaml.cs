@@ -52,15 +52,9 @@ namespace Puzzled
             m_CustomStopWatch.Pauze();// stops time
             m_CustomStopWatch.Reset();// resets time
 
-<<<<<<< HEAD
             m_Overlay.LoadLevel(m_Overlay.ActiveSave.Level);// resets the same level
             m_Overlay.Camera.Player = m_Overlay.Level.Player;// camera changes to new player
-=======
-            m_Overlay.LoadLevel(m_Overlay.ActiveSave.Level);
-
-            m_Overlay.Camera.Player = m_Overlay.Level.Player;
             m_Overlay.Camera.Reset();
->>>>>>> b3322f46e1ecdf2396805b48565efb2c3544c0c9
 
             m_CustomStopWatch.Start();// start time
         }
