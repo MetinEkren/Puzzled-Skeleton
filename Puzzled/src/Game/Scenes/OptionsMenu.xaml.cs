@@ -42,16 +42,16 @@ namespace Puzzled
         {
             Loaded -= OnLoad;
 
-            MusicSlider.Value = Settings.MusicVolume;
-            SFXSlider.Value = Settings.SFXVolume;
+            MusicSlider.Value = UserSettings.MusicVolume;
+            SFXSlider.Value = UserSettings.SFXVolume;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
 
-            MusicValueText.Text = Settings.MusicVolume.ToString() + "%";
-            SFXValueText.Text =  Settings.SFXVolume.ToString() + "%";
+            MusicValueText.Text = UserSettings.MusicVolume.ToString() + "%";
+            SFXValueText.Text = UserSettings.SFXVolume.ToString() + "%";
         }
 
         public void OnRender()
@@ -73,27 +73,32 @@ namespace Puzzled
                 if (kpe.KeyCode == Key.Escape)
                 {
                     Game.Instance.ActiveScene = m_PreviousScene;
+                    UserSettings.Save();
                 }
+            }
+            if (e is WindowCloseEvent)
+            {
+                UserSettings.Save();
             }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
-        /// Callbacks
+        // Callbacks
         ////////////////////////////////////////////////////////////////////////////////////
-
         void BackButtonPressed(object sender, RoutedEventArgs args)
         {
             Game.Instance.ActiveScene = m_PreviousScene;
+            UserSettings.Save();
         }
 
         private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Settings.MusicVolume = (uint)MusicSlider.Value;
+            UserSettings.MusicVolume = (uint)MusicSlider.Value;
         }
 
         private void SFXSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Settings.SFXVolume = (uint)SFXSlider.Value;
+            UserSettings.SFXVolume = (uint)SFXSlider.Value;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

@@ -1,11 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
-using System.Text.Json;
 
 namespace Puzzled
 {
@@ -30,13 +31,6 @@ namespace Puzzled
             m_Save = save;
             m_SaveSlot = slot;
 
-            m_CustomStopWatch = new CustomStopWatch();
-            // Connect stopwatch updates to the overlay
-            m_CustomStopWatch.TimeUpdated = UpdateStopwatchDisplay;
-            // Start the stopwatch
-            m_CustomStopWatch.Start();
-
-
             InitializeComponent();
             Loaded += OnLoad;
         }
@@ -54,7 +48,13 @@ namespace Puzzled
 
             LoadLevel(m_Save.Level);
 
-            m_VerticalCamera = new VerticalCamera(Level.Player);
+            Camera = new VerticalCamera(Level.Player);
+
+            m_StopWatch = new CustomStopWatch();
+
+            // Connect stopwatch updates to the overlay & start
+            m_StopWatch.TimeUpdated = UpdateStopwatchDisplay;
+            m_StopWatch.Start();
 
             Loaded -= OnLoad;
         }
@@ -65,12 +65,7 @@ namespace Puzzled
             if (Paused) return;
 
             Level.OnUpdate(deltaTime);
-            m_VerticalCamera.Update();
-        }
-
-        public void UpdateStopwatchDisplay(string time)
-        {
-            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
+            Camera.Update();
         }
 
         public void OnRender()
@@ -80,10 +75,11 @@ namespace Puzzled
             m_Renderer.Begin();
             Level.OnRender();
 
-            if (Paused)
-                m_Renderer.AddQuad(new Maths.Vector2(-m_VerticalCamera.XOffset, -m_VerticalCamera.YOffset), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
+            // Note: Darkens de the background on pause
+            if (Paused) // Note: We use the camera offset to make sure it's fully in screen
+                m_Renderer.AddQuad(new Maths.Vector2(-Camera.XOffset, -Camera.YOffset), new Maths.Vector2(Game.Instance.Window.Width, Game.Instance.Window.Height), Assets.BlackTexture, 40);
             
-            m_Renderer.End(m_VerticalCamera);
+            m_Renderer.End(Camera);
         }
 
         public void OnUIRender()
@@ -101,15 +97,15 @@ namespace Puzzled
                 {
                     if (Paused == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_CustomStopWatch);
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_StopWatch);
                         Paused = true;
-                        m_CustomStopWatch.Pauze();
+                        m_StopWatch.Pauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
-                        m_CustomStopWatch.Start();
+                        m_StopWatch.Start();
                     }
                 }
                 if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
@@ -157,20 +153,25 @@ namespace Puzzled
             File.WriteAllText(path, text);
         }
 
+        private void UpdateStopwatchDisplay(string time)
+        {
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private Renderer m_Renderer;
-        private VerticalCamera m_VerticalCamera;
         
         private Save m_Save;
         private readonly uint m_SaveSlot;
 
         public Level Level;
+        public LevelCamera Camera;
 
         public bool Paused = false;
 
-        private Puzzled.CustomStopWatch m_CustomStopWatch;
+        private Puzzled.CustomStopWatch m_StopWatch;
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }

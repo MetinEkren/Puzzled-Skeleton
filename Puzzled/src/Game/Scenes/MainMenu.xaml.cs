@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -30,6 +31,15 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
+            UserSettings.Load();
+
+            // TODO: Remove on release // Note: This is so the volume isn't too load on Jorben's PC
+            if ((Environment.GetEnvironmentVariable("VULKAN_SDK") != null))
+            {
+                UserSettings.SFXVolume = 1;
+                UserSettings.MusicVolume = 1;
+            }
+
             if (s_BootUp)
             {
                 Assets.IntroMusic.Play();

@@ -43,8 +43,8 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public int Compare(Save x, Save y)
         {
-            if (x.Scores[(int)m_Level - 1] > y.Scores[(int)m_Level - 1]) return 1;
-            if (x.Scores[(int)m_Level - 1] < y.Scores[(int)m_Level - 1]) return -1;
+            if (x.Scores[(int)m_Level] > y.Scores[(int)m_Level]) return 1;
+            if (x.Scores[(int)m_Level] < y.Scores[(int)m_Level]) return -1;
             return 0;
         }
 
@@ -119,13 +119,13 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // MainMenu/Saves menu
         ////////////////////////////////////////////////////////////////////////////////////
-        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, Settings.MusicVolume);
-        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, Settings.MusicVolume);
-        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, Settings.MusicVolume);
-        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, Settings.MusicVolume);
+        public static FireableAudio IntroMusic = new FireableAudio(IntroMusicPath, UserSettings.MusicVolume);
+        public static LoopAudio MainMenuMusic = new LoopAudio(MainMenuMusicPath, UserSettings.MusicVolume);
+        public static LoopAudio LevelMusic = new LoopAudio(LevelMusicPath, UserSettings.MusicVolume);
+        public static LoopAudio WinMenuMusic = new LoopAudio(WinMenuMusicPath, UserSettings.MusicVolume);
 
-        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, Settings.SFXVolume);
-        public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, Settings.SFXVolume);
+        public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, UserSettings.SFXVolume);
+        public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, UserSettings.SFXVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();

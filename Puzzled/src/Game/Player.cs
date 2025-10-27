@@ -30,6 +30,10 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
+        public Player()
+        {
+            Position = Settings.PlayerSpawnPosition;
+        }
         public Player(Maths.Vector2 position)
         {
             Position = position;
@@ -141,6 +145,14 @@ namespace Puzzled
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X, HitboxPosition.Y + HitboxSize.Y - (1 * Settings.Scale)), new Maths.Vector2(HitboxSize.X, 1 * Settings.Scale), Assets.WhiteTexture);
                 renderer.AddQuad(new Maths.Vector2(HitboxPosition.X + HitboxSize.X - (1 * Settings.Scale), HitboxPosition.Y), new Maths.Vector2(1 * Settings.Scale, HitboxSize.Y), Assets.WhiteTexture);
             }
+        }
+
+        // Note: Resets the player to the start position
+        public void Kill()
+        {
+            Position = Settings.PlayerSpawnPosition;
+            Velocity = new Maths.Vector2(0.0f, 0.0f);
+            ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Reset();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////

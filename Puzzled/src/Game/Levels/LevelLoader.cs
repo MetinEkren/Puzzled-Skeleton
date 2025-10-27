@@ -88,13 +88,16 @@ namespace Puzzled
 
                         outTiles.Add(new Tile(position, size, Assets.GetTexture(Assets.TileSheet, uvX, uvY), (TileType)tileId));
                         next();
-                      
-                        
                     }
                 }
 
                 // Object layer
                 {
+                    // Note: We require a tile layer, but an object layer is currently not always present
+                    // this is to prevent a crash
+                    if (!(layers.GetArrayLength() > 1))
+                        return;
+
                     JsonElement data = layers[1].GetProperty("objects");
 
                     uint x = 0, y = 0;
@@ -111,14 +114,13 @@ namespace Puzzled
                         Maths.Vector2 position = new Maths.Vector2((x * Settings.Scale), (y * Settings.Scale));
                         Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
 
-                        uint m_ID;
-                        uint m_ConnectionID;
-                        uint m_BridgeSide;
+                        uint ID;
+                        uint connectionID;
                         switch(objType)
                         {
                             case "Box":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Box(position));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Box(position));
                                 break;
 
                             case "Bridge":
@@ -128,39 +130,39 @@ namespace Puzzled
                                 break;
 
                             case "Button":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                m_ConnectionID = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Button(position, m_ConnectionID));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                connectionID = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(ID, new Button(position, connectionID));
                                 break;
 
                             case "ButtonDoor":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Door(position, DoorType.ButtonDoor));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Door(position, DoorType.ButtonDoor));
                                 break;
 
                             case "DoorKey":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new DoorKey(position));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new DoorKey(position));
                                 break;
 
                             case "KeyDoor":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Door(position, DoorType.KeyDoor));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Door(position, DoorType.KeyDoor));
                                 break;
 
                             case "Ladder":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Ladder(position));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Ladder(position));
                                 break;
 
                             case "Lava":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Lava(position));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Lava(position));
                                 break;
 
                             case "Spike":
-                                m_ID = obj.GetProperty("id").GetUInt32();
-                                dynamicObjects.Add(m_ID, new Spike(position));
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Spike(position));
                                 break;
 
                             default:

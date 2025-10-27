@@ -45,36 +45,39 @@ namespace Puzzled
 
             List<Save> saves = new List<Save>();
 
-            if (save1.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            // First - 1 is to convert get the previous level (which we just won), second -1 is to convert level to index
+            if (save1.Scores[(int)m_Level.ActiveSave.Level - 1 - 1] != 0) 
             {
                 saves.Add(save1);
             }
-            if (save2.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            if (save2.Scores[(int)m_Level.ActiveSave.Level - 1 - 1] != 0) 
             {
                 saves.Add(save2);
             }
-            if (save3.Scores[(int)m_Level.ActiveSave.Level - 1] != 0) 
+            if (save3.Scores[(int)m_Level.ActiveSave.Level - 1 - 1] != 0) 
             {
                 saves.Add(save3);
             }
 
-            saves.Sort(new SortSaveScoreHelper(m_Level.ActiveSave.Level - 1));
+            saves.Sort(new SortSaveScoreHelper(m_Level.ActiveSave.Level - 1 - 1));
 
             if (saves.Count >= 1)
             {
                 PlayerName1.Text = saves[0].Name;
-                PlayerScore1.Text = saves[0].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+                PlayerScore1.Text = saves[0].Scores[(int)m_Level.ActiveSave.Level - 1 - 1].ToString();
             }
             if (saves.Count >= 2)
             {
                 PlayerName2.Text = saves[1].Name;
-                PlayerScore2.Text = saves[1].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+                PlayerScore2.Text = saves[1].Scores[(int)m_Level.ActiveSave.Level - 1 - 1].ToString();
             }
             if (saves.Count == 3)
             {
                 PlayerName3.Text = saves[2].Name;
-                PlayerScore3.Text = saves[2].Scores[(int)m_Level.ActiveSave.Level - 1].ToString();
+                PlayerScore3.Text = saves[2].Scores[(int)m_Level.ActiveSave.Level - 1 - 1].ToString();
             }
+
+            Logger.Trace($"{m_Level.ActiveSave.Level - 1}");
 
             // Music
             if (Assets.LevelMusic.IsPlaying())
@@ -142,7 +145,7 @@ namespace Puzzled
         void OptionsMenu(object sender, RoutedEventArgs args)
         {
             Logger.Info("Going to option menu");
-            Game.Instance.ActiveScene = new OptionsMenu();
+            Game.Instance.ActiveScene = new OptionsMenu(this);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
