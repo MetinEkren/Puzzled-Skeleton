@@ -289,10 +289,9 @@ namespace Puzzled
                 }
                 else if (obj is Button button)
                 {
-                    // Collision between box and button
-                    else if (obj2.Value is Button button)
+                    if (obj2.Value is Box box2)
                     {
-                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box.HitboxPosition, box.HitboxSize);
+                        CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         if (result.Side != CollisionSide.None)
                         {
                             button.Press();
@@ -487,7 +486,7 @@ namespace Puzzled
                         {
                         },
                         // Bottom
-                        () => 
+                        () =>
                         {
                             if (Player.Velocity.Y < 0.0f)
                             {
@@ -498,6 +497,7 @@ namespace Puzzled
                         }
                     );
                     hasCollided |= collision;
+                }
                 else if (obj.Value is Spike spike)
                 {
                     CollisionResult result = Collision.AABB(spike.HitboxPosition, spike.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
