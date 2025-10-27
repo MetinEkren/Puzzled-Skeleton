@@ -74,6 +74,7 @@ namespace Puzzled
 
         public static string JumpSoundPath = ResourcesDirectory + "Resources/SFX/Jump.wav";
         public static string KeyPickupSoundPath = ResourcesDirectory + "Resources/SFX/Key_Pickup.wav";
+        public static string BoxPushSoundPath = ResourcesDirectory + "Resources/SFX/Box_Push.wav";
 
         public static string MainMenuLogoPath = ResourcesDirectory + "Resources/Textures/Main-Logo.png";
 
@@ -126,6 +127,7 @@ namespace Puzzled
 
         public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, UserSettings.SFXVolume);
         public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, UserSettings.SFXVolume);
+        public static FireableAudio BoxPushSound = new FireableAudio(BoxPushSoundPath, UserSettings.SFXVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();

@@ -359,11 +359,13 @@ namespace Puzzled
                         () =>
                         {
                             box.Position.X += result.Overlap;
+                            Player.Push(); // Set player to pushing state.
                         },
                         // Right
                         () =>
                         {
                             box.Position.X -= result.Overlap;
+                            Player.Push(); // Set player to pushing state.
                         },
                         // Top
                         () =>
