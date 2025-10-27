@@ -167,7 +167,7 @@ namespace Puzzled
         private readonly uint m_SaveSlot;
 
         public Level Level;
-        public VerticalCamera Camera;
+        public LevelCamera Camera;
 
         public bool Paused = false;
 
