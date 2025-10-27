@@ -149,7 +149,10 @@ namespace Puzzled
 
         // Note: Resets the player to the start position
         public void Kill()
-        {
+        {         
+            ((LevelOverlay)(Game.Instance.ActiveScene)).LoadLevel(((LevelOverlay)(Game.Instance.ActiveScene)).ActiveSave.Level);// resets the same level
+            ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Player = ((LevelOverlay)(Game.Instance.ActiveScene)).Level.Player;// camera changes to new player
+  
             Position = Settings.PlayerSpawnPosition;
             Velocity = new Maths.Vector2(0.0f, 0.0f);
             ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Reset();
@@ -199,7 +202,7 @@ namespace Puzzled
         public bool CanJump = true;
         public bool HasKey = false;
         public bool IsClimbing = false;
- 
+
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
         // TODO: More animations
