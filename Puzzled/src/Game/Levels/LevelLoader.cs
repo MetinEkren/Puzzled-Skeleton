@@ -166,6 +166,11 @@ namespace Puzzled
                                 dynamicObjects.Add(ID, new Spike(position));
                                 break;
 
+                            case "WinTile":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new WinTile(position));
+                                break;
+
                             default:
                                 Logger.Error($"INVALID OBJECT - {objType}");
                                 break;

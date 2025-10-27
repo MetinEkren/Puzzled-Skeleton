@@ -108,20 +108,6 @@ namespace Puzzled
                         m_StopWatch.Start();
                     }
                 }
-                if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
-                {
-                    if (m_Save.Level == Assets.LevelCount) // Finish the game
-                    {
-                        Game.Instance.ActiveScene = new MainMenu();
-                    }
-                    else // Win a level
-                    {
-                        ++m_Save.Level;
-                        Save();
-                        
-                        Game.Instance.ActiveScene = new WinMenu(this);
-                    }
-                }
             }
 
             Level.OnEvent(e);
@@ -138,6 +124,21 @@ namespace Puzzled
             Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
             m_Save.Level = level;
+        }
+
+        public void NextLevel()
+        {
+            if (m_Save.Level == Assets.LevelCount) // Finish the game
+            {
+                Game.Instance.ActiveScene = new MainMenu();
+            }
+            else // Win a level
+            {
+                ++m_Save.Level;
+                Save();
+
+                Game.Instance.ActiveScene = new WinMenu(this);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
