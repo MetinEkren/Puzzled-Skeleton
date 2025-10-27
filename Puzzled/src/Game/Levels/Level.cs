@@ -264,11 +264,23 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
+                    else if (obj2.Value is Lava lava)
+                    {
+                        CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, box.HitboxPosition, box.HitboxSize);
+                        if (result.Side != CollisionSide.None)
+                        {
+                            box.Destroy();
+                            hasCollided = true;
+                        }
+                    }
                 }
             }
 
             return hasCollided;
         }
+        
+      
+
 
         private bool HandleDynamicCollisionPlayer() // Collisions between player and dynamic objects
         {

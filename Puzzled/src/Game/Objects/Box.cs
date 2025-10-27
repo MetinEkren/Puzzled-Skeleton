@@ -24,6 +24,7 @@ namespace Puzzled
         public Box(Maths.Vector2 position)
         {
             Position = position;
+            HitboxSize = s_Size;
         }
 
         //////////////////////////////////////////////////////////////////////////////////
@@ -31,31 +32,35 @@ namespace Puzzled
         //////////////////////////////////////////////////////////////////////////////////
         public override void Update(float deltaTime)
         {
-            // Friction & Gravity
+            if (!m_Destroyed)
             {
-                if (Velocity.X != 0.0f)
+                // Friction & Gravity
                 {
-                    Velocity.X -= Settings.GroundFriction * Math.Sign(Velocity.X) * deltaTime;
+                    if (Velocity.X != 0.0f)
+                    {
+                        Velocity.X -= Settings.GroundFriction * Math.Sign(Velocity.X) * deltaTime;
 
-                    // Snap to zero if it overshoots
-                    if (Math.Abs(Velocity.X) < Settings.GroundFriction)
-                        Velocity.X = 0.0f;
+                        // Snap to zero if it overshoots
+                        if (Math.Abs(Velocity.X) < Settings.GroundFriction)
+                            Velocity.X = 0.0f;
+                    }
+
+                    Velocity.Y -= Settings.Gravity * deltaTime;
+                    Velocity.Y = Math.Max(Velocity.Y, Settings.BoxTerminalVelocity);
                 }
 
-                Velocity.Y -= Settings.Gravity * deltaTime;
-                Velocity.Y = Math.Max(Velocity.Y, Settings.BoxTerminalVelocity);
-            }
-
-            // Velocity
-            {
-                Position.X += Velocity.X * deltaTime;
-                Position.Y += Velocity.Y * deltaTime;
+                // Velocity
+                {
+                    Position.X += Velocity.X * deltaTime;
+                    Position.Y += Velocity.Y * deltaTime;
+                }
             }
         }
 
         public override void RenderTo(Renderer renderer, bool debug = false)
         {
-            renderer.AddQuad(Position, s_Size, s_Texture);
+            if (!m_Destroyed)
+                renderer.AddQuad(Position, s_Size, s_Texture);
 
             if (debug) // Outline tile hitbox
             {
@@ -66,17 +71,24 @@ namespace Puzzled
             }
         }
 
+        public void Destroy()
+        {
+            m_Destroyed = true;
+            HitboxSize = new Maths.Vector2(0, 0);
+        }
+
         //////////////////////////////////////////////////////////////////////////////////
         // Variables
         //////////////////////////////////////////////////////////////////////////////////
         public Maths.Vector2 Position;
         public Maths.Vector2 Velocity;
+        public Maths.Vector2 HitboxSize;
 
         private static readonly Maths.Vector2 s_Size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
         private static readonly CroppedTexture s_Texture = new CroppedTexture(Assets.ObjectsSheet, new UV(32, 0, Settings.SpriteSize / Settings.Scale, Settings.SpriteSize / Settings.Scale));
+        private bool m_Destroyed = false;
     
         public Maths.Vector2 HitboxPosition { get { return Position; } }
-        public Maths.Vector2 HitboxSize { get { return s_Size; } }
 
     }
 }
