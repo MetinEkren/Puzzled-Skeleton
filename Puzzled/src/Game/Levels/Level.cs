@@ -308,7 +308,6 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
-                    
                 }
                 else if (obj is Bridge bridge)
                 {
@@ -380,16 +379,14 @@ namespace Puzzled
                         {
                             box.Position.Y += result.Overlap;
 
+                            if (box.Velocity.Y < 0.0f)
+                            {
+                                box.Velocity.X = Player.Velocity.X;
+                            }
+
                             if (Player.Velocity.Y > 0.0f)
                             {
-                                box.Velocity.X = (Player.Velocity.X / Settings.PlayerRunningVelocity) * Settings.BoxHitVelocity;
-                                box.Velocity.Y = (Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
-                                //box.Velocity.X = Player.Velocity.X;
-                                //box.Velocity.Y = Player.Velocity.Y;
-                            }
-                            else
-                            {
-                                box.Velocity.Y = 0.0f;
+                                box.Velocity.Y = Settings.BoxVerticalVelocity;
                             }
                         }
                     );
@@ -488,7 +485,6 @@ namespace Puzzled
                 }
                 else if (obj.Value is Bridge bridge)
                 {
-
                     CollisionResult result = Collision.AABB(Player.HitboxPosition, Player.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
                     bool collision = HandleCollision(result,
                         // Left
@@ -534,6 +530,14 @@ namespace Puzzled
                     if (result.Side != CollisionSide.None)
                     {
                         Player.IsClimbing = true;
+                    }
+                }
+                else if (obj.Value is WinTile wintile)
+                {
+                    CollisionResult result = Collision.AABB(wintile.HitboxPosition, wintile.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        ((LevelOverlay)Game.Instance.ActiveScene).NextLevel();
                     }
                 }
             }

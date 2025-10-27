@@ -108,20 +108,6 @@ namespace Puzzled
                         m_StopWatch.Start();
                     }
                 }
-                if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
-                {
-                    if (m_Save.Level == Assets.LevelCount) // Finish the game
-                    {
-                        Game.Instance.ActiveScene = new MainMenu();
-                    }
-                    else // Win a level
-                    {
-                        ++m_Save.Level;
-                        Save();
-                        
-                        Game.Instance.ActiveScene = new WinMenu(this);
-                    }
-                }
             }
 
             Level.OnEvent(e);
@@ -140,6 +126,21 @@ namespace Puzzled
             m_Save.Level = level;
         }
 
+        public void NextLevel()
+        {
+            if (m_Save.Level == Assets.LevelCount) // Finish the game
+            {
+                Game.Instance.ActiveScene = new MainMenu();
+            }
+            else // Win a level
+            {
+                ++m_Save.Level;
+                Save();
+
+                Game.Instance.ActiveScene = new WinMenu(this);
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////////////////
         // Private methods
         ////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +156,7 @@ namespace Puzzled
 
         private void UpdateStopwatchDisplay(string time)
         {
-            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);// get value form customStopwatch 
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
