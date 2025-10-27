@@ -134,6 +134,9 @@ namespace Puzzled
             }
             else // Win a level
             {
+                m_StopWatch.Pauze();
+                // TODO: Save score
+
                 ++m_Save.Level;
                 Save();
 
