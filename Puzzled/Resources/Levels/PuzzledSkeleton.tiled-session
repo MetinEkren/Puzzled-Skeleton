@@ -3,19 +3,28 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level-2.json",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "Objects.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiles.tsx": {
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
         "level-1.json": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 4,
+            "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 167.875,
-                "y": 620.375
+                "x": 97.16666666666666,
+                "y": 424.16666666666663
             }
         },
         "level-2.json": {
@@ -78,10 +87,28 @@
     "map.tileWidth": 16,
     "map.width": 15,
     "openFiles": [
+        "Tiles.tsx",
+        "Objects.tsx",
+        "level-1.json",
+        "level-2.json",
+        "level-3.json",
+        "level-4.json",
+        "level-6.json",
+        "level-5.json",
+        "level-7.json"
     ],
     "project": "PuzzledSkeleton.tiled-project",
     "property.type": "object",
     "recentFiles": [
+        "Tiles.tsx",
+        "Objects.tsx",
+        "level-1.json",
+        "level-7.json",
+        "level-5.json",
+        "level-6.json",
+        "level-4.json",
+        "level-3.json",
+        "level-2.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

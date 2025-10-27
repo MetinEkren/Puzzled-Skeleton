@@ -331,6 +331,32 @@ namespace Puzzled
                         Player.IsClimbing = true;
                     }
                 }
+                else if (obj is Bridge bridge)
+                {
+                    if (obj2.Value is Box box2)
+                    {
+                        CollisionResult result = Collision.AABB(box2.HitboxPosition, box2.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
+                        bool collision = HandleCollision(result,
+                        // Left
+                        () => { },
+                        // Right
+                        () => { },
+                        // Top
+                        () =>
+                        {
+                        },
+                        // Bottom
+                        () =>
+                        {
+                            if (box2.Velocity.Y < 0.0f)
+                            {
+                                box2.Position.Y += result.Overlap;
+                                box2.Velocity.Y = 0.0f;
+                            }
+                        }
+                        );
+                    }
+                }
             }
 
             return hasCollided;
@@ -477,6 +503,32 @@ namespace Puzzled
                         door.OpenForever();
                         Player.HasKey = false;
                     }
+                }
+                else if (obj.Value is Bridge bridge)
+                {
+
+                    CollisionResult result = Collision.AABB(Player.HitboxPosition, Player.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
+                    bool collision = HandleCollision(result,
+                        // Left
+                        () => { },
+                        // Right
+                        () => { },
+                        // Top
+                        () =>
+                        {
+                        },
+                        // Bottom
+                        () => 
+                        {
+                            if (Player.Velocity.Y < 0.0f)
+                            {
+                                Player.Position.Y += result.Overlap;
+                                Player.Velocity.Y = 0.0f;
+                                Player.CanJump = true;
+                            }
+                        }
+                    );
+                    hasCollided |= collision;
                 }
             }
 
