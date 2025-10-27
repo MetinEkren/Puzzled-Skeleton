@@ -532,6 +532,14 @@ namespace Puzzled
                         Player.IsClimbing = true;
                     }
                 }
+                else if (obj.Value is WinTile wintile)
+                {
+                    CollisionResult result = Collision.AABB(wintile.HitboxPosition, wintile.HitboxSize, Player.HitboxPosition, Player.HitboxSize);
+                    if (result.Side != CollisionSide.None)
+                    {
+                        ((LevelOverlay)Game.Instance.ActiveScene).NextLevel();
+                    }
+                }
             }
 
             return hasCollided;
