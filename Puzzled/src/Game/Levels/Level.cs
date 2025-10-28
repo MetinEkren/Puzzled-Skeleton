@@ -99,8 +99,8 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, ref DynamicObjects, out tilesX, out tilesY);
 
-            Width = tilesX * (Settings.SpriteSize / Settings.Scale);
-            Height = tilesY * (Settings.SpriteSize / Settings.Scale);
+            Width = tilesX * Settings.SpriteSize;
+            Height = tilesY * Settings.SpriteSize;
 
             // Putting all tiles into chunks 
             {
@@ -326,7 +326,7 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
-                    else if (obj is Bridge bridge)
+                    else if (obj2.Value is Bridge bridge)
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
                         bool collision = HandleCollision(result,
