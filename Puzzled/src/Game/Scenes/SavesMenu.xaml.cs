@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
@@ -56,14 +58,14 @@ namespace Puzzled
 
             // Load saves
             {
-                m_Saves[0] = Assets.LoadSave(1);
-                Logger.Trace($"Save 1 {{ Name = {m_Saves[0].Name}, Level = {m_Saves[0].Level}, Scores = {((m_Saves[0].Scores.Count != 0) ? string.Join(", ", m_Saves[0].Scores.ToArray()) : "<NO SCORES>")} }}");
-
-                m_Saves[1] = Assets.LoadSave(2);
-                Logger.Trace($"Save 2 {{ Name = {m_Saves[1].Name}, Level = {m_Saves[1].Level}, Scores = {((m_Saves[1].Scores.Count != 0) ? string.Join(", ", m_Saves[1].Scores.ToArray()) : "<NO SCORES>")} }}");
-
-                m_Saves[2] = Assets.LoadSave(3);
-                Logger.Trace($"Save 3 {{ Name = {m_Saves[2].Name}, Level = {m_Saves[2].Level}, Scores = {((m_Saves[2].Scores.Count != 0) ? string.Join(", ", m_Saves[2].Scores.ToArray()) : "<NO SCORES>")} }}");
+                Save save1 = Assets.LoadSave(1);
+                Logger.Trace($"Save 1 {{ Name = {save1.Name}, Level = {save1.Level}, Scores = {((save1.Scores.Count != 0) ? string.Join(", ", save1.Scores.ToArray()) : "<NO SCORES>")} }}");
+                
+                Save save2 = Assets.LoadSave(2);
+                Logger.Trace($"Save 2 {{ Name = {save2.Name}, Level = {save2.Level}, Scores = {((save2.Scores.Count != 0) ? string.Join(", ", save2.Scores.ToArray()) : "<NO SCORES>")} }}");
+                
+                Save save3 = Assets.LoadSave(3);
+                Logger.Trace($"Save 3 {{ Name = {save3.Name}, Level = {save3.Level}, Scores = {((save3.Scores.Count != 0) ? string.Join(", ", save3.Scores.ToArray()) : "<NO SCORES>")} }}");
             }
 
             Loaded -= OnLoad;
@@ -91,10 +93,29 @@ namespace Puzzled
 
             if (e is KeyPressedEvent kpe)
             {
-                if (kpe.KeyCode == System.Windows.Input.Key.Escape)
+                if (kpe.KeyCode == Key.Escape)
                 {
                     Logger.Info("Pressed Esc, going back to main menu.");
                     Game.Instance.ActiveScene = ((m_MainMenu != null) ? m_MainMenu : new MainMenu());
+                }
+                if (kpe.KeyCode == Key.OemPlus) // Debug function to reset saves
+                {
+                    // Reset saves
+                    {
+                        // There are 3 saves (hardcoded = bad) ;)
+                        for (uint i = 1; i <= 3; i++)
+                        {
+                            Save save = Assets.LoadSave(i);
+                            save.Level = 1;
+
+                            string path = Assets.GetSaveSlotPath(i);
+                            string text = JsonSerializer.Serialize<Save>(save);
+
+                            File.WriteAllText(path, text);
+                        }
+
+                        MessageBox.Show("[DEBUG] RESET LEVELS.");
+                    }
                 }
             }
 
@@ -117,7 +138,7 @@ namespace Puzzled
         {
             Logger.Info($"Save slot {slot} being loaded.");
             
-            Game.Instance.ActiveScene = new LevelOverlay(m_Saves[slot - 1], slot);
+            Game.Instance.ActiveScene = new LevelOverlay(Assets.LoadSave(slot), slot);
             
             Assets.IntroMusic.CloseAll();
             Assets.MainMenuMusic.Stop();
@@ -139,7 +160,6 @@ namespace Puzzled
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
         private MainMenu m_MainMenu = null;
-        private Save[] m_Saves = new Save[3];
         
         private Renderer m_Renderer;
 

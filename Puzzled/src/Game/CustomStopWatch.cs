@@ -28,7 +28,7 @@ namespace Puzzled
         private void Timer_Tick(object sender, EventArgs e)
         {
             TimeSpan elapsed = m_StopWatch.Elapsed;// calculates how much time passed 
-            StartTimeDisplay = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}.{elapsed.Milliseconds / 10:00}";// shows how much time passed in minutes/seconds/miliseconds
+            StartTimeDisplay = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}";// shows how much time passed in minutes/seconds/miliseconds
 
             if (TimeUpdated != null)
             {
@@ -58,7 +58,7 @@ namespace Puzzled
         public void Reset()
         {
             m_StopWatch.Reset();// reset Microsoft Stopwatch
-            StartTimeDisplay = "00:00.00";// changes the time value to 00:00.00
+            StartTimeDisplay = "00:00";// changes the time value to 00:00
 
             if (TimeUpdated != null)
             {
