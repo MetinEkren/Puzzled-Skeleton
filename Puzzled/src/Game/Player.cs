@@ -115,11 +115,6 @@ namespace Puzzled
                 if (m_IsPushing)
                 {
                     Velocity.X /= 2;
-                    if (!Assets.BoxPushSound.IsPlaying())
-                    {
-                        Assets.BoxPushSound.Play();
-                        Logger.Trace("holy mpoly");
-                    }
                 }
 
                 // When falling (or jumping) you are no longer able to jump again

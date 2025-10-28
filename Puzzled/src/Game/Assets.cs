@@ -127,7 +127,6 @@ namespace Puzzled
 
         public static FireableAudio JumpSound = new FireableAudio(JumpSoundPath, UserSettings.SFXVolume);
         public static FireableAudio KeyPickupSound = new FireableAudio(KeyPickupSoundPath, UserSettings.SFXVolume);
-        public static FireableAudio BoxPushSound = new FireableAudio(BoxPushSoundPath, UserSettings.SFXVolume);
 
         public static Texture MainMenuLogo = new Texture(MainMenuLogoPath);
         public static Texture WhiteTexture = new Texture();
