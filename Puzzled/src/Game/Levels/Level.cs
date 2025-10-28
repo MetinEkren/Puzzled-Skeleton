@@ -83,19 +83,6 @@ namespace Puzzled
 
         public void OnEvent(Event e)
         {
-            if (e is KeyPressedEvent kpe)
-            {
-                // Note: For testing a debug
-                if (kpe.KeyCode == Key.H)
-                    m_Debug = !m_Debug;
-                if (kpe.KeyCode == Key.R)
-                    DynamicObjects.Clear();
-            }
-
-            if (e is MouseButtonPressedEvent)
-            {
-                DynamicObjects.Add((uint)new Random().Next(), (new Box(new Maths.Vector2(Input.GetMousePosition().X - (Settings.SpriteSize / 2), (Game.Instance.Window.Height - Input.GetMousePosition().Y - (Settings.SpriteSize / 2))))));
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -339,10 +326,7 @@ namespace Puzzled
 
             return hasCollided;
         }
-        
       
-
-
         private bool HandleDynamicCollisionPlayer() // Collisions between player and dynamic objects
         {
             bool hasCollided = false;
