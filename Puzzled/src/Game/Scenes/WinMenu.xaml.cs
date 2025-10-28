@@ -124,7 +124,14 @@ namespace Puzzled
         void NextLevelPressed(object sender, RoutedEventArgs args)
         {
             Logger.Info($"Going to next level, {m_Level.ActiveSave.Level}.");
-            m_Level.LoadLevel(m_Level.ActiveSave.Level);
+
+            m_Level.LoadLevel(m_Level.ActiveSave.Level);// resets the same level
+            m_Level.Camera.Player = m_Level.Level.Player;// camera changes to new player
+            m_Level.Camera.Reset();
+
+            m_Level.StopWatch.Reset();
+            m_Level.StopWatch.Start();
+
             Game.Instance.ActiveScene = m_Level;
         }
 
