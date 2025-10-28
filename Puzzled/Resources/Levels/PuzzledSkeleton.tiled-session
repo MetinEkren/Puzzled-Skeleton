@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-5.json",
+    "activeFile": "level-2.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -18,30 +18,30 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 2,
+            "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 119.25,
-                "y": 512.75
+                "x": 97.16666666666666,
+                "y": 424.16666666666663
             }
         },
         "level-2.json": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 2,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 128.25,
-                "y": 335.75
+                "x": 128.49999999999997,
+                "y": 114.16666666666669
             }
         },
         "level-3.json": {
-            "scale": 0.75,
+            "scale": 1.311904761904762,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 189.99999999999994,
-                "y": 632.6666666666666
+                "x": 127.6769509981851,
+                "y": 335.7713248638838
             }
         },
         "level-4.json": {
@@ -56,13 +56,8 @@
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-<<<<<<< HEAD
-                "x": 145.66666666666666,
-                "y": 442.33333333333326
-=======
                 "x": 139.83333333333331,
                 "y": 574.8333333333333
->>>>>>> 74729b9de02204907c96d9db98a7999b9680cfbf
             }
         },
         "level-6.json": {
@@ -82,22 +77,14 @@
             }
         }
     },
-    "last.exportedFilePath": "C:/Users/steph/Desktop/game/Game-Interaction/Puzzled/Resources/Levels",
-    "last.imagePath": "C:/Users/rpkin/source/repos/Puzzled-Skeleton/Puzzled/Resources/Sprites",
-    "map.height": 42,
-    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
-    "map.width": 15,
     "openFiles": [
-        "level-2.json",
-        "level-5.json"
+        "level-2.json"
     ],
     "project": "PuzzledSkeleton.tiled-project",
-    "property.type": "int",
+    "property.type": "object",
     "recentFiles": [
-        "level-5.json",
-        "level-2.json"
+        "level-2.json",
+        "level-5.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
