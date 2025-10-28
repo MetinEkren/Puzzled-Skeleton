@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Numerics;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace Puzzled
+{
+
+    //////////////////////////////////////////////////////////////////////////////////
+    // Camera
+    //////////////////////////////////////////////////////////////////////////////////
+    public class Camera
+    {
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Constructor
+        ////////////////////////////////////////////////////////////////////////////////////
+        public Camera(float xOffset, float yOffset)
+        {
+            XOffset = xOffset;
+            YOffset = yOffset;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Variables
+        ////////////////////////////////////////////////////////////////////////////////////
+        public float XOffset;
+        public float YOffset;
+
+    }
+
+}

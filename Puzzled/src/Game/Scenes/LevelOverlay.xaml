@@ -9,13 +9,12 @@
 
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
-
+            
             <!-- Score text -->
-            <TextBlock x:Name="Score" Text="Score: NULL"
-                FontSize="38"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Foreground="White" Margin="10,0,0,0" />
+            <Label x:Name="StopwatchLabel" Content="00:00" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="38" Height="65" Width="210" FontFamily="Courier New" Margin="10,0,0,0"/>
+
         </Grid>
+
+        <ContentControl x:Name="PauseOverlay" FontFamily="Courier New"/>
     </Grid>
 </UserControl>

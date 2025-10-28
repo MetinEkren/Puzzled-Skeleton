@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
-using System.Text.Json;
-using System.Linq;
 
 namespace Puzzled
 {
@@ -24,20 +25,17 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Static methods
         ////////////////////////////////////////////////////////////////////////////////////
-        public static void Load(string levelPath, ref List<Tile> outTiles, out uint outWidth, out uint outHeight)
+        public static void Load(string levelPath, ref List<Tile> outTiles, ref Dictionary<uint, DynamicObject> dynamicObjects, out uint outWidth, out uint outHeight)
         {
             string json = File.ReadAllText(levelPath);
             using (JsonDocument doc = JsonDocument.Parse(json))
             {
                 JsonElement root = doc.RootElement;
-
-                // Access the first layer (currently the only layer)
                 JsonElement layers = root.GetProperty("layers");
-                JsonElement firstLayer = layers[0];
 
                 // Get size
-                uint width = firstLayer.GetProperty("width").GetUInt32();
-                uint height = firstLayer.GetProperty("height").GetUInt32();
+                uint width = root.GetProperty("width").GetUInt32();
+                uint height = root.GetProperty("height").GetUInt32();
                 outWidth = width;
                 outHeight = height;
 
@@ -45,44 +43,140 @@ namespace Puzzled
                 uint tilesX = Assets.TileSheet.Width / tileSize;
                 uint tilesY = Assets.TileSheet.Height / tileSize;
 
-                JsonElement data = firstLayer.GetProperty("data");
-                uint x = 0, y = 0;
-                foreach (JsonElement tile in data.EnumerateArray().Reverse())
+                // Tile layer
                 {
-                    // Update position
-                    Action next = () =>
+                    // TODO: Make it load the tile layer based on some layer name? or set a fixed format.
+                    JsonElement data = layers[0].GetProperty("data");
+                    
+                    uint x = 0, y = 0;
+                    foreach (JsonElement tile in data.EnumerateArray().Reverse())
                     {
-                        x++;
-
-                        if (x == width)
+                        // Update position
+                        Action next = () =>
                         {
-                            x = 0;
-                            y++;
+                            x++;
+
+                            if (x == width)
+                            {
+                                x = 0;
+                                y++;
+                            }
+                        };
+
+                        uint tileId = tile.GetUInt32();
+                        if (tileId == 0) // No tile
+                        {
+                            next();
+                            continue;
                         }
-                    };
 
-                    uint tileId = tile.GetUInt32();
-                    if (tileId == 0) // No tile
-                    {
+                        // Convert tileID to UV
+                        uint uvX = 0, uvY = 0;
+                        {
+                            uint id = tileId - 1; // Tiled starts at 1
+
+                            uint col = id % tilesX; // Column
+                            uint row = id / tilesX; // Row
+
+                            uvX = col * tileSize;
+                            uvY = row * tileSize;
+                        }
+
+                        // Note: (width - x) because x is flipped because we .Reverse()
+                        Maths.Vector2 position = new Maths.Vector2(((width - 1) - x) * (Settings.SpriteSize), y * (Settings.SpriteSize));
+                        Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+
+                        outTiles.Add(new Tile(position, size, Assets.GetTexture(Assets.TileSheet, uvX, uvY), (TileType)tileId));
                         next();
-                        continue;
                     }
+                }
 
-                    // Convert tileID to UV
-                    uint uvX = 0, uvY = 0;
+                // Object layer
+                {
+                    // Note: We require a tile layer, but an object layer is currently not always present
+                    // this is to prevent a crash
+                    if (!(layers.GetArrayLength() > 1))
+                        return;
+
+                    JsonElement data = layers[1].GetProperty("objects");
+
+                    uint x = 0, y = 0;
+
+                    foreach (JsonElement obj in data.EnumerateArray().Reverse())
                     {
-                        uint id = (uint)(tileId - 1); // Tiled starts at 1
+                        // Get position
+                        x = obj.GetProperty("x").GetUInt32();
+                        y = (height * (Settings.SpriteSize / Settings.Scale)) - obj.GetProperty("y").GetUInt32();
 
-                        uint col = id % tilesX; // column
-                        uint row = id / tilesX; // row
+                        string objType = obj.GetProperty("type").GetString();
 
-                        uvX = col * (Settings.SpriteSize / Settings.Scale);
-                        uvY = row * (Settings.SpriteSize / Settings.Scale);
+                        // Note: (width - x) because x is flipped because we .Reverse()
+                        Maths.Vector2 position = new Maths.Vector2((x * Settings.Scale), (y * Settings.Scale));
+                        Maths.Vector2 size = new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize);
+
+                        uint ID;
+                        uint connectionID;
+                        uint bridgeSide;
+                        switch(objType)
+                        {
+                            case "Box":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Box(position));
+                                break;
+
+                            case "Bridge":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                bridgeSide = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(ID, new Bridge(position, (BridgeSide)bridgeSide));
+                                break;
+
+                            case "Button":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                connectionID = obj.GetProperty("properties")[0].GetProperty("value").GetUInt32();
+                                dynamicObjects.Add(ID, new Button(position, connectionID));
+                                break;
+
+                            case "ButtonDoor":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Door(position, DoorType.ButtonDoor));
+                                break;
+
+                            case "DoorKey":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new DoorKey(position));
+                                break;
+
+                            case "KeyDoor":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Door(position, DoorType.KeyDoor));
+                                break;
+
+                            case "Ladder":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Ladder(position));
+                                break;
+
+                            case "Lava":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Lava(position));
+                                break;
+
+                            case "Spike":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new Spike(position));
+                                break;
+
+                            case "WinTile":
+                                ID = obj.GetProperty("id").GetUInt32();
+                                dynamicObjects.Add(ID, new WinTile(position));
+                                break;
+
+                            default:
+                                Logger.Error($"INVALID OBJECT - {objType}");
+                                break;
+
+                        }
                     }
-
-                    // Note: (width - x) because x is flipped because we .Reverse()
-                    outTiles.Add(new Tile(new Maths.Vector2(((width - 1) - x) * (Settings.SpriteSize), y * (Settings.SpriteSize)), new Maths.Vector2(Settings.SpriteSize, Settings.SpriteSize), Assets.GetTexture(Assets.TileSheet, uvX, uvY)));
-                    next();
                 }
             }
         }

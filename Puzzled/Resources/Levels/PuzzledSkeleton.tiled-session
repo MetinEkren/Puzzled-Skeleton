@@ -1,0 +1,101 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "level-1.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Objects.tsx": {
+            "scaleInDock": 1
+        },
+        "Tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "level-1.json": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 4,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 216.625,
+                "y": 159.875
+            }
+        },
+        "level-2.json": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 127.5,
+                "y": 199.5
+            }
+        },
+        "level-3.json": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 107.25,
+                "y": 154.25
+            }
+        },
+        "level-4.json": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.33333333333331,
+                "y": 335.33333333333326
+            }
+        },
+        "level-5.json": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 127.66666666666664,
+                "y": 119.66666666666664
+            }
+        },
+        "level-6.json": {
+            "scale": 1.311904761904762,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.6769509981851,
+                "y": 335.7713248638838
+            }
+        },
+        "level-7.json": {
+            "scale": 1.311904761904762,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.6769509981851,
+                "y": 335.7713248638838
+            }
+        }
+    },
+    "openFiles": [
+        "level-2.json",
+        "level-1.json",
+        "level-3.json",
+        "level-4.json",
+        "level-5.json"
+    ],
+    "project": "PuzzledSkeleton.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "level-2.json",
+        "level-5.json",
+        "level-4.json",
+        "level-3.json",
+        "level-1.json"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

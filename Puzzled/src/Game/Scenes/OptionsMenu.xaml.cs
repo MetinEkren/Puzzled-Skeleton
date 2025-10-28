@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,6 +15,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Constructor & Destructor
         ////////////////////////////////////////////////////////////////////////////////////
+
+
         public OptionsMenu()
         {
             InitializeComponent();
@@ -26,6 +29,7 @@ namespace Puzzled
             InitializeComponent();
             Loaded += OnLoad;
         }
+
         ~OptionsMenu()
         {
             // Note: For future, don't put anything in destructor, since objects are not destroyed at set moment. (GC moment)
@@ -37,11 +41,17 @@ namespace Puzzled
         private void OnLoad(object sender, RoutedEventArgs args) // Note: We need to do this after layout pass to make sure sizes are calculated
         {
             Loaded -= OnLoad;
+
+            MusicSlider.Value = UserSettings.MusicVolume;
+            SFXSlider.Value = UserSettings.SFXVolume;
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (!IsLoaded) return;
+
+            MusicValueText.Text = UserSettings.MusicVolume.ToString() + "%";
+            SFXValueText.Text = UserSettings.SFXVolume.ToString() + "%";
         }
 
         public void OnRender()
@@ -63,8 +73,32 @@ namespace Puzzled
                 if (kpe.KeyCode == Key.Escape)
                 {
                     Game.Instance.ActiveScene = m_PreviousScene;
+                    UserSettings.Save();
                 }
             }
+            if (e is WindowCloseEvent)
+            {
+                UserSettings.Save();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Callbacks
+        ////////////////////////////////////////////////////////////////////////////////////
+        void BackButtonPressed(object sender, RoutedEventArgs args)
+        {
+            Game.Instance.ActiveScene = m_PreviousScene;
+            UserSettings.Save();
+        }
+
+        private void MusicSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UserSettings.MusicVolume = (uint)MusicSlider.Value;
+        }
+
+        private void SFXSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            UserSettings.SFXVolume = (uint)SFXSlider.Value;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +106,7 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private IScene m_PreviousScene;
 
-    }
+
+    }        
 
 }

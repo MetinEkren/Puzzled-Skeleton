@@ -84,14 +84,14 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [ ] 🟨 Level 4 (🟨 normal / 🟧extra hard)
       - [ ] 🟨 Level 5 (🟨 normal / 🟧extra hard)
       - [ ] 🟨 Level 6 (🟨 normal / 🟧extra hard)
-      - [ ] 🟧 Texture for skeleton
+      - [x] 🟧 Texture for skeleton
       - [ ] 🟧 Texture for background(s)
       - [ ] 🟧 Texture for objects
-      - [ ] 🟧 Texture for platform blocks
+      - [x] 🟧 Texture for platform blocks
   - [ ] Mechanics
     - [x] 🟩 Gravity
     - [x] 🟩 Physics (gravity/collision)
-    - [ ] 🟩 Movement (WASD/Arrow keys)
+    - [x] 🟩 Movement (WASD/Arrow keys)
     - [ ] Puzzle mechanics
       - [ ] 🟩 Time = score
       - [ ] 🟧 Movable bricks (on to moving platform?)

@@ -10,45 +10,41 @@
             <!-- UI Canvas for UI elements -->
             <Canvas x:Name="UICanvas" Background="Transparent"/>
 
-            <!-- Save slots text -->
-            <TextBlock Text="Choose a Save slot"
-                FontSize="80"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Foreground="White"
-                Margin="0,64,0,0" />
+            <!-- Hover save buttons -->
+            <Image x:Name="SaveButton1Hover" Width="189" Height="96" Margin="66,538,513,86"
+                Source="pack://application:,,,/Resources/Textures/save1_hover.png"
+                Opacity="0"/>
+            <Image x:Name="SaveButton2Hover" Width="189" Height="96" Margin="290,538,290,86"
+                Source="pack://application:,,,/Resources/Textures/save2_hover.png"
+                Opacity="0"/>
+            <Image x:Name="SaveButton3Hover" Width="189" Height="96" Margin="510,538,69,86"
+                Source="pack://application:,,,/Resources/Textures/save3_hover.png"
+                Opacity="0"/>
 
-            <!-- Save slot buttons -->
-            <Button x:Name="SaveSlot1" Width="549" Height="127"
-                Content=" Slot #1&#x0a;Score: 0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                FontSize="24"
-                Foreground="Black"
-                BorderBrush="Blue"
-                BorderThickness="2"
-                Background="White"
-                Click="SaveSlot1Pressed" Margin="0,233,0,0"/>
-            <Button x:Name="SaveSlot2" Width="549" Height="127"
-                Content=" Slot #2&#x0a;Score: 0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                FontSize="24"
-                Foreground="Black"
-                BorderBrush="Blue"
-                BorderThickness="2"
-                Background="White"
-                Click="SaveSlot2Pressed" Margin="0,380,0,0"/>
-            <Button x:Name="SaveSlot3" Width="548" Height="127"
-                Content=" Slot #3&#x0a;Score: 0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                FontSize="24"
-                Foreground="Black"
-                BorderBrush="Blue"
-                BorderThickness="2"
-                Background="White"
-                Click="SaveSlot3Pressed" Margin="0,531,0,0"/>
+            <!-- UI buttons -->
+            <Image x:Name="BackButton" Width="48" Height="48" Margin="0,0,702,656 "
+                Source="pack://application:,,,/Resources/Textures/back_button.png"
+                MouseDown="BackButtonPressed"/>
+            <Image x:Name="SaveButton1" Width="189" Height="96" Margin="66,538,513,86"
+                Source="pack://application:,,,/Resources/Textures/save1.png"
+                MouseDown="SaveSlot1Pressed"
+                MouseEnter="SaveSlot1StartHover"
+                MouseLeave="SaveSlot1StopHover"/>
+            <Image x:Name="SaveButton2" Width="189" Height="96" Margin="290,538,290,86"
+                Source="pack://application:,,,/Resources/Textures/save2.png"
+                MouseDown="SaveSlot2Pressed"
+                MouseEnter="SaveSlot2StartHover"
+                MouseLeave="SaveSlot2StopHover"/>
+            <Image x:Name="SaveButton3" Width="189" Height="96" Margin="510,538,69,86"
+                Source="pack://application:,,,/Resources/Textures/save3.png"
+                MouseDown="SaveSlot3Pressed"
+                MouseEnter="SaveSlot3StartHover"
+                MouseLeave="SaveSlot3StopHover"/>
+
+            <Image x:Name="PixelArt" Width="450" Height="330" Margin="152,84,166,306"
+                Source="pack://application:,,,/Resources/Textures/save_pixelart.png"/>
+
+            <TextBlock x:Name="QuoteText" Foreground="White" Margin="0,428,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" FontFamily="Courier New" TextAlignment="Center" Width="724" Height="83" Text="Placeholder for Quote" LineStackingStrategy="BlockLineHeight" TextWrapping="WrapWithOverflow"/>
         </Grid>
     </Grid>
 </UserControl>
