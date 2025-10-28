@@ -156,7 +156,10 @@ namespace Puzzled
 
         // Note: Resets the player to the start position
         public void Kill()
-        {
+        {         
+            ((LevelOverlay)(Game.Instance.ActiveScene)).LoadLevel(((LevelOverlay)(Game.Instance.ActiveScene)).ActiveSave.Level);// resets the same level
+            ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Player = ((LevelOverlay)(Game.Instance.ActiveScene)).Level.Player;// camera changes to new player
+  
             Position = Settings.PlayerSpawnPosition;
             Velocity = new Maths.Vector2(0.0f, 0.0f);
             ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Reset();

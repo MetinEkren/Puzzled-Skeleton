@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections.Generic;
 
 namespace Puzzled
 {
@@ -146,7 +147,13 @@ namespace Puzzled
                 Scores = m_Level.ActiveSave.Scores
             }; // Restart current level
 
-            m_Level.LoadLevel(m_Level.ActiveSave.Level);
+            m_Level.LoadLevel(m_Level.ActiveSave.Level);// resets the same level
+            m_Level.Camera.Player = m_Level.Level.Player;// camera changes to new player
+            m_Level.Camera.Reset();
+
+            m_Level.StopWatch.Reset();
+            m_Level.StopWatch.Start();
+
             Game.Instance.ActiveScene = m_Level;
         }
 

@@ -381,14 +381,14 @@ namespace Puzzled
                         {
                             box.Position.Y += result.Overlap;
 
-                            if (box.Velocity.Y < 0.0f)
-                            {
-                                box.Velocity.X = Player.Velocity.X;
-                            }
-
                             if (Player.Velocity.Y > 0.0f)
                             {
-                                box.Velocity.Y = Settings.BoxVerticalVelocity;
+                                box.Velocity.Y = (Player.Velocity.Y / Settings.PlayerJumpingVelocity) * Settings.BoxHitVelocity;
+                            }
+                            else
+                            {
+                                box.Velocity.X = Player.Velocity.X;
+                                box.Velocity.Y = 0.0f;
                             }
                         }
                     );

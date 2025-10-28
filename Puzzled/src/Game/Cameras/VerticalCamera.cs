@@ -32,13 +32,13 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public override void Update()
         {
-            if (Player.Position.Y < (7 * 48))
+            if (Player.Position.Y < (7 * 48))// if player position is smaller then 336px then it does nothing. 48 is 48px and is one tile.
             {
                 return;
             }
             else
             {
-                YOffset = Player.Position.Y - (7 * 48);
+                YOffset = Player.Position.Y - (7 * 48);// the camera shows 7 tiles onder the player. 
             }
         }
 
