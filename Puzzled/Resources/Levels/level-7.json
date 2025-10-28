@@ -32,7 +32,31 @@
          "draworder":"topdown",
          "id":2,
          "name":"Objectlaag 1",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":80,
+                 "height":16,
+                 "id":29,
+                 "name":"",
+                 "rotation":0,
+                 "type":"WinTile",
+                 "visible":true,
+                 "width":16,
+                 "x":192,
+                 "y":224
+                }, 
+                {
+                 "gid":80,
+                 "height":16,
+                 "id":30,
+                 "name":"",
+                 "rotation":0,
+                 "type":"WinTile",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":208
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -40,7 +64,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":29,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",

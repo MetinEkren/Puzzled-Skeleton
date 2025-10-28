@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-6.json",
+    "activeFile": "level-5.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -18,46 +18,49 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 3,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 97,
-                "y": 300.16666666666663
+                "x": 182.5,
+                "y": 157.5
             }
         },
         "level-2.json": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 2,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 128,
-                "y": 335.75
+                "x": 170,
+                "y": 355.33333333333326
             }
         },
         "level-3.json": {
-            "scale": 1.311904761904762,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.75,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 127.29582577132486,
-                "y": 335.7713248638838
+                "x": 166,
+                "y": 408.6666666666667
             }
         },
         "level-4.json": {
-            "scale": 1.311904761904762,
+            "scale": 0.75,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 127.6769509981851,
-                "y": 335.7713248638838
+                "x": 170,
+                "y": 348.6666666666667
             }
         },
         "level-5.json": {
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 127.99999999999997,
-                "y": 336.3333333333333
+                "x": 127.66666666666664,
+                "y": 522.3333333333333
             }
         },
         "level-6.json": {
@@ -65,7 +68,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 155.75,
-                "y": 409.75
+                "y": 316.75
             }
         },
         "level-7.json": {
@@ -77,30 +80,15 @@
             }
         }
     },
-    "last.exportedFilePath": "C:/Users/steph/Desktop/game/Game-Interaction/Puzzled/Resources/Levels",
-    "last.imagePath": "C:/Users/rpkin/source/repos/Puzzled-Skeleton/Puzzled/Resources/Sprites",
-    "map.height": 42,
-    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
-    "map.width": 15,
     "openFiles": [
         "level-2.json",
-        "level-5.json",
-        "level-1.json",
-        "level-3.json",
-        "level-6.json",
-        "level-7.json"
+        "level-5.json"
     ],
     "project": "PuzzledSkeleton.tiled-project",
-    "property.type": "int",
+    "property.type": "object",
     "recentFiles": [
         "level-2.json",
-        "level-5.json",
-        "level-1.json",
-        "level-3.json",
-        "level-7.json",
-        "level-6.json"
+        "level-5.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
