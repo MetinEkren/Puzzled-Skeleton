@@ -99,6 +99,9 @@ namespace Puzzled
 
             LevelLoader.Load(path, ref m_Tiles, ref DynamicObjects, out tilesX, out tilesY);
 
+            Width = tilesX * (Settings.SpriteSize / Settings.Scale);
+            Height = tilesY * (Settings.SpriteSize / Settings.Scale);
+
             // Putting all tiles into chunks 
             {
                 uint chunksX = (uint)Math.Ceiling((double)(tilesX / (float)Settings.ChunkSize));
@@ -248,7 +251,7 @@ namespace Puzzled
 
                         // Note: We currently don't do anything if we collide again, which is fine I think
                     }
-                    if (obj2.Value is Lava lava)
+                    else if (obj2.Value is Lava lava)
                     {
                         CollisionResult result = Collision.AABB(lava.HitboxPosition, lava.HitboxSize, box.HitboxPosition, box.HitboxSize);
                         if (result.Side != CollisionSide.None)
@@ -257,7 +260,7 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
-                    if (obj2.Value is Door door)
+                    else if (obj2.Value is Door door)
                     {
                         CollisionResult result = Collision.AABB(box.HitboxPosition, box.HitboxSize, door.HitboxPosition, door.HitboxSize);
 
@@ -282,11 +285,7 @@ namespace Puzzled
                         if (!collision)
                             continue;
                     }
-                    // Note: We don't need button logic here, since it's below
-                }
-                else if (obj is Button button)
-                {
-                    if (obj2.Value is Box box2)
+                    else if (obj2.Value is Button button)
                     {
                         CollisionResult result = Collision.AABB(button.HitboxPosition, button.HitboxSize, box2.HitboxPosition, box2.HitboxSize);
                         if (result.Side != CollisionSide.None)
@@ -295,10 +294,7 @@ namespace Puzzled
                             hasCollided = true;
                         }
                     }
-                }
-                else if (obj is Bridge bridge)
-                {
-                    if (obj2.Value is Box box2)
+                    else if (obj is Bridge bridge)
                     {
                         CollisionResult result = Collision.AABB(box2.HitboxPosition, box2.HitboxSize, bridge.HitboxPosition, bridge.HitboxSize);
                         bool collision = HandleCollision(result,
@@ -619,6 +615,7 @@ namespace Puzzled
         private Renderer m_Renderer;
         private bool m_Debug = false;
 
+        public uint Width, Height;
         public Player Player;
 
         private List<Tile> m_Tiles; // Note: Contiguous list of all tiles, not used at the moment, but for level loading is useful
