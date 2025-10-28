@@ -32,14 +32,18 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public override void Update()
         {
-            if (Player.Position.Y < (7 * 48))
-            {
+            if (!(Game.Instance.ActiveScene is LevelOverlay)) // Fixes a bug, the root issue is yet to be 
                 return;
-            }
-            else
-            {
-                YOffset = Player.Position.Y - (7 * 48);
-            }
+
+            uint bottomBuffer = (7 * Settings.SpriteSize);
+            uint topBuffer = (8 * Settings.SpriteSize);
+
+            if (Player.Position.Y < bottomBuffer) // if player position is smaller then 336px then it does nothing. 48 is 48px and is one tile.
+                return;
+            else if (Player.Position.Y > (((LevelOverlay)(Game.Instance.ActiveScene)).Level.Height - topBuffer))
+                return;
+
+            YOffset = Player.Position.Y - bottomBuffer;// the camera shows 7 tiles onder the player. 
         }
 
     }

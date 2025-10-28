@@ -17,9 +17,9 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         public CustomStopWatch()
         {
-            m_Timer = new DispatcherTimer();
-            m_Timer.Interval = TimeSpan.FromMilliseconds(10);
-            m_Timer.Tick += Timer_Tick;
+            m_Timer = new DispatcherTimer();// Microsoft timer
+            m_Timer.Interval = TimeSpan.FromMilliseconds(10);// timer with a time span of 10 miliseconds
+            m_Timer.Tick += Timer_Tick;// every 10 milisecond is calls Timer_Tick function
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -27,12 +27,12 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         private void Timer_Tick(object sender, EventArgs e)
         {
-            TimeSpan elapsed = m_StopWatch.Elapsed;
-            StartTimeDisplay = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}.{elapsed.Milliseconds / 10:00}";
+            TimeSpan elapsed = m_StopWatch.Elapsed;// calculates how much time passed 
+            StartTimeDisplay = $"{elapsed.Minutes:00}:{elapsed.Seconds:00}";// shows how much time passed in minutes/seconds/miliseconds
 
             if (TimeUpdated != null)
             {
-                TimeUpdated.Invoke(StartTimeDisplay);
+                TimeUpdated.Invoke(StartTimeDisplay);// activates a function in leveloverlay UpdateStopwatchDisplay and sends the time value
             }
                 
         }
@@ -41,8 +41,8 @@ namespace Puzzled
         {
             if (!m_StopWatch.IsRunning)
             {
-                m_StopWatch.Start();
-                m_Timer.Start();
+                m_StopWatch.Start();// start time/stopwatch
+                m_Timer.Start();// start timer
             }
         }
 
@@ -50,29 +50,37 @@ namespace Puzzled
         {
             if (m_StopWatch.IsRunning)
             {
-                m_StopWatch.Stop();
-                m_Timer.Stop();
+                m_StopWatch.Stop();// stops time/stopwatch
+                m_Timer.Stop();// stop timer
             }
         }
 
         public void Reset()
         {
-            m_StopWatch.Reset();
-            StartTimeDisplay = "00:00.00";
+            m_StopWatch.Reset();// reset Microsoft Stopwatch
+            StartTimeDisplay = "00:00";// changes the time value to 00:00
 
             if (TimeUpdated != null)
             {
-                TimeUpdated.Invoke(StartTimeDisplay);
+                TimeUpdated.Invoke(StartTimeDisplay);// activates a function in leveloverlay UpdateStopwatchDisplay and sends the time value
             }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Helper methods
+        ////////////////////////////////////////////////////////////////////////////////////
+        public float Elapsed() // Note: In sseconds
+        {
+            return m_StopWatch.ElapsedMilliseconds / 1000.0f;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // Variables
         ////////////////////////////////////////////////////////////////////////////////////
-        private Stopwatch m_StopWatch = new Stopwatch();
-        private DispatcherTimer m_Timer;
+        private Stopwatch m_StopWatch = new Stopwatch();// Microsoft stopwatch
+        private DispatcherTimer m_Timer;//  Microsoft timer
 
-        public string StartTimeDisplay { get; private set; } = "00:00.00";
+        public string StartTimeDisplay { get; private set; } = "00:00.00";// time text/value 
 
         public Action<string> TimeUpdated;
     }

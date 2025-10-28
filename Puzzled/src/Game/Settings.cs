@@ -41,7 +41,7 @@ namespace Puzzled
         public const float PlayerJumpingVelocity = 90.0f * Scale;
         public const float PlayerTerminalVelocity = -PlayerJumpingVelocity * 1.5f; // Note: For downwards, so it doesn't keep accelerating
 
-        public const float BoxHitVelocity = 105.0f * Scale;
+        public const float BoxHitVelocity = 100.0f * Scale;
         public const float BoxTerminalVelocity = PlayerTerminalVelocity;
 
         ////////////////////////////////////////////////////////////////////////////////////

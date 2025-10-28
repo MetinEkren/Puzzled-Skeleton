@@ -50,11 +50,11 @@ namespace Puzzled
 
             Camera = new VerticalCamera(Level.Player);
 
-            m_StopWatch = new CustomStopWatch();
+            StopWatch = new CustomStopWatch();
 
             // Connect stopwatch updates to the overlay & start
-            m_StopWatch.TimeUpdated = UpdateStopwatchDisplay;
-            m_StopWatch.Start();
+            StopWatch.TimeUpdated = UpdateStopwatchDisplay;
+            StopWatch.Start();
 
             Loaded -= OnLoad;
         }
@@ -97,29 +97,15 @@ namespace Puzzled
                 {
                     if (Paused == false) 
                     {
-                        PauseOverlay.Content = new LevelOverlay_Pauze(this, m_StopWatch);
+                        PauseOverlay.Content = new LevelOverlay_Pauze(this, StopWatch);
                         Paused = true;
-                        m_StopWatch.Pauze();
+                        StopWatch.Pauze();
                     }
                     else if (Paused == true)
                     {
                         PauseOverlay.Content = null; // This removes the overlay
                         Paused = false;
-                        m_StopWatch.Start();
-                    }
-                }
-                if (kpe.KeyCode == Key.Enter) // TODO: Change to win condition
-                {
-                    if (m_Save.Level == Assets.LevelCount) // Finish the game
-                    {
-                        Game.Instance.ActiveScene = new MainMenu();
-                    }
-                    else // Win a level
-                    {
-                        ++m_Save.Level;
-                        Save();
-                        
-                        Game.Instance.ActiveScene = new WinMenu(this);
+                        StopWatch.Start();
                     }
                 }
             }
@@ -134,10 +120,33 @@ namespace Puzzled
         {
             // Note: +1 for final level
             Debug.Assert(((level <= Assets.LevelCount + 1) && (level != 0)), "Invalid level passed in.");
-            
+
             Level = new Level(GameCanvas, m_Renderer, Assets.LevelToPath(level));
             
             m_Save.Level = level;
+        }
+
+        public void NextLevel()
+        {
+            if (m_Save.Level == Assets.LevelCount) // Finish the game
+            {
+                Game.Instance.ActiveScene = new MainMenu();
+            }
+            else // Win a level
+            {
+                // Save score
+                StopWatch.Pauze();
+                m_Save.Scores[(int)m_Save.Level - 1] = Convert.ToUInt32(StopWatch.Elapsed());
+                StopWatch.Reset();
+
+                // Advance level
+                ++m_Save.Level;
+
+                // Save to disk
+                Save();
+
+                Game.Instance.ActiveScene = new WinMenu(this);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +164,7 @@ namespace Puzzled
 
         private void UpdateStopwatchDisplay(string time)
         {
-            Dispatcher.Invoke(() => StopwatchLabel.Content = time);
+            Dispatcher.Invoke(() => StopwatchLabel.Content = time);// get value form customStopwatch 
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +180,8 @@ namespace Puzzled
 
         public bool Paused = false;
 
-        private Puzzled.CustomStopWatch m_StopWatch;
+        public Puzzled.CustomStopWatch StopWatch;
+
         public Save ActiveSave { get { return m_Save; } set { m_Save = value; } }
 
     }
