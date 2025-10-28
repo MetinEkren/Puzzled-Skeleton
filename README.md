@@ -2,11 +2,16 @@
 
 Puzzled-Skeleton is a small C# WPF game where the player, a skeleton who was once human, must navigate through a series of dungeon chambers to find a way out. Along the journey, the skeleton discovers a photo from its past, which restores it to its human form. The game is built using C# with WPF for the interface and visuals.
 
-// TODO: Preview image
+| ![Preview 1](Puzzled/Resources/Textures/Preview-1.png) | ![Preview 2](Puzzled/Resources/Textures/Preview-2.png) |
+|:--:|:--:|
+| **MainMenu** | **Level Design** |
 
 ## Features
-
-// TODO: Features
+- **Spikes** – Deadly traps that cause the player to respawn.
+- **Movable Boxes** – Push and position boxes to solve puzzles.
+- **Keys and Openable** Doors – Collect keys to unlock new paths.
+- **Lava Hazards** – Avoid deadly lava pools scattered through levels.
+- **4 Playable Levels** – Explore multiple dungeons, each with unique puzzles and difficulty.
 
 ## Getting Started
 
