@@ -92,9 +92,7 @@ namespace Puzzled
         public static string Level3Path = ResourcesDirectory + "Resources/Levels/level-3.json";
         public static string Level4Path = ResourcesDirectory + "Resources/Levels/level-4.json";
         public static string Level5Path = ResourcesDirectory + "Resources/Levels/level-5.json";
-        public static string Level6Path = ResourcesDirectory + "Resources/Levels/level-6.json";
-        public static string Level7Path = ResourcesDirectory + "Resources/Levels/level-7.json";
-        public const uint LevelCount = 7;
+        public const uint LevelCount = 5;
 
         public static string SaveQuotesPath = ResourcesDirectory + "Resources/Saves/Quotes.txt";
 
@@ -107,8 +105,6 @@ namespace Puzzled
             case 3:     return Level3Path;
             case 4:     return Level4Path;
             case 5:     return Level5Path;
-            case 6:     return Level6Path;
-            case 7:     return Level7Path;
 
             default:
                 break;

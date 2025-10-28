@@ -1,51 +1,34 @@
 { "compressionlevel":-1,
- "height":42,
+ "height":25,
  "infinite":false,
  "layers":[
         {
-         "data":[12, 8, 8, 8, 8, 8, 8, 8, 0, 8, 8, 8, 8, 8, 8, 10,
-            12, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 19, 8, 9, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 7, 8, 9, 0, 0, 0, 0, 10, 10, 10, 10, 10, 10,
+         "data":[1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 0, 1,
+            20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 0, 19,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 5, 0, 0, 0, 25, 0, 0, 0, 25, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 19, 8, 8, 8, 21, 0, 10,
-            12, 8, 8, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 7, 8, 9, 0, 5, 0, 0, 5, 0, 5, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            11, 8, 9, 0, 0, 7, 9, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 7, 8, 8, 8, 8, 8, 8, 9, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 7, 8, 9, 0, 0, 5, 0, 0, 0, 0, 0, 10,
-            11, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 3, 0, 10,
-            11, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 0, 10,
-            12, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 1, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 10, 11, 11, 11, 11, 11, 2, 8, 8, 8, 8, 8, 8, 8,
-            12, 0, 19, 20, 20, 20, 20, 20, 21, 0, 0, 0, 0, 0, 0, 10,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            8, 8, 8, 8, 8, 8, 8, 8, 9, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 8, 8,
             12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 0, 0, 0, 0, 7, 8, 8, 8, 8, 8, 8,
-            12, 0, 0, 0, 0, 0, 7, 9, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10,
-            12, 0, 0, 5, 0, 0, 0, 0, 25, 0, 0, 0, 25, 0, 0, 10,
-            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-         "height":42,
+            12, 0, 0, 0, 7, 9, 0, 0, 0, 0, 0, 0, 7, 9, 0, 19,
+            12, 0, 1, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+            12, 0, 10, 11, 11, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21,
+            12, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 1,
+            12, 0, 19, 20, 21, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 10,
+            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 10,
+            1, 2, 2, 2, 3, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 10,
+            10, 11, 11, 11, 12, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 10,
+            19, 20, 20, 20, 21, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 10,
+            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 19,
+            1, 2, 2, 2, 2, 3, 0, 0, 0, 25, 0, 1, 2, 2, 2, 3,
+            19, 20, 20, 20, 20, 21, 0, 0, 0, 26, 0, 19, 20, 20, 20, 21,
+            3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            12, 0, 0, 0, 0, 0, 7, 9, 0, 0, 7, 9, 0, 0, 0, 19,
+            12, 0, 0, 7, 9, 0, 0, 0, 0, 0, 0, 0, 0, 7, 8, 9,
+            12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            10, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 12],
+         "height":25,
          "id":1,
          "name":"Tilelaag 1",
          "opacity":1,
@@ -61,16 +44,16 @@
          "name":"Objectlaag 1",
          "objects":[
                 {
-                 "gid":80,
+                 "gid":66,
                  "height":16,
                  "id":29,
                  "name":"",
                  "rotation":0,
-                 "type":"WinTile",
+                 "type":"Box",
                  "visible":true,
                  "width":16,
-                 "x":128,
-                 "y":16
+                 "x":112,
+                 "y":336
                 }, 
                 {
                  "gid":64,
@@ -82,42 +65,60 @@
                  "visible":true,
                  "width":16,
                  "x":128,
-                 "y":16
+                 "y":384
                 }, 
                 {
                  "gid":64,
                  "height":16,
-                 "id":31,
+                 "id":33,
                  "name":"",
                  "rotation":0,
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
                  "x":128,
-                 "y":32
+                 "y":368
                 }, 
                 {
-                 "gid":68,
+                 "gid":64,
                  "height":16,
-                 "id":33,
+                 "id":34,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"connection",
-                         "type":"object",
-                         "value":39
-                        }],
                  "rotation":0,
-                 "type":"Button",
+                 "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":208,
-                 "y":656
+                 "x":128,
+                 "y":352
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":35,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":336
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":36,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":128,
+                 "y":320
                 }, 
                 {
                  "gid":76,
                  "height":16,
-                 "id":34,
+                 "id":37,
                  "name":"",
                  "properties":[
                         {
@@ -129,13 +130,13 @@
                  "type":"Bridge",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":576
+                 "x":96,
+                 "y":304
                 }, 
                 {
                  "gid":77,
                  "height":16,
-                 "id":35,
+                 "id":39,
                  "name":"",
                  "properties":[
                         {
@@ -147,31 +148,13 @@
                  "type":"Bridge",
                  "visible":true,
                  "width":16,
-                 "x":176,
-                 "y":576
-                }, 
-                {
-                 "gid":77,
-                 "height":16,
-                 "id":36,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":192,
-                 "y":576
+                 "x":112,
+                 "y":304
                 }, 
                 {
                  "gid":78,
                  "height":16,
-                 "id":37,
+                 "id":41,
                  "name":"",
                  "properties":[
                         {
@@ -183,165 +166,171 @@
                  "type":"Bridge",
                  "visible":true,
                  "width":16,
-                 "x":208,
-                 "y":576
+                 "x":128,
+                 "y":304
                 }, 
                 {
-                 "gid":72,
+                 "gid":68,
                  "height":16,
-                 "id":38,
+                 "id":49,
                  "name":"",
+                 "properties":[
+                        {
+                         "name":"connection",
+                         "type":"object",
+                         "value":54
+                        }],
                  "rotation":0,
-                 "type":"Spike",
+                 "type":"Button",
                  "visible":true,
                  "width":16,
-                 "x":144,
-                 "y":656
+                 "x":16,
+                 "y":288
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":50,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":272
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":51,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":288
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":52,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":240
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":53,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":80,
+                 "y":256
                 }, 
                 {
                  "gid":71,
                  "height":16,
-                 "id":39,
+                 "id":54,
                  "name":"",
                  "rotation":0,
                  "type":"ButtonDoor",
                  "visible":true,
                  "width":16,
-                 "x":128,
-                 "y":544
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":41,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
                  "x":192,
-                 "y":496
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":42,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":208,
-                 "y":496
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":43,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":496
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":44,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":144,
-                 "y":496
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":45,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":128,
-                 "y":496
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":46,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":176,
-                 "y":496
-                },
-            
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":48,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":112,
-                 "y":480
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":49,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":112,
-                 "y":464
-                }, 
-                {
-                 "gid":65,
-                 "height":16,
-                 "id":51,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":224,
-                 "y":496
+                 "y":288
                 }, 
                 {
                  "gid":64,
+                 "height":16,
+                 "id":55,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":272
+                },
+            
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":56,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":288
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":57,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":240
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":58,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":256
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":59,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":224
+                }, 
+                {
+                 "gid":79,
                  "height":16,
                  "id":60,
                  "name":"",
                  "rotation":0,
-                 "type":"Ladder",
+                 "type":"DoorKey",
                  "visible":true,
                  "width":16,
-                 "x":224,
-                 "y":432
+                 "x":208,
+                 "y":192
                 }, 
                 {
-                 "gid":64,
+                 "gid":70,
                  "height":16,
                  "id":61,
                  "name":"",
                  "rotation":0,
-                 "type":"Ladder",
+                 "type":"KeyDoor",
                  "visible":true,
                  "width":16,
-                 "x":224,
-                 "y":416
+                 "x":48,
+                 "y":224
                 }, 
                 {
                  "gid":64,
@@ -352,8 +341,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":224,
-                 "y":400
+                 "x":16,
+                 "y":208
                 }, 
                 {
                  "gid":64,
@@ -364,8 +353,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":176,
-                 "y":448
+                 "x":16,
+                 "y":224
                 }, 
                 {
                  "gid":64,
@@ -376,8 +365,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":192,
-                 "y":576
+                 "x":16,
+                 "y":192
                 }, 
                 {
                  "gid":64,
@@ -389,7 +378,7 @@
                  "visible":true,
                  "width":16,
                  "x":16,
-                 "y":512
+                 "y":176
                 }, 
                 {
                  "gid":64,
@@ -401,7 +390,7 @@
                  "visible":true,
                  "width":16,
                  "x":16,
-                 "y":496
+                 "y":160
                 }, 
                 {
                  "gid":64,
@@ -412,32 +401,32 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":16,
-                 "y":528
+                 "x":32,
+                 "y":384
                 }, 
                 {
-                 "gid":64,
+                 "gid":65,
                  "height":16,
                  "id":68,
                  "name":"",
                  "rotation":0,
-                 "type":"Ladder",
+                 "type":"Lava",
                  "visible":true,
                  "width":16,
-                 "x":224,
-                 "y":368
+                 "x":96,
+                 "y":144
                 }, 
                 {
-                 "gid":64,
+                 "gid":65,
                  "height":16,
                  "id":69,
                  "name":"",
                  "rotation":0,
-                 "type":"Ladder",
+                 "type":"Lava",
                  "visible":true,
                  "width":16,
-                 "x":224,
-                 "y":384
+                 "x":112,
+                 "y":144
                 }, 
                 {
                  "gid":65,
@@ -449,7 +438,7 @@
                  "visible":true,
                  "width":16,
                  "x":144,
-                 "y":368
+                 "y":144
                 }, 
                 {
                  "gid":65,
@@ -461,8 +450,9 @@
                  "visible":true,
                  "width":16,
                  "x":128,
-                 "y":368
-                }, 
+                 "y":144
+                },
+            
                 {
                  "gid":65,
                  "height":16,
@@ -472,10 +462,9 @@
                  "type":"Lava",
                  "visible":true,
                  "width":16,
-                 "x":112,
-                 "y":368
-                },
-            
+                 "x":160,
+                 "y":144
+                }, 
                 {
                  "gid":65,
                  "height":16,
@@ -485,80 +474,80 @@
                  "type":"Lava",
                  "visible":true,
                  "width":16,
-                 "x":96,
-                 "y":368
+                 "x":176,
+                 "y":144
                 }, 
                 {
-                 "gid":65,
+                 "gid":66,
                  "height":16,
-                 "id":74,
+                 "id":76,
                  "name":"",
                  "rotation":0,
-                 "type":"Lava",
+                 "type":"Box",
                  "visible":true,
                  "width":16,
                  "x":80,
-                 "y":368
+                 "y":128
                 }, 
                 {
-                 "gid":65,
-                 "height":16,
-                 "id":75,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Lava",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":368
-                }, 
-                {
-                 "gid":65,
+                 "gid":66,
                  "height":16,
                  "id":77,
                  "name":"",
                  "rotation":0,
-                 "type":"Lava",
+                 "type":"Box",
                  "visible":true,
                  "width":16,
-                 "x":64,
-                 "y":368
+                 "x":80,
+                 "y":112
                 }, 
                 {
-                 "gid":65,
+                 "gid":66,
                  "height":16,
                  "id":78,
                  "name":"",
                  "rotation":0,
-                 "type":"Lava",
+                 "type":"Box",
                  "visible":true,
                  "width":16,
-                 "x":48,
-                 "y":368
+                 "x":80,
+                 "y":96
                 }, 
                 {
-                 "gid":65,
+                 "gid":66,
                  "height":16,
                  "id":79,
                  "name":"",
                  "rotation":0,
-                 "type":"Lava",
+                 "type":"Box",
                  "visible":true,
                  "width":16,
-                 "x":32,
-                 "y":368
+                 "x":80,
+                 "y":80
                 }, 
                 {
-                 "gid":65,
+                 "gid":64,
                  "height":16,
                  "id":80,
                  "name":"",
                  "rotation":0,
-                 "type":"Lava",
+                 "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":16,
-                 "y":368
+                 "x":224,
+                 "y":112
+                }, 
+                {
+                 "gid":64,
+                 "height":16,
+                 "id":81,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":128
                 }, 
                 {
                  "gid":64,
@@ -569,8 +558,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":336
+                 "x":224,
+                 "y":144
                 }, 
                 {
                  "gid":64,
@@ -581,8 +570,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":320
+                 "x":224,
+                 "y":96
                 }, 
                 {
                  "gid":64,
@@ -593,8 +582,8 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":304
+                 "x":224,
+                 "y":80
                 }, 
                 {
                  "gid":64,
@@ -605,635 +594,56 @@
                  "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":288
+                 "x":224,
+                 "y":64
                 }, 
                 {
-                 "gid":66,
+                 "gid":64,
                  "height":16,
                  "id":86,
                  "name":"",
                  "rotation":0,
-                 "type":"Box",
+                 "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":80,
-                 "y":224
+                 "x":224,
+                 "y":48
                 }, 
                 {
-                 "gid":76,
+                 "gid":64,
+                 "height":16,
+                 "id":87,
+                 "name":"",
+                 "rotation":0,
+                 "type":"Ladder",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":32
+                }, 
+                {
+                 "gid":64,
                  "height":16,
                  "id":88,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":1
-                        }],
                  "rotation":0,
-                 "type":"Bridge",
+                 "type":"Ladder",
                  "visible":true,
                  "width":16,
-                 "x":160,
-                 "y":272
+                 "x":224,
+                 "y":16
                 }, 
                 {
-                 "gid":77,
+                 "gid":80,
                  "height":16,
                  "id":89,
                  "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
                  "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":176,
-                 "y":272
-                }, 
-                {
-                 "gid":77,
-                 "height":16,
-                 "id":90,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":192,
-                 "y":272
-                }, 
-                {
-                 "gid":77,
-                 "height":16,
-                 "id":91,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":208,
-                 "y":272
-                },
-            
-                {
-                 "gid":78,
-                 "height":16,
-                 "id":92,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
+                 "type":"WinTile",
                  "visible":true,
                  "width":16,
                  "x":224,
-                 "y":272
-                }, 
-                {
-                 "gid":71,
-                 "height":16,
-                 "id":93,
-                 "name":"",
-                 "rotation":0,
-                 "type":"ButtonDoor",
-                 "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":256
-                }, 
-                {
-                 "gid":68,
-                 "height":16,
-                 "id":95,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"connection",
-                         "type":"object",
-                         "value":93
-                        }],
-                 "rotation":0,
-                 "type":"Button",
-                 "visible":true,
-                 "width":16,
-                 "x":80,
-                 "y":256
-                }, 
-                {
-                 "gid":70,
-                 "height":16,
-                 "id":96,
-                 "name":"",
-                 "rotation":0,
-                 "type":"KeyDoor",
-                 "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":176
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":98,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":192
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":99,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":208
-                }, 
-                {
-                 "gid":68,
-                 "height":16,
-                 "id":102,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"connection",
-                         "type":"object",
-                         "value":104
-                        }],
-                 "rotation":0,
-                 "type":"Button",
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":336
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":103,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":80,
-                 "y":304
-                }, 
-                {
-                 "gid":71,
-                 "height":16,
-                 "id":104,
-                 "name":"",
-                 "rotation":0,
-                 "type":"ButtonDoor",
-                 "visible":true,
-                 "width":16,
-                 "x":144,
-                 "y":304
-                }, 
-                {
-                 "gid":79,
-                 "height":16,
-                 "id":105,
-                 "name":"",
-                 "rotation":0,
-                 "type":"DoorKey",
-                 "visible":true,
-                 "width":16,
-                 "x":128,
-                 "y":304
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":106,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":176,
-                 "y":656
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":107,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":656
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":108,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":192,
-                 "y":640
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":109,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":480
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":110,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":80,
-                 "y":480
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":117,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":112,
-                 "y":192
-                },
-            
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":118,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":192
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":119,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":224,
-                 "y":192
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":120,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":224,
-                 "y":176
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":121,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":224,
-                 "y":160
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":123,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":224,
-                 "y":144
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":124,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":112,
-                 "y":608
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":125,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":128
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":126,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":176,
-                 "y":128
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":127,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":192,
-                 "y":128
-                }, 
-                {
-                 "gid":71,
-                 "height":16,
-                 "id":128,
-                 "name":"",
-                 "rotation":0,
-                 "type":"ButtonDoor",
-                 "visible":true,
-                 "width":16,
-                 "x":160,
-                 "y":64
-                }, 
-                {
-                 "gid":78,
-                 "height":16,
-                 "id":129,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":3
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":144,
-                 "y":80
-                }, 
-                {
-                 "gid":77,
-                 "height":16,
-                 "id":131,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":128,
-                 "y":80
-                }, 
-                {
-                 "gid":76,
-                 "height":16,
-                 "id":133,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":1
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":96,
-                 "y":80
-                }, 
-                {
-                 "gid":77,
-                 "height":16,
-                 "id":134,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"side",
-                         "type":"int",
-                         "value":2
-                        }],
-                 "rotation":0,
-                 "type":"Bridge",
-                 "visible":true,
-                 "width":16,
-                 "x":112,
-                 "y":80
-                }, 
-                {
-                 "gid":68,
-                 "height":16,
-                 "id":135,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"connection",
-                         "type":"object",
-                         "value":128
-                        }],
-                 "rotation":0,
-                 "type":"Button",
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":64
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":136,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":64,
-                 "y":64
-                },
-            
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":137,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":96
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":138,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":80
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":139,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":112
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":140,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":128
-                }, 
-                {
-                 "gid":64,
-                 "height":16,
-                 "id":141,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Ladder",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":128
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":142,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":16,
-                 "y":144
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":143,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":48,
-                 "y":144
-                }, 
-                {
-                 "gid":72,
-                 "height":16,
-                 "id":144,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Spike",
-                 "visible":true,
-                 "width":16,
-                 "x":32,
-                 "y":144
-                }, 
-                {
-                 "gid":66,
-                 "height":16,
-                 "id":145,
-                 "name":"",
-                 "rotation":0,
-                 "type":"Box",
-                 "visible":true,
-                 "width":16,
-                 "x":64,
-                 "y":48
+                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1242,7 +652,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":146,
+ "nextobjectid":90,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
