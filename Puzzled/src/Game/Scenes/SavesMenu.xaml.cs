@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Shapes;
@@ -91,10 +93,29 @@ namespace Puzzled
 
             if (e is KeyPressedEvent kpe)
             {
-                if (kpe.KeyCode == System.Windows.Input.Key.Escape)
+                if (kpe.KeyCode == Key.Escape)
                 {
                     Logger.Info("Pressed Esc, going back to main menu.");
                     Game.Instance.ActiveScene = ((m_MainMenu != null) ? m_MainMenu : new MainMenu());
+                }
+                if (kpe.KeyCode == Key.OemPlus) // Debug function to reset saves
+                {
+                    // Reset saves
+                    {
+                        // There are 3 saves (hardcoded = bad)
+                        for (uint i = 1; i <= 3; i++)
+                        {
+                            Save save = Assets.LoadSave(i);
+                            save.Level = i;
+
+                            string path = Assets.GetSaveSlotPath(i);
+                            string text = JsonSerializer.Serialize<Save>(save);
+
+                            File.WriteAllText(path, text);
+                        }
+
+                        MessageBox.Show("[DEBUG] RESET LEVELS.");
+                    }
                 }
             }
 
