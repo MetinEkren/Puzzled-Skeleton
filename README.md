@@ -11,7 +11,7 @@ Puzzled-Skeleton is a small C# WPF game where the player, a skeleton who was onc
 - **Movable Boxes** – Push and position boxes to solve puzzles.
 - **Keys and Openable** Doors – Collect keys to unlock new paths.
 - **Lava Hazards** – Avoid deadly lava pools scattered through levels.
-- **4 Playable Levels** – Explore multiple dungeons, each with unique puzzles and difficulty.
+- **5 Playable Levels** – Explore multiple dungeons, each with unique puzzles and difficulty.
 
 ## Getting Started
 
@@ -88,7 +88,7 @@ Build instructions for this project can be found in the [BUILDING.md](BUILDING.m
       - [x] 🟨 Level 3 (🟨 normal / 🟧extra hard)
       - [x] 🟨 Level 4 (🟨 normal / 🟧extra hard)
       - [x] 🟨 Level 5 (🟨 normal / 🟧extra hard)
-      - [ ] 🟨 Level 6 (🟨 normal / 🟧extra hard)
+      - [x] 🟨 Level 6 (🟨 normal / 🟧extra hard)
       - [x] 🟧 Texture for skeleton
       - [ ] 🟧 Texture for background(s)
       - [x] 🟧 Texture for objects
