@@ -541,6 +541,18 @@
                  "width":16,
                  "x":224,
                  "y":416
+                }, 
+                {
+                 "gid":80,
+                 "height":16,
+                 "id":128,
+                 "name":"",
+                 "rotation":0,
+                 "type":"WinTile",
+                 "visible":true,
+                 "width":16,
+                 "x":16,
+                 "y":144
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -549,7 +561,7 @@
          "y":0
         }],
  "nextlayerid":3,
- "nextobjectid":128,
+ "nextobjectid":129,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.11.2",
