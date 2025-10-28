@@ -112,6 +112,11 @@ namespace Puzzled
                     Velocity.Y = Math.Max(Velocity.Y, Settings.PlayerTerminalVelocity);
                 }
 
+                if (m_IsPushing)
+                {
+                    Velocity.X /= 2;
+                }
+
                 // When falling (or jumping) you are no longer able to jump again
                 if (Velocity.Y != 0.0f)
                     CanJump = false;
@@ -131,6 +136,8 @@ namespace Puzzled
                     SetNewState(State.Idle);
             }
             IsClimbing = false;
+            m_IsPushing = false;
+            
             GetCurrentAnimation().Update(deltaTime);
         }
 
@@ -156,6 +163,11 @@ namespace Puzzled
             Position = Settings.PlayerSpawnPosition;
             Velocity = new Maths.Vector2(0.0f, 0.0f);
             ((LevelOverlay)(Game.Instance.ActiveScene)).Camera.Reset();
+        }
+
+        public void Push()
+        {
+            m_IsPushing = true;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
@@ -203,6 +215,7 @@ namespace Puzzled
         public bool HasKey = false;
         public bool IsClimbing = false;
 
+        private bool m_IsPushing = false;
         private Animation m_IdleAnimation = new Animation(Assets.IdleSheet, (Settings.SpriteSize / Settings.Scale), Settings.IdleAdvanceTime);
         private Animation m_RunningAnimation = new Animation(Assets.RunSheet, (Settings.SpriteSize / Settings.Scale), Settings.RunAdvanceTime);
         // TODO: More animations
