@@ -64,8 +64,8 @@ namespace Puzzled
         ////////////////////////////////////////////////////////////////////////////////////
         // Paths
         ////////////////////////////////////////////////////////////////////////////////////
-        //public static string ResourcesDirectory = "../../../Puzzled/"; // Debug & Release path
-        public static string ResourcesDirectory = ""; // Distribution path
+        public static string ResourcesDirectory = "../../../Puzzled/"; // Debug & Release path
+        //public static string ResourcesDirectory = ""; // Distribution path
 
         public static string IntroMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Intro.wav";
         public static string MainMenuMusicPath = ResourcesDirectory + "Resources/Music/MainMenu_Loop.wav";

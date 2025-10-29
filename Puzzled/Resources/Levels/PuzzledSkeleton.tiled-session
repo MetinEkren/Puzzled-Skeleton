@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-4.json",
+    "activeFile": "level-6.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -48,8 +48,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 142.33333333333334,
-                "y": 211.66666666666663
+                "x": 127.66666666666664,
+                "y": 199.66666666666663
             }
         },
         "level-5.json": {
@@ -64,8 +64,8 @@
             "scale": 1.311904761904762,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 127.6769509981851,
-                "y": 335.7713248638838
+                "x": 127.67695099818512,
+                "y": 52.2141560798548
             }
         },
         "level-7.json": {
@@ -82,7 +82,8 @@
         "level-1.json",
         "level-3.json",
         "level-5.json",
-        "level-4.json"
+        "level-4.json",
+        "level-6.json"
     ],
     "project": "PuzzledSkeleton.tiled-project",
     "property.type": "int",
@@ -91,7 +92,8 @@
         "level-1.json",
         "level-3.json",
         "level-5.json",
-        "level-4.json"
+        "level-4.json",
+        "level-6.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
